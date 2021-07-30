@@ -1,8 +1,13 @@
 # frozen_string_literal: true
 
-require_relative "labrat/version"
+require 'prawn'
+require 'prawn/measurement_extensions'
+require 'optparse'
+require 'pp'
+require 'pry'
 
-module Labrat
-  class Error < StandardError; end
-  # Your code goes here...
-end
+require_relative "labrat/version"
+require_relative "labrat/errors"
+require_relative "labrat/options"
+require_relative "labrat/arg_parser"
+require_relative "labrat/runner"
