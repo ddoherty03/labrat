@@ -59,4 +59,4 @@ Prawn::Document.generate('label.pdf', page_size: [28.mm, 88.mm],
 end
 
 # system("zathura label.pdf &")
-system("lpr -P dymo label.pdf &")
+# system("lpr -P dymo label.pdf &")
