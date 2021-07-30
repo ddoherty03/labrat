@@ -89,11 +89,11 @@ module Labrat
     end
 
     def delta_options
-      parser.on("--delta_x [DIMENSION]",
+      parser.on('-x', "--delta_x [DIMENSION]",
                 "Left-right adjustment as label text is oriented") do |x|
         options.delta_x = parse_dimension(x, 'delta_x')
       end
-      parser.on("--delta_y [DIMENSION]",
+      parser.on('-y', "--delta_y [DIMENSION]",
                 "Up-down adjustment as label text is oriented") do |y|
         options.delta_y = parse_dimension(y, 'delta_y')
       end
