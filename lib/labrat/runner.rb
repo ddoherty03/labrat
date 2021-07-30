@@ -1,0 +1,49 @@
+# The text is captured in a array of all non-option command-line arguments,
+# but we join the components with a space.  Use \\ to indicate a line break.
+label_text = ARGV.join.gsub('\\', "\n")
+
+# Adjustments appropriate for lpr printing to dymo 330.  Should make these
+# command-line options.
+#
+# I shift the bounding box placement location to the left and down from the
+# location used when printing from a viewer such as zathura.  This is to
+# compensate for the lpr program's tendency to shift the label to the right
+# and up from where it appears when viewed with a pdf viewer such as zathura,
+# etc.  I didn't notice any difference after setting the x adjustment to less
+# than -2.5mm: setting it to -3.5mm seemed not to make any difference in the
+# position of the text within the label.
+#
+# Note that the x and y axis are based on landscape orientation, i.e., rotated
+# 90 degrees counterclockwise from the orientation coming out of the printer.
+# So x is the wide dimension of the label (left and right as read) and y is
+# the short dimension (up and down as read).
+#
+# Yet, using lpr is better than printing from a viewer because it allows me to
+# set the destination printer on the command line, requires no mouse
+# interaction, and does not leave a window open that I have to close.
+adjust_x = -2.5.mm
+adjust_y = -2.15.mm
+
+# The big breakthrough in getting reasonable output for 30327 File Folder
+# Labels is to set the page size to include the wastage portion of the label,
+# not just the peelable label part.  With the label oriented with the long
+# dimension vertical and the small dimension horizontal (just as it comes out
+# of the printer), I measured the "width" at 28mm; the "height" is 87mm as
+# advertised on the box since there is no wastage in that direction.  That
+# accounts for the page_size dimensions used here.
+Prawn::Document.generate('label.pdf', page_size: [28.mm, 88.mm],
+                         margin: 0.mm,
+                         page_layout: :landscape) do
+  # NB: With the page_layout set to landscape, within this block, the
+  # x-coordinates now represent the axis along the wide side of the label, and
+  # the y-axis along the short side, just as you would read it.
+  bounding_box([1.mm + adjust_x, 21.15.mm + adjust_y], width: 85.mm, height: 12.25.mm) do
+  # bounding_box([-1.5.mm, 19.0.mm], width: 85.mm, height: 12.25.mm) do
+    # stroke_bounds
+    font 'Helvetica', style: :bold, size: 12
+    text label_text, align: :center, valign: :center
+    end
+end
+
+# system("zathura label.pdf &")
+# system("lpr -P dymo label.pdf &")
