@@ -29,7 +29,7 @@ module Labrat
       label_dimension_options
       delta_options
       printer_name_option
-      nl_marker_option
+      nl_sep_option
       in_file_option
       landscape_option
       portrait_option
@@ -100,10 +100,10 @@ module Labrat
       end
     end
 
-    def nl_marker_option
+    def nl_sep_option
       parser.on("-n", "--nlsep [SEPARATOR]",
                 "Specify text to be interpreted as a line-break (default '++')") do |nl|
-        options.nl_marker = nl
+        options.nl_sep = nl
       end
     end
 

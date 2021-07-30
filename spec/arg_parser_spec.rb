@@ -17,7 +17,7 @@ RSpec.describe ArgParser do
     expect(op.delta_x).to be_within(EPS).of(0 * MM)
     expect(op.delta_y).to be_within(EPS).of(0 * MM)
     expect(op.printer_name).to eq('dymo')
-    expect(op.nl_marker).to eq('++')
+    expect(op.nl_sep).to eq('++')
     expect(op.in_file).to be_nil
   end
 
