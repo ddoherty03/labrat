@@ -55,7 +55,7 @@ module Labrat
         raise Labrat::DimensionError, "illegal #{where} dimension: '#{str}'"
       end
 
-      if match[:unit].nil?
+      if match[:unit].empty?
         match[:measure].to_f
       else
         meas = match[:measure].to_f
