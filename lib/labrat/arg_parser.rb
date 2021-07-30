@@ -24,6 +24,10 @@ module Labrat
       parser.banner = "Usage: labrat [options]"
       parser.separator ""
       parser.separator "Specific options:"
+      parser.separator "  Note: for DIMENSION, valid units are: " +
+                       "pt, mm, cm, dm, m, in, ft, yd"
+      parser.separator "    With no units, pt (points) assumed"
+      parser.separator ""
 
       # add additional options
       label_dimension_options
@@ -61,7 +65,9 @@ module Labrat
         meas = match[:measure].to_f
         u_meth = match[:unit].to_sym
         unless meas.respond_to?(u_meth)
-          raise Labrat::DimensionError, "unknown #{where} unit: '#{match[:unit]}'"
+          msg = "unknown #{where} unit: '#{match[:unit]}'\n"
+          "  valid units are: pt, mm, cm, dm, m, in, ft, yd"
+          raise Labrat::DimensionError, msg
         end
 
         meas.send(u_meth)
