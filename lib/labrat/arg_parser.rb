@@ -15,7 +15,7 @@ module Labrat
       options.msg = nil
       parser.parse!(args)
       options
-    rescue OptionParser::InvalidOption => e
+    rescue OptionParser::ParseError => e
       options.msg = "Error: #{e}\n\n#{parser}"
       options
     end
