@@ -124,7 +124,7 @@ module Labrat
     def in_file_option
       parser.on("-fFILENAME", "--file=FILENAME",
                 "Read labels from given file instead of command-line") do |file|
-        options.in_file = file.sub(/\A\s*/, '').sub(/\s*\z/, '')
+        options.in_file = file.strip
       end
     end
 
