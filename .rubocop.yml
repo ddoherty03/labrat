@@ -1,5 +1,10 @@
+inherit_gem:
+    rubocop-shopify: rubocop.yml
+require: rubocop-rspec
+require: rubocop-performance
+
 AllCops:
-  TargetRubyVersion: 2.4
+  TargetRubyVersion: 2.7
 
 Style/StringLiterals:
   Enabled: true
