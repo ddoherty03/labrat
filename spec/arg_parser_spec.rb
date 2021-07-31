@@ -25,6 +25,7 @@ RSpec.describe ArgParser do
     help = ap.parse(['--help']).msg
     expect(help).to include('--width')
     expect(help).to include('--height')
+    expect(help).to include('--label')
     expect(help).to include('--delta_x')
     expect(help).to include('--delta_y')
     expect(help).to include('--printer')

@@ -31,6 +31,7 @@ module Labrat
 
       # add additional options
       label_dimension_options
+      label_name_option
       delta_options
       printer_name_option
       nl_sep_option
@@ -85,6 +86,13 @@ module Labrat
                 "Label height:",
                 "the vertical dimension of label as it comes out of the printer") do |ht|
         options.label_height = parse_dimension(ht, 'height')
+      end
+    end
+
+    def label_name_option
+      parser.on("-lNAME", "--label=NAME",
+                "Name of the label to print on") do |name|
+        options.label_name = name.strip
       end
     end
 

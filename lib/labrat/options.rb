@@ -1,13 +1,15 @@
 module Labrat
   class Options
-    attr_accessor :delta_x, :delta_y, :printer_name, :nl_sep,
-                  :in_file, :label_width, :label_height,
-                  :landscape, :verbose, :msg
+    attr_accessor :label_width, :label_height, :label_name,
+                  :delta_x, :delta_y, :printer_name,
+                  :landscape, :nl_sep, :in_file,
+                  :verbose, :msg
 
     def initialize
       self.msg = nil
       self.label_width = 28.mm
       self.label_height = 88.mm
+      self.label_name = nil
       self.delta_x = 0
       self.delta_y = 0
       self.printer_name = 'dymo'
