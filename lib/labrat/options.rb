@@ -19,6 +19,9 @@ module Labrat
       self.msg = nil
     end
 
+    # Return any string in msg, e.g., the usage help or error.
+    def to_s
+      msg
     end
   end
 end
