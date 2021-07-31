@@ -77,12 +77,12 @@ module Labrat
 
     def label_dimension_options
       # Specifies an optional option argument
-      parser.on("-w", "--width [DIMENSION]",
+      parser.on("-wDIMENSION", "--width DIMENSION",
                 "Label width:",
                 "the horizontal dimension of the label as it comes out of the printer") do |wd|
         options.label_width = parse_dimension(wd, 'width')
       end
-      parser.on("-h", "--height [DIMENSION]",
+      parser.on("-hDIMENSION", "--height DIMENSION",
                 "Label height:",
                 "the vertical dimension of label as it comes out of the printer") do |ht|
         options.label_height = parse_dimension(ht, 'height')
@@ -97,50 +97,50 @@ module Labrat
     end
 
     def delta_options
-      parser.on('-x', "--delta_x [DIMENSION]",
+      parser.on('-xDIMENSION', "--delta_x=DIMENSION",
                 "Left-right adjustment as label text is oriented") do |x|
         options.delta_x = parse_dimension(x, 'delta_x')
       end
-      parser.on('-y', "--delta_y [DIMENSION]",
+      parser.on('-yDIMENSION', "--delta_y=DIMENSION",
                 "Up-down adjustment as label text is oriented") do |y|
         options.delta_y = parse_dimension(y, 'delta_y')
       end
     end
 
     def printer_name_option
-      parser.on("-p", "--printer [NAME]",
+      parser.on("-pNAME", "--printer=NAME",
                 "Name of the label printer to print on") do |name|
         options.printer_name = name
       end
     end
 
     def nl_sep_option
-      parser.on("-n", "--nlsep [SEPARATOR]",
+      parser.on("-nSEP", "--nlsep=SEPARATOR",
                 "Specify text to be interpreted as a line-break (default '++')") do |nl|
         options.nl_sep = nl
       end
     end
 
     def in_file_option
-      parser.on("-f", "--file [FILENAME]",
+      parser.on("-fFILENAME", "--file=FILENAME",
                 "Read labels from given file instead of command-line") do |file|
         options.in_file = file.sub(/\A\s*/, '').sub(/\s*\z/, '')
       end
     end
 
     def landscape_option
-      parser.on("-L", "--landscape",
+      parser.on("-L", "--[no-]landscape",
                 "Print label in landscape (default true), i.e., with the left of",
-                "the label text starting at the top as the label in printed") do
-        options.landscape = true
+                "the label text starting at the top as the label in printed") do |l|
+        options.landscape = l
       end
     end
 
     def portrait_option
-      parser.on("-P", "--portrait",
+      parser.on("-P", "--[no-]portrait",
                 "Print label in portrait (default false), i.e., left-to-right",
-                "top-to-bottom as the label in printed. Negated landscape") do
-        options.landscape = false
+                "top-to-bottom as the label in printed. Negated landscape") do |p|
+        options.landscape = !p
       end
     end
 

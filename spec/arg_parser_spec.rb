@@ -31,8 +31,8 @@ RSpec.describe ArgParser do
     expect(help).to include('--printer')
     expect(help).to include('--nlsep')
     expect(help).to include('--file')
-    expect(help).to include('--landscape')
-    expect(help).to include('--portrait')
+    expect(help).to include('--[no-]landscape')
+    expect(help).to include('--[no-]portrait')
     expect(help).to include('--[no-]verbose')
   end
 
@@ -40,9 +40,16 @@ RSpec.describe ArgParser do
     expect(ap.parse(['--version']).msg).to match(/\A[0-9.]+\z/)
   end
 
-  it 'produces help on bad option' do
+  it 'produces help on invalid option' do
     bad_option = '--lsflkwroi'
     err_msg = ap.parse([bad_option]).msg
+    expect(err_msg).to include('Error: invalid option')
+    expect(err_msg).to include(bad_option)
+  end
+
+  it 'produces help on missing option arg' do
+    option = '--delta_x'
+    err_msg = ap.parse([option]).msg
     expect(err_msg).to include('Error: invalid option')
     expect(err_msg).to include(bad_option)
   end

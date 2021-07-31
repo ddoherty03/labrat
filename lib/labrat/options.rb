@@ -6,16 +6,19 @@ module Labrat
                   :verbose, :msg
 
     def initialize
-      self.msg = nil
       self.label_width = 28.mm
       self.label_height = 88.mm
       self.label_name = nil
       self.delta_x = 0
       self.delta_y = 0
       self.printer_name = 'dymo'
+      self.landscape = true
       self.nl_sep = '++'
       self.in_file = nil
-      self.landscape = true
+      self.verbose = false
+      self.msg = nil
+    end
+
     end
   end
 end
