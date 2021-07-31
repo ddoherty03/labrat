@@ -50,16 +50,102 @@ RSpec.describe ArgParser do
   it 'produces help on missing option arg' do
     option = '--delta_x'
     err_msg = ap.parse([option]).msg
-    expect(err_msg).to include('Error: invalid option')
-    expect(err_msg).to include(bad_option)
+    expect(err_msg).to include('Error: missing argument:')
+    expect(err_msg).to include(option)
   end
 
   it 'can set the dimensions of the label' do
+    # Points
+    ops = ap.parse(['-w', '44', '-h', '180.5'])
+    expect(ops.label_width).to be_within(EPS).of(44.0)
+    expect(ops.label_height).to be_within(EPS).of(180.5)
+    # Long options
     ops = ap.parse(['--width=4cm', '--height', '60mm'])
     expect(ops.label_width).to be_within(EPS).of(40 * MM)
     expect(ops.label_height).to be_within(EPS).of(60 * MM)
+    # Short options
     ops = ap.parse(['-w', '0.5in', '-h', '3.4375in'])
     expect(ops.label_width).to be_within(EPS).of(0.5 * IN)
     expect(ops.label_height).to be_within(EPS).of(3.4375 * IN)
+  end
+
+  it 'can set the name of a label' do
+    ops = ap.parse(['--label=dymo30327'])
+    expect(ops.label_name).to eq('dymo30327')
+  end
+
+  it 'can set the offset dimensions' do
+    ops = ap.parse(['--delta_x=0.5cm', '--delta_y', '6mm'])
+    expect(ops.delta_x).to be_within(EPS).of(5 * MM)
+    expect(ops.delta_y).to be_within(EPS).of(6 * MM)
+    ops = ap.parse(['-x', '0.5in', '-y', '3.4375in'])
+    expect(ops.delta_x).to be_within(EPS).of(0.5 * IN)
+    expect(ops.delta_y).to be_within(EPS).of(3.4375 * IN)
+  end
+
+  it 'can set convert certain units' do
+    # pt, mm, cm, dm, m, in, ft, yd
+    units = %i[pt mm cm dm m in ft yd]
+    units.each do |unit|
+      ops = ap.parse(["--delta_x=5#{unit}"])
+      expect(ops.delta_x).to be_kind_of(Numeric)
+    end
+    units = %i[mi furlongs]
+    units.each do |unit|
+      expect { ap.parse(["--delta_x=5#{unit}"]) }.to raise_exception(Labrat::DimensionError)
+    end
+  end
+
+  it 'can set the printer name' do
+    ops = ap.parse(['--printer=epson55'])
+    expect(ops.printer_name).to eq('epson55')
+  end
+
+  it 'can set the printer name' do
+    ops = ap.parse(['--printer=epson55'])
+    expect(ops.printer_name).to eq('epson55')
+  end
+
+  it 'can set the new-line marker' do
+    ops = ap.parse(['--nlsep=&&'])
+    expect(ops.nl_sep).to eq('&&')
+    ops = ap.parse(['-n', '&&'])
+    expect(ops.nl_sep).to eq('&&')
+  end
+
+  it 'can set an optional input file' do
+    ops = ap.parse(['-f junk.lab'])
+    expect(ops.in_file).to eq('junk.lab')
+    ops = ap.parse(['--file junk.lab'])
+    expect(ops.in_file).to eq('junk.lab')
+    ops = ap.parse(['--file', '  file with some spaces  	'])
+    expect(ops.in_file).to eq('file with some spaces')
+  end
+
+  it 'can set orientation' do
+    ops = ap.parse(['-L'])
+    expect(ops.landscape).to be true
+    ops = ap.parse(['--landscape'])
+    expect(ops.landscape).to be true
+    ops = ap.parse(['--no-landscape'])
+    expect(ops.landscape).to be false
+    # Portrait is, essentially, --no-landacape
+    ops = ap.parse(['-P'])
+    expect(ops.landscape).to be false
+    ops = ap.parse(['--portrait'])
+    expect(ops.landscape).to be false
+    ops = ap.parse(['--no-portrait'])
+    expect(ops.landscape).to be true
+  end
+
+  it 'can set verbose' do
+    ops = ap.parse([])
+    expect(ops.verbose).to be false
+    ops = ap.parse(['-v'])
+    expect(ops.verbose).to be true
+    ops = ap.parse(['--verbose'])
+    expect(ops.verbose).to be true
+    ops = ap.parse(['--no-verbose'])
+    expect(ops.verbose).to be false
   end
 end
