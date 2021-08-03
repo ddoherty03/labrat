@@ -1,6 +1,9 @@
 # frozen_string_literal: true
 
 require "labrat"
+require 'pry'
+# require 'pry-exception_explorer'
+require 'debug'
 
 RSpec.configure do |config|
   # Enable flags like --only-failures and --next-failure
