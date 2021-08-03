@@ -23,5 +23,36 @@ module Labrat
     def to_s
       msg
     end
+
+    # Return a hash of the values in this Options object.
+    def to_hash
+      {
+        label_width: label_width,
+        label_height: label_height,
+        label_name: label_name,
+        delta_x: delta_x,
+        delta_y: delta_y,
+        printer_name: printer_name,
+        landscape: landscape,
+        nl_sep: nl_sep,
+        in_file: in_file,
+        verbose: verbose,
+        msg: msg
+      }
+    end
+
+    # Update the fields of this Option instance by merging in the values in
+    # hsh into self.  Ignore any keys in hsh not corresponding to a setter for
+    # an Options object.
+    def merge_hash!(hsh)
+      new_hash = to_hash.merger(hsh)
+      new_hash.each_pair do |k, val|
+        setter = "#{k}=".to_sym
+        next unless respond_to?(setter)
+
+        send(setter, val)
+      end
+      self
+    end
   end
 end
