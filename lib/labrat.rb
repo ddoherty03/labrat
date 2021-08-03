@@ -3,8 +3,8 @@
 require 'prawn'
 require 'prawn/measurement_extensions'
 require 'optparse'
+require 'yaml'
 require 'pp'
-require 'pry'
 
 require_relative "labrat/version"
 require_relative "labrat/errors"
