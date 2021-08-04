@@ -80,19 +80,19 @@ module Labrat
       parser.on("-wDIMENSION", "--width DIMENSION",
                 "Label width:",
                 "the horizontal dimension of the label as it comes out of the printer") do |wd|
-        options.label_width = parse_dimension(wd, 'width')
+        options.width = parse_dimension(wd, 'width')
       end
       parser.on("-hDIMENSION", "--height DIMENSION",
                 "Label height:",
                 "the vertical dimension of label as it comes out of the printer") do |ht|
-        options.label_height = parse_dimension(ht, 'height')
+        options.height = parse_dimension(ht, 'height')
       end
     end
 
     def label_name_option
       parser.on("-lNAME", "--label=NAME",
                 "Name of the label to print on") do |name|
-        options.label_name = name.strip
+        options.label = name.strip
       end
     end
 
@@ -110,21 +110,21 @@ module Labrat
     def printer_name_option
       parser.on("-pNAME", "--printer=NAME",
                 "Name of the label printer to print on") do |name|
-        options.printer_name = name
+        options.printer = name
       end
     end
 
     def nl_sep_option
       parser.on("-nSEP", "--nlsep=SEPARATOR",
                 "Specify text to be interpreted as a line-break (default '++')") do |nl|
-        options.nl_sep = nl
+        options.nlsep = nl
       end
     end
 
     def in_file_option
       parser.on("-fFILENAME", "--file=FILENAME",
                 "Read labels from given file instead of command-line") do |file|
-        options.in_file = file.strip
+        options.file = file.strip
       end
     end
 

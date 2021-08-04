@@ -1,20 +1,20 @@
 module Labrat
   class Options
-    attr_accessor :label_width, :label_height, :label_name,
-                  :delta_x, :delta_y, :printer_name,
-                  :landscape, :nl_sep, :in_file,
+    attr_accessor :width, :height, :label,
+                  :delta_x, :delta_y, :printer,
+                  :landscape, :nlsep, :file,
                   :verbose, :msg
 
     def initialize
-      self.label_width = 28.mm
-      self.label_height = 88.mm
-      self.label_name = nil
+      self.width = 28.mm
+      self.height = 88.mm
+      self.label = nil
       self.delta_x = 0
       self.delta_y = 0
-      self.printer_name = 'dymo'
+      self.printer = 'dymo'
       self.landscape = true
-      self.nl_sep = '++'
-      self.in_file = nil
+      self.nlsep = '++'
+      self.file = nil
       self.verbose = false
       self.msg = nil
     end
@@ -27,15 +27,15 @@ module Labrat
     # Return a hash of the values in this Options object.
     def to_hash
       {
-        label_width: label_width,
-        label_height: label_height,
-        label_name: label_name,
+        width: width,
+        height: height,
+        label: label,
         delta_x: delta_x,
         delta_y: delta_y,
-        printer_name: printer_name,
+        printer: printer,
         landscape: landscape,
-        nl_sep: nl_sep,
-        in_file: in_file,
+        nlsep: nlsep,
+        file: file,
         verbose: verbose,
         msg: msg
       }

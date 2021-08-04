@@ -12,13 +12,13 @@ RSpec.describe ArgParser do
   it 'can parse default options with no args' do
     op = ap.parse([])
     expect(op).to be_instance_of(Options)
-    expect(op.label_width).to be_within(EPS).of(28 * MM)
-    expect(op.label_height).to be_within(EPS).of(88 * MM)
+    expect(op.width).to be_within(EPS).of(28 * MM)
+    expect(op.height).to be_within(EPS).of(88 * MM)
     expect(op.delta_x).to be_within(EPS).of(0 * MM)
     expect(op.delta_y).to be_within(EPS).of(0 * MM)
-    expect(op.printer_name).to eq('dymo')
-    expect(op.nl_sep).to eq('++')
-    expect(op.in_file).to be_nil
+    expect(op.printer).to eq('dymo')
+    expect(op.nlsep).to eq('++')
+    expect(op.file).to be_nil
   end
 
   it 'can produce help' do
@@ -57,21 +57,21 @@ RSpec.describe ArgParser do
   it 'can set the dimensions of the label' do
     # Points
     ops = ap.parse(['-w', '44', '-h', '180.5'])
-    expect(ops.label_width).to be_within(EPS).of(44.0)
-    expect(ops.label_height).to be_within(EPS).of(180.5)
+    expect(ops.width).to be_within(EPS).of(44.0)
+    expect(ops.height).to be_within(EPS).of(180.5)
     # Long options
     ops = ap.parse(['--width=4cm', '--height', '60mm'])
-    expect(ops.label_width).to be_within(EPS).of(40 * MM)
-    expect(ops.label_height).to be_within(EPS).of(60 * MM)
+    expect(ops.width).to be_within(EPS).of(40 * MM)
+    expect(ops.height).to be_within(EPS).of(60 * MM)
     # Short options
     ops = ap.parse(['-w', '0.5in', '-h', '3.4375in'])
-    expect(ops.label_width).to be_within(EPS).of(0.5 * IN)
-    expect(ops.label_height).to be_within(EPS).of(3.4375 * IN)
+    expect(ops.width).to be_within(EPS).of(0.5 * IN)
+    expect(ops.height).to be_within(EPS).of(3.4375 * IN)
   end
 
   it 'can set the name of a label' do
     ops = ap.parse(['--label=dymo30327'])
-    expect(ops.label_name).to eq('dymo30327')
+    expect(ops.label).to eq('dymo30327')
   end
 
   it 'can set the offset dimensions' do
@@ -98,28 +98,28 @@ RSpec.describe ArgParser do
 
   it 'can set the printer name' do
     ops = ap.parse(['--printer=epson55'])
-    expect(ops.printer_name).to eq('epson55')
+    expect(ops.printer).to eq('epson55')
   end
 
   it 'can set the printer name' do
     ops = ap.parse(['--printer=epson55'])
-    expect(ops.printer_name).to eq('epson55')
+    expect(ops.printer).to eq('epson55')
   end
 
   it 'can set the new-line marker' do
     ops = ap.parse(['--nlsep=&&'])
-    expect(ops.nl_sep).to eq('&&')
+    expect(ops.nlsep).to eq('&&')
     ops = ap.parse(['-n', '&&'])
-    expect(ops.nl_sep).to eq('&&')
+    expect(ops.nlsep).to eq('&&')
   end
 
   it 'can set an optional input file' do
     ops = ap.parse(['-f junk.lab'])
-    expect(ops.in_file).to eq('junk.lab')
+    expect(ops.file).to eq('junk.lab')
     ops = ap.parse(['--file junk.lab'])
-    expect(ops.in_file).to eq('junk.lab')
+    expect(ops.file).to eq('junk.lab')
     ops = ap.parse(['--file', '  file with some spaces  	'])
-    expect(ops.in_file).to eq('file with some spaces')
+    expect(ops.file).to eq('file with some spaces')
   end
 
   it 'can set orientation' do
