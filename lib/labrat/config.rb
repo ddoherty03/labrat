@@ -24,24 +24,21 @@ module Labrat
     # 5. System classic config files,
     # 6. System xdg config files for for app_name,
     #
-    # If an environment variable is found pointing to a readable file, the
-    # search for xdg and classic config files is skipped. Any dir_prefix is
-    # pre-pended to search locations for the xdg and classic config file
-    # directories so you can run this on a temporary directory set up for
-    # testing.
-    def self.read_config(app_name,
-                         base: 'config', dir_prefix: '',
-                         xdg: true, :classic: false)
+    # If an environment variable is found, the search for xdg and classic
+    # config files is skipped. Any dir_prefix is pre-pended to search
+    # locations environment, xdg and classic config paths so you can run this
+    # on a temporary directory set up for testing.
+    def self.read(app_name, base: 'config', dir_prefix: '', xdg: true)
       config = {}
       sys_configs = []
       sys_env_name = "#{app_name.upcase}_SYS_CONFIG"
-      if ENV[sys_env_name] && File.readable?(File.expand_path(ENV[sys_env_name]))
-        sys_configs = ENV[sys_env_name]
+      if ENV[sys_env_name]
+        sys_fname = File.join(dir_prefix, File.expand_path(ENV[sys_env_name]))
+        sys_configs << sys_fname if File.readable?(sys_fname)
       else
         if xdg
           sys_configs += find_xdg_sys_config_files(app_name, base, dir_prefix)
-        end
-        if classic
+        else
           sys_configs += find_classic_sys_config_files(app_name, base, dir_prefix)
         end
       end
@@ -49,40 +46,42 @@ module Labrat
 
       usr_configs = []
       usr_env_name = "#{app_name.upcase}_CONFIG"
-      if ENV[usr_env_name] && File.readable?(File.expand_path(ENV[usr_env_name]))
-        usr_configs = ENV[usr_env_name]
+      if ENV[usr_env_name]
+        usr_fname = File.join(dir_prefix, File.expand_path(ENV[usr_env_name]))
+        usr_configs << usr_fname if File.readable?(usr_fname)
       else
         if xdg
-          usr_configs += find_xdg_usr_config_files(app_name, base, dir_prefix)
-        end
-        if classic
-          usr_configs += find_classic_usr_config_files(app_name, base, dir_prefix)
+          usr_configs += find_xdg_user_config_files(app_name, base, dir_prefix)
+        else
+          usr_configs += find_classic_user_config_files(app_name, base, dir_prefix)
         end
       end
       merge_configs_from(usr_configs, config)
     end
 
     # Return the absolute path names of all XDG system config files for
-    # app_name with the basename variants of base. Prefix the search locations
-    # with dir_prefix if given.
-    def find_xdg_sys_config_files(app_name, base, dir_prefix)
+    # app_name with the basename variants of base. Return the lowest priority
+    # files first, highest last. Prefix the search locations with dir_prefix
+    # if given.
+    def self.find_xdg_sys_config_files(app_name, base, dir_prefix)
       configs = []
-      xdg_search_dirs = ENV['XDG_CONFIG_DIRS']&.split(':') || ['/etc/xdg']
+      xdg_search_dirs = ENV['XDG_CONFIG_DIRS']&.split(':').reverse || ['/etc/xdg']
       xdg_search_dirs.each do |dir|
-        dir = File.expand_path(dir)
+        dir = File.expand_path(File.join(dir, app_name))
         dir = File.join(dir_prefix, dir) unless dir_prefix.nil? || dir_prefix.strip.empty?
         base = app_name if base.nil? || base.strip.empty?
-        base_candidates = ["#{base}" "#{base}.yml", "#{base}.yaml", "#{base.cfg}", "#{base}.config"]
-        configs += base_candidates.find { |b| File.readable?(File.join(dir, b)) }
+        base_candidates = ["#{base}", "#{base}.yml", "#{base}.yaml", "#{base}.cfg", "#{base}.config"]
+        config_fname = base_candidates.find { |b| File.readable?(File.join(dir, b)) }
+        configs << File.join(dir, config_fname) if config_fname
       end
       configs
     end
 
     # Return the absolute path names of all "classic" system config files for
-    # app_name with the basename variants of base. Return the highest priority
-    # files first, lowest last.  Prefix the search locations with dir_prefix if
-    # given.
-    def find_classic_sys_config_files(app_name, base, dir_prefix)
+    # app_name with the basename variants of base. Return the lowest priority
+    # files first, highest last.  Prefix the search locations with dir_prefix
+    # if given.
+    def self.find_classic_sys_config_files(app_name, base, dir_prefix)
       dir_prefix ||= ''
       configs = []
       env_config = ENV["#{app_name.upcase}_SYS_CONFIG"]
@@ -98,36 +97,38 @@ module Labrat
           base = app_name if base.nil? || base.strip.empty?
           base_candidates = ["#{base}" "#{base}.yml", "#{base}.yaml", "#{base.cfg}", "#{base}.config"]
           config = base_candidates.find { |b| File.readable?(File.join(dir, b)) }
-          configs = [ config ] if config
+          configs = [ File.join(dir, config) ] if config
         end
       end
       configs
     end
 
     # Return the absolute path names of all XDG user config files for app_name
-    # with the basename variants of base. Prefix the search locations with
-    # dir_prefix if given.
-    def find_xdg_user_config_files(app_name, base, dir_prefix)
+    # with the basename variants of base. Return the lowest priority files
+    # first, highest last. Prefix the search locations with dir_prefix if
+    # given.
+    def self.find_xdg_user_config_files(app_name, base, dir_prefix)
       dir_prefix ||= ''
       base ||= (base&.strip || app_name)
       configs = []
-      xdg_search_dirs = ENV['XDG_CONFIG_HOME']&.split(':') || ['~/.config']
+      xdg_search_dirs = ENV['XDG_CONFIG_HOME']&.split(':')&.reverse || ['~/.config']
       xdg_search_dirs.each do |dir|
         dir = File.expand_path(File.join(dir, app_name))
         dir = File.join(dir_prefix, dir) unless dir_prefix.strip.empty?
         next unless Dir.exist?(dir)
 
-        base_candidates = ["#{base}" "#{base}.yml", "#{base}.yaml", "#{base.cfg}", "#{base}.config"]
-        configs += base_candidates.find { |b| File.readable?(File.join(dir, b)) }
+        base_candidates = ["#{base}", "#{base}.yml", "#{base}.yaml", "#{base}.cfg", "#{base}.config"]
+        config = base_candidates.find { |b| File.readable?(File.join(dir, b)) }
+        configs = [ File.join(dir, config) ] if config
       end
       configs
     end
 
     # Return the absolute path names of all "classic" system config files for
-    # app_name with the basename variants of base. Return the highest priority
-    # files first, lowest last.  Prefix the search locations with dir_prefix if
+    # app_name with the basename variants of base. Return the lowest priority
+    # files first, highest last.  Prefix the search locations with dir_prefix if
     # given.
-    def find_classic_user_config_files(app_name, base, dir_prefix)
+    def self.find_classic_user_config_files(app_name, base, dir_prefix)
       dir_prefix ||= ''
       base ||= (base&.strip || app_name)
       base_candidates = ["#{base}" "#{base}.yml", "#{base}.yaml", "#{base.cfg}", "#{base}.config"]
@@ -144,42 +145,24 @@ module Labrat
       configs
     end
 
-    # Given the name of an environment variable for colon-separated config
-    # paths and a default directory to use if the environment variable is not
-    # set, return an array of directories within those having a subdirectory
-    # with the name app_dir_name in which to search for config files.
-    def self.find_config_dirs(env_path_var, default_dir, app_dir_name = 'labrat')
-      env = ENV[env_path_var]
-      default_dir = File.join(File.expand_path(default_dir), app_dir_name)
-      if env
-        env.split(':').select { |d| Dir.exist?(File.join(d, app_dir_name)) }
-      elsif Dir.exist?(default_dir)
-        [default_dir]
-      else
-        []
-      end
-    end
-
     # Merge the settings from config files with the name config_name from the
     # given directories, dirs, into the given Options object.  Per the XDG
     # specification, directories listed first are the most important, so we
     # merge them in reverse order so that earlier-listed config directories
     # override later-listed ones.
-    def self.merge_configs_from(dirs = [], config_name, into: Options.new)
-      dirs.reverse.each do |dir|
-        config_file = File.join(dir, config_name)
-        if File.readable?(config_file)
-          yml = File.read(config_file)
-          merge_config_string(yml, into)
+    def self.merge_configs_from(files = [], hash)
+      files.each do |f|
+        if File.readable?(f)
+          yml = File.read(f)
+          hash.merge!(YAML.load(yml))
         end
       end
-      into
+      hash
     end
 
     # Merge the given YAML string into the given Options object and return it.
-    def self.merge_config_string(str, op)
-      hsh = YAML.load(str)
-      op.merge_hash
+    def self.merge_config_string(str, hsh)
+      YAML.load(str).merge(hsh)
     end
   end
 end
