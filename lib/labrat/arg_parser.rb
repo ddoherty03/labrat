@@ -20,6 +20,14 @@ module Labrat
       options
     end
 
+    def from_hash(hsh = {})
+      args = []
+      hsh.each_pair do |k, v|
+        args << "--#{k}=#{v}"
+      end
+      parse(args)
+    end
+
     def define_options
       parser.banner = "Usage: labrat [options]"
       parser.separator ""
