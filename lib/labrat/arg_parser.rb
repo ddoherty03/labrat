@@ -56,7 +56,8 @@ module Labrat
     end
 
     def parse_dimension(str, where = '')
-      unless (match = str.match(/\A\s*(?<measure>[0-9.]+)\s*(?<unit>[A-Za-z]*)\s*\z/))
+      unless (match = str.match(/\A\s*(?<measure>[-+]?[0-9.]+)\s*(?<unit>[A-Za-z]*)\s*\z/))
+        binding.break
         raise Labrat::DimensionError, "illegal #{where} dimension: '#{str}'"
       end
 
