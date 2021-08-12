@@ -1,7 +1,3 @@
-MM = 2.83464566929
-IN = 72.0
-EPS = 0.000001
-
 RSpec.describe ArgParser do
   let(:ap) { ArgParser.new }
 

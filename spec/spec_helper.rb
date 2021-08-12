@@ -18,3 +18,9 @@ RSpec.configure do |config|
 end
 
 include Labrat
+
+# Conversion factors from given measure to Adobe points
+MM = 2.83464566929
+CM = 28.3464566929
+IN = 72.0
+EPS = 0.000001
