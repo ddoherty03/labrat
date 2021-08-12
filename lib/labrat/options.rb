@@ -45,7 +45,7 @@ module Labrat
     # hsh into self.  Ignore any keys in hsh not corresponding to a setter for
     # an Options object.
     def merge_hash!(hsh)
-      new_hash = to_hash.merger(hsh)
+      new_hash = to_hash.merge(hsh)
       new_hash.each_pair do |k, val|
         setter = "#{k}=".to_sym
         next unless respond_to?(setter)
