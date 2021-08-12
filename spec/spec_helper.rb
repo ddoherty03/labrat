@@ -1,7 +1,8 @@
 # frozen_string_literal: true
 
 require "labrat"
-require 'pry'
+
+# require 'pry'
 # require 'pry-exception_explorer'
 require 'debug'
 
