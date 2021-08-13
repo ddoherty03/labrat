@@ -27,6 +27,8 @@ RSpec.describe ArgParser do
     expect(help).to include('--printer')
     expect(help).to include('--nlsep')
     expect(help).to include('--file')
+    expect(help).to include('--print-command')
+    expect(help).to include('--view-command')
     expect(help).to include('--[no-]landscape')
     expect(help).to include('--[no-]portrait')
     expect(help).to include('--[no-]verbose')
@@ -116,6 +118,31 @@ RSpec.describe ArgParser do
     expect(ops.file).to eq('junk.lab')
     ops = ap.parse(['--file', '  file with some spaces  	'])
     expect(ops.file).to eq('file with some spaces')
+  end
+
+  it 'can set an optional output PDF file' do
+    ops = ap.parse(['-ojunk'])
+    expect(ops.out_file).to eq('junk.pdf')
+    ops = ap.parse(['--out-file junk'])
+    expect(ops.out_file).to eq('junk.pdf')
+    ops = ap.parse(['--out-file=junk.PDF'])
+    expect(ops.out_file).to eq('junk.PDF')
+    ops = ap.parse(['--out-file', '  file with some spaces  	'])
+    expect(ops.out_file).to eq('file with some spaces.pdf')
+  end
+
+  it 'can set an optional print command' do
+    ops = ap.parse(["-%lppr -P %p %o"])
+    expect(ops.print_command).to eq('lppr -P %p %o')
+    ops = ap.parse(["--print-command=lppr -P %p %o"])
+    expect(ops.print_command).to eq('lppr -P %p %o')
+  end
+
+  it 'can set an optional view command' do
+    ops = ap.parse(["-:snapview %o"])
+    expect(ops.view_command).to eq('snapview %o')
+    ops = ap.parse(["--view-command=snapview %o"])
+    expect(ops.view_command).to eq('snapview %o')
   end
 
   it 'can set orientation' do

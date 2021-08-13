@@ -57,6 +57,8 @@ module Labrat
       printer_name_option
       nl_sep_option
       in_file_option
+      out_file_option
+      print_and_view_options
       landscape_option
       portrait_option
       verbose_option
@@ -165,6 +167,32 @@ module Labrat
       parser.on("-fFILENAME", "--file=FILENAME",
                 "Read labels from given file instead of command-line") do |file|
         options.file = file.strip
+      end
+    end
+
+    # For batch printing of labels, the user might want to just feed a file of
+    # labels to be printed.  This option allows a file name to be give.
+    def out_file_option
+      parser.on("-oFILENAME", "--out-file=FILENAME",
+                "Put generated label in the given file") do |file|
+        file = file.strip
+        unless file =~ /\.pdf\z/i
+          file = "#{file}.pdf"
+        end
+        options.out_file = file
+      end
+    end
+
+    def print_and_view_options
+      # NB: the % is supposed to remind me of the rollers on a printer
+      parser.on("-%PRINTCMD", "--print-command=PRINTCMD",
+                "Command to use for printing with %p for printer name; %o for label file name") do |cmd|
+        options.print_command = cmd.strip
+      end
+      # NB: the : is supposed to remind me of two eyeballs viewing the PDF
+      parser.on("-:VIEWCMD", "--view-command=VIEWCMD",
+                "Command to use for viewing with %o for label file name") do |cmd|
+        options.view_command = cmd.strip
       end
     end
 

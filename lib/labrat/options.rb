@@ -8,7 +8,8 @@ module Labrat
   class Options
     attr_accessor :width, :height, :label,
                   :delta_x, :delta_y, :printer,
-                  :landscape, :nlsep, :file,
+                  :landscape, :nlsep, :file, :out_file,
+                  :print_command, :view_command,
                   :verbose, :msg
 
     def initialize
@@ -21,6 +22,9 @@ module Labrat
       self.landscape = true
       self.nlsep = '++'
       self.file = nil
+      self.out_file = './label.pdf'
+      self.print_command = 'lpr -P %p %o'
+      self.view_command = 'zathura %o'
       self.verbose = false
       self.msg = nil
     end
@@ -42,6 +46,9 @@ module Labrat
         landscape: landscape,
         nlsep: nlsep,
         file: file,
+        out_file: out_file,
+        print_command: print_command,
+        view_command: view_command,
         verbose: verbose,
         msg: msg,
       }
