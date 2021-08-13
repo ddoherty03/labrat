@@ -51,12 +51,12 @@ module Labrat
         usr_configs << usr_fname if File.readable?(usr_fname)
       else
         if xdg
-          usr_configs += find_xdg_user_config_files(app_name, base, dir_prefix)
+          usr_configs << find_xdg_user_config_file(app_name, base, dir_prefix)
         else
-          usr_configs += find_classic_user_config_files(app_name, base, dir_prefix)
+          usr_configs << find_classic_user_config_file(app_name, base, dir_prefix)
         end
       end
-      merge_configs_from(usr_configs, config)
+      merge_configs_from((sys_configs + usr_configs).compact, config)
     end
 
     # Return the absolute path names of all XDG system config files for
