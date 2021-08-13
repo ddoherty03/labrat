@@ -42,7 +42,6 @@ module Labrat
           sys_configs += find_classic_sys_config_files(app_name, base, dir_prefix)
         end
       end
-      config = merge_configs_from(sys_configs, config)
 
       usr_configs = []
       usr_env_name = "#{app_name.upcase}_CONFIG"
