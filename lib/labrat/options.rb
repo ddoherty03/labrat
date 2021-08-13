@@ -9,7 +9,7 @@ module Labrat
     attr_accessor :width, :height, :label,
                   :delta_x, :delta_y, :printer,
                   :landscape, :nlsep, :file, :out_file,
-                  :print_command, :view_command,
+                  :print_command, :view_command, :view,
                   :verbose, :msg
 
     def initialize
@@ -49,6 +49,7 @@ module Labrat
         out_file: out_file,
         print_command: print_command,
         view_command: view_command,
+        view: false,
         verbose: verbose,
         msg: msg,
       }

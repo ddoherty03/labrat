@@ -58,7 +58,8 @@ module Labrat
       nl_sep_option
       in_file_option
       out_file_option
-      print_and_view_options
+      print_and_view_command_options
+      view_option
       landscape_option
       portrait_option
       verbose_option
@@ -183,7 +184,7 @@ module Labrat
       end
     end
 
-    def print_and_view_options
+    def print_and_view_command_options
       # NB: the % is supposed to remind me of the rollers on a printer
       parser.on("-%PRINTCMD", "--print-command=PRINTCMD",
                 "Command to use for printing with %p for printer name; %o for label file name") do |cmd|
@@ -213,6 +214,14 @@ module Labrat
                 "Print label in portrait (default false), i.e., left-to-right",
                 "top-to-bottom as the label in printed. Negated landscape") do |p|
         options.landscape = !p
+      end
+    end
+
+    # Whether to preview with the view command instead of print
+    def view_option
+      # Boolean switch.
+      parser.on("-V", "--[no-]view", "View rather than print") do |v|
+        options.view = v
       end
     end
 

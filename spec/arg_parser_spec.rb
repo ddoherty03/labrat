@@ -145,6 +145,15 @@ RSpec.describe ArgParser do
     expect(ops.view_command).to eq('snapview %o')
   end
 
+  it 'can ask to view rather than print' do
+    ops = ap.parse(["-V"])
+    expect(ops.view).to be true
+    ops = ap.parse(["--view"])
+    expect(ops.view).to be true
+    ops = ap.parse(["--no-view"])
+    expect(ops.view).to be false
+  end
+
   it 'can set orientation' do
     ops = ap.parse(['-L'])
     expect(ops.landscape).to be true
