@@ -1,4 +1,10 @@
+# frozen_string_literal: true
+
 module Labrat
+  # The Options class is a glorified Hash, a container for the options
+  # settings gathered from the defaults, the config files, the command line,
+  # and perhaps environment.  An Options instance can be handed off to the
+  # label-printing objects to inform its formatting, printing, etc.
   class Options
     attr_accessor :width, :height, :label,
                   :delta_x, :delta_y, :printer,
@@ -37,7 +43,7 @@ module Labrat
         nlsep: nlsep,
         file: file,
         verbose: verbose,
-        msg: msg
+        msg: msg,
       }
     end
 

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Labrat
   class Label
     attr_reader :lines, :width, :height, :landscape,

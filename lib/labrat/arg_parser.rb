@@ -1,6 +1,11 @@
-require_relative '../labrat'
+# frozen_string_literal: true
 
 module Labrat
+  # An ArgParser object implements parsing of command-line arguments and
+  # gathering them into an Options object.  By using the from_hash method, you
+  # can get an ArgParser object to also treat a Hash as if it were a set of
+  # command-line arguments so that config files, converted to a Hash can also
+  # be used with an ArgParser.
   class ArgParser
     attr_reader :parser, :args, :options
 
@@ -10,7 +15,9 @@ module Labrat
       define_options
     end
 
-    # Return an Options object instance describing the options.
+    # Return an Options object instance describing the options represented by
+    # an Array of strings given by args.  Throw an exception for errors
+    # encountered parsing the args.
     def parse(args)
       options.msg = nil
       parser.parse!(args)
@@ -20,6 +27,9 @@ module Labrat
       options
     end
 
+    # Convert the given Hash into a Array of Strings that represent an
+    # equivalent set of command-line args and pass them into the #parse
+    # method.
     def from_hash(hsh = {})
       args = []
       hsh.each_pair do |k, v|
@@ -28,6 +38,9 @@ module Labrat
       parse(args)
     end
 
+    private
+
+    # Define the OptionParser rules for acceptable options in Labrat.
     def define_options
       parser.banner = "Usage: labrat [options]"
       parser.separator ""
@@ -63,9 +76,11 @@ module Labrat
       end
     end
 
+    # Use the facilities of 'prawn/measurement_extensions' to convert
+    # dimensions given in pt, mm, cm, dm, m, in, ft, yd into Adobe points, or
+    # "big points" in TeX jargon.
     def parse_dimension(str, where = '')
       unless (match = str.match(/\A\s*(?<measure>[-+]?[0-9.]+)\s*(?<unit>[A-Za-z]*)\s*\z/))
-        binding.break
         raise Labrat::DimensionError, "illegal #{where} dimension: '#{str}'"
       end
 
@@ -75,7 +90,7 @@ module Labrat
         meas = match[:measure].to_f
         u_meth = match[:unit].to_sym
         unless meas.respond_to?(u_meth)
-          msg = "unknown #{where} unit: '#{match[:unit]}'\n"
+          msg = "unknown #{where} unit: '#{match[:unit]}'\n"\
           "  valid units are: pt, mm, cm, dm, m, in, ft, yd"
           raise Labrat::DimensionError, msg
         end
@@ -84,6 +99,8 @@ module Labrat
       end
     end
 
+    # Define options for specifying the dimensions of the label to be printed
+    # on.
     def label_dimension_options
       # Specifies an optional option argument
       parser.on("-wDIMENSION", "--width DIMENSION",
@@ -98,6 +115,9 @@ module Labrat
       end
     end
 
+    # Define a label name.  Perhaps the config files could contain a database
+    # of common labels with their dimensions, so that --width and --height
+    # need not be specified.
     def label_name_option
       parser.on("-lNAME", "--label=NAME",
                 "Name of the label to print on") do |name|
@@ -105,6 +125,10 @@ module Labrat
       end
     end
 
+    # Even with accurate dimensions for labels, a combination of drivers, PDF
+    # settings, and perhaps a particular printer may result in text not
+    # sitting precisely where the user intends on the printed label.  These
+    # options tweak the PDF settings to compensate for any such anomalies.
     def delta_options
       parser.on('-xDIMENSION', "--delta_x=DIMENSION",
                 "Left-right adjustment as label text is oriented") do |x|
@@ -116,6 +140,7 @@ module Labrat
       end
     end
 
+    # The name of the printer to send the job to.
     def printer_name_option
       parser.on("-pNAME", "--printer=NAME",
                 "Name of the label printer to print on") do |name|
@@ -123,6 +148,10 @@ module Labrat
       end
     end
 
+    # On a command-line, specifying where a line-break should occur is not
+    # convenient when shell interpretation and quoting rules are taken into
+    # account.  This allows the user to use some distinctive marker ('++' by
+    # default) to designate where a line break should occur.
     def nl_sep_option
       parser.on("-nSEP", "--nlsep=SEPARATOR",
                 "Specify text to be interpreted as a line-break (default '++')") do |nl|
@@ -130,6 +159,8 @@ module Labrat
       end
     end
 
+    # For batch printing of labels, the user might want to just feed a file of
+    # labels to be printed.  This option allows a file name to be give.
     def in_file_option
       parser.on("-fFILENAME", "--file=FILENAME",
                 "Read labels from given file instead of command-line") do |file|
@@ -137,6 +168,9 @@ module Labrat
       end
     end
 
+    # Whether the label ought to be printed in landscape orientation, that is,
+    # turned 90 degrees clockwise from the orientation the label has coming
+    # out of the printer.
     def landscape_option
       parser.on("-L", "--[no-]landscape",
                 "Print label in landscape (default true), i.e., with the left of",
@@ -145,6 +179,7 @@ module Labrat
       end
     end
 
+    # The inverse of landscape, i.e., no rotation is done.
     def portrait_option
       parser.on("-P", "--[no-]portrait",
                 "Print label in portrait (default false), i.e., left-to-right",
@@ -153,6 +188,7 @@ module Labrat
       end
     end
 
+    # Whether we ought to be blabby about what we're up to.
     def verbose_option
       # Boolean switch.
       parser.on("-v", "--[no-]verbose", "Run verbosely") do |v|
