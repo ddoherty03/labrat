@@ -8,8 +8,8 @@ RSpec.describe ArgParser do
   it 'can parse default options with no args' do
     op = ap.parse([])
     expect(op).to be_instance_of(Options)
-    expect(op.width).to be_within(EPS).of(28 * MM)
-    expect(op.height).to be_within(EPS).of(88 * MM)
+    expect(op.width).to be_within(EPS).of(24 * MM)
+    expect(op.height).to be_within(EPS).of(83 * MM)
     expect(op.delta_x).to be_within(EPS).of(0 * MM)
     expect(op.delta_y).to be_within(EPS).of(0 * MM)
     expect(op.printer).to eq('dymo')
