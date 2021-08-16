@@ -42,15 +42,17 @@ module Labrat
 
     # Define the OptionParser rules for acceptable options in Labrat.
     def define_options
-      parser.banner = "Usage: labrat [options]"
+      parser.banner = "Usage: labrat [options] <label-text>"
+      parser.separator ""
+      parser.separator "Print or view (with -V) a label with the given <label-text>."
+      parser.separator "All non-option arguments are used for the text with a special"
+      parser.separator "marker ('++' by default) indicating a line-break."
       parser.separator ""
       parser.separator "Specific options:"
       parser.separator "  Note: for DIMENSION, valid units are: " +
                        "pt, mm, cm, dm, m, in, ft, yd"
       parser.separator "    With no units, pt (points) assumed"
-      parser.separator ""
 
-      # add additional options
       label_dimension_options
       label_name_option
       align_options
@@ -78,7 +80,7 @@ module Labrat
       end
       # Another typical switch to print the version.
       parser.on_tail("--version", "Show version") do
-        options.msg = VERSION
+        options.msg = "labrat version #{VERSION}"
       end
     end
 
