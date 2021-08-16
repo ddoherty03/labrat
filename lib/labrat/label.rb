@@ -22,15 +22,15 @@ module Labrat
       # the convention that the margins are named assuming a portrait
       # orientation and swap them here so that when Prawn swaps them again,
       if layout == :portrait
-        tm = 0.mm
-        bm = 0.mm
-        lm = 4.5.mm
-        rm = 4.5.mm
+        tm = ops.top_margin
+        bm = ops.bottom_margin
+        lm = ops.left_margin
+        rm = ops.right_margin
       else
-        lm = 0.mm
-        rm = 0.mm
-        tm = 4.5.mm
-        bm = 4.5.mm
+        lm = ops.top_margin
+        rm = ops.bottom_margin
+        tm = ops.left_margin
+        bm = ops.right_margin
       end
 
       Prawn::Document.generate(ops.out_file, page_size: [ops.width, ops.height],

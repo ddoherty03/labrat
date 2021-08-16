@@ -54,6 +54,7 @@ module Labrat
       label_dimension_options
       label_name_option
       delta_options
+      margin_options
       printer_name_option
       nl_sep_option
       in_file_option
@@ -128,18 +129,54 @@ module Labrat
       end
     end
 
+    # Set the margins between the sides of the label and the bounding box to
+    # hold the text of the label.  Left, right, top, and bottom are named
+    # assuming a portrait orientation, that is the orientation the label has
+    # as it comes out of the printer.
+    def margin_options
+      parser.on("--right-margin=DIMENSION",
+                "Distance from right side of label (in portrait) to print area") do |x|
+        options.right_margin = parse_dimension(x, 'right-margin')
+      end
+      parser.on("--left-margin=DIMENSION",
+                "Distance from left side of label (in portrait) to print area") do |x|
+        options.left_margin = parse_dimension(x, 'left-margin')
+      end
+      parser.on("--top-margin=DIMENSION",
+                "Distance from top side of label (in portrait) to print area") do |x|
+        options.top_margin = parse_dimension(x, 'top-margin')
+      end
+      parser.on("--bottom-margin=DIMENSION",
+                "Distance from bottom side of label (in portrait) to print area") do |x|
+        options.bottom_margin = parse_dimension(x, 'bottom-margin')
+      end
+      parser.on("--h-margin=DIMENSION",
+                "Distance from left and right sides of label (in portrait) to print area") do |x|
+        options.left_margin = options.right_margin = parse_dimension(x, 'h-margin')
+      end
+      parser.on("--v-margin=DIMENSION",
+                "Distance from top and bottom sides of label (in portrait) to print area") do |x|
+        options.top_margin = options.bottom_margin = parse_dimension(x, 'v-margin')
+      end
+      parser.on("--margin=DIMENSION",
+                "Distance from all sides of label (in portrait) to print area") do |x|
+        options.left_margin = options.right_margin =
+          options.top_margin = options.bottom_margin = parse_dimension(x, 'margin')
+      end
+    end
+
     # Even with accurate dimensions for labels, a combination of drivers, PDF
     # settings, and perhaps a particular printer may result in text not
     # sitting precisely where the user intends on the printed label.  These
     # options tweak the PDF settings to compensate for any such anomalies.
     def delta_options
-      parser.on('-xDIMENSION', "--delta_x=DIMENSION",
+      parser.on('-xDIMENSION', "--delta-x=DIMENSION",
                 "Left-right adjustment as label text is oriented") do |x|
-        options.delta_x = parse_dimension(x, 'delta_x')
+        options.delta_x = parse_dimension(x, 'delta-x')
       end
-      parser.on('-yDIMENSION', "--delta_y=DIMENSION",
+      parser.on('-yDIMENSION', "--delta-y=DIMENSION",
                 "Up-down adjustment as label text is oriented") do |y|
-        options.delta_y = parse_dimension(y, 'delta_y')
+        options.delta_y = parse_dimension(y, 'delta-y')
       end
     end
 

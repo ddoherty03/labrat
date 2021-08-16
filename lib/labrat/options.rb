@@ -7,17 +7,22 @@ module Labrat
   # label-printing objects to inform its formatting, printing, etc.
   class Options
     attr_accessor :width, :height, :label,
+                  :left_margin, :right_margin, :top_margin, :bottom_margin,
                   :delta_x, :delta_y, :printer,
                   :landscape, :nlsep, :file, :out_file,
                   :print_command, :view_command, :view,
                   :verbose, :msg
 
     def initialize
-      self.width = 28.mm
-      self.height = 88.mm
+      self.width = 24.mm
+      self.height = 83.mm
       self.label = nil
       self.delta_x = 0
       self.delta_y = 0
+      self.left_margin = 4.5.mm
+      self.right_margin = 4.5.mm
+      self.top_margin = 0
+      self.bottom_margin = 0
       self.printer = 'dymo'
       self.landscape = true
       self.nlsep = '++'
@@ -40,6 +45,10 @@ module Labrat
         width: width,
         height: height,
         label: label,
+        left_margin: left_margin,
+        right_margin: right_margin,
+        top_margin: top_margin,
+        bottom_margin: bottom_margin,
         delta_x: delta_x,
         delta_y: delta_y,
         printer: printer,
