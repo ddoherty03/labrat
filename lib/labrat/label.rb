@@ -53,11 +53,11 @@ module Labrat
         box_y = box_ht + ops.delta_y
         if ops.verbose
           warn "orientation: #{layout}"
-          warn "page_size = [#{ops.width},#{ops.height}]"
-          warn "[lm, rm] = [#{lm},#{rm}]"
-          warn "[tm, bm] = [#{tm},#{bm}]"
-          warn "[box_x, box_y] = [#{box_x},#{box_y}]"
-          warn "[box_wd, box_ht] = [#{box_wd},#{box_ht}]"
+          warn "page_size = [#{ops.width}pt,#{ops.height}pt]"
+          warn "[lm, rm] = [#{lm}pt,#{rm}pt]"
+          warn "[tm, bm] = [#{tm}pt,#{bm}pt]"
+          warn "[box_x, box_y] = [#{box_x}pt,#{box_y}pt]"
+          warn "[box_wd, box_ht] = [#{box_wd}pt,#{box_ht}pt]"
         end
         pdf.bounding_box([box_x, box_y], width: box_wd, height: box_ht) do
           pdf.stroke_bounds
