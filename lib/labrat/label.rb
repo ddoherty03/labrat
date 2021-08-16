@@ -1,59 +1,81 @@
 # frozen_string_literal: true
 
+require 'pry'
+
 module Labrat
   class Label
-    attr_reader :lines, :width, :height, :landscape,
-    def initialize(lines: [], )
+    attr_reader :text, :ops
+
+    def initialize(text, ops)
+      @ops = ops
+      @text = text.gsub(ops.nlsep, "\n")
     end
-# The text is captured in a array of all non-option command-line arguments,
-# but we join the components with a space.  Use \\ to indicate a line break.
-label_text = ARGV.join.gsub('\\', "\n")
 
-# Adjustments appropriate for lpr printing to dymo 330.  Should make these
-# command-line options.
-#
-# I shift the bounding box placement location to the left and down from the
-# location used when printing from a viewer such as zathura.  This is to
-# compensate for the lpr program's tendency to shift the label to the right
-# and up from where it appears when viewed with a pdf viewer such as zathura,
-# etc.  I didn't notice any difference after setting the x adjustment to less
-# than -2.5mm: setting it to -3.5mm seemed not to make any difference in the
-# position of the text within the label.
-#
-# Note that the x and y axis are based on landscape orientation, i.e., rotated
-# 90 degrees counterclockwise from the orientation coming out of the printer.
-# So x is the wide dimension of the label (left and right as read) and y is
-# the short dimension (up and down as read).
-#
-# Yet, using lpr is better than printing from a viewer because it allows me to
-# set the destination printer on the command line, requires no mouse
-# interaction, and does not leave a window open that I have to close.
-adjust_x = -2.5.mm
-adjust_y = -2.15.mm
+    def generate
+      layout = ops.landscape ? :landscape : :portrait
+      # The default margin is 0.5in, way too big for labels, so it is
+      # important to set these here.  The margins' designation as "top,"
+      # "left," "bottom," and "right" take into account the page layout.  That
+      # is, the left margin is on the left in both portrait and landscape
+      # orientations.  But I want the user to be able to set the margins
+      # according to the label type, independent of the orientation.  I adopt
+      # the convention that the margins are named assuming a portrait
+      # orientation and swap them here so that when Prawn swaps them again,
+      if layout == :portrait
+        tm = 0.mm
+        bm = 0.mm
+        lm = 4.5.mm
+        rm = 4.5.mm
+      else
+        lm = 0.mm
+        rm = 0.mm
+        tm = 4.5.mm
+        bm = 4.5.mm
+      end
 
-# The big breakthrough in getting reasonable output for 30327 File Folder
-# Labels is to set the page size to include the wastage portion of the label,
-# not just the peelable label part.  With the label oriented with the long
-# dimension vertical and the small dimension horizontal (just as it comes out
-# of the printer), I measured the "width" at 28mm; the "height" is 87mm as
-# advertised on the box since there is no wastage in that direction.  That
-# accounts for the page_size dimensions used here.
-Prawn::Document.generate('label.pdf', page_size: [28.mm, 88.mm],
-                         margin: 0.mm,
-                         page_layout: :landscape) do
-  # NB: With the page_layout set to landscape, within this block, the
-  # x-coordinates now represent the axis along the wide side of the label, and
-  # the y-axis along the short side, just as you would read it.
-  bounding_box([1.mm + adjust_x, 21.15.mm + adjust_y], width: 85.mm, height: 12.25.mm) do
-  # bounding_box([-1.5.mm, 19.0.mm], width: 85.mm, height: 12.25.mm) do
-    # stroke_bounds
-    font 'Helvetica', style: :bold, size: 12
-    text label_text, align: :center, valign: :center
+      Prawn::Document.generate(ops.out_file, page_size: [ops.width, ops.height],
+                               left_margin: lm, right_margin: rm,
+                               top_margin: tm, bottom_margin: bm,
+                               page_layout: layout) do |pdf|
+        # We are setting up the box within which the text of the label will be
+        # printed.  Its width should be reduced by the side margins and its
+        # height by the top and bottom margins.  Since the use specifies label
+        # "width" and "height" using the portrait layout, we need to swap
+        # those if a landscape orientation is used.
+        box_wd = (ops.landscape ? ops.height : ops.width) - lm - rm
+        box_ht = (ops.landscape ? ops.width : ops.height) - tm - bm
+        # The first parameter to bounding_box is the top-left corner of the
+        # bounding box relative to the margin box set up for the page. The
+        # user can push this around with delta_x and delta_y (within the
+        # limits of the printer) if the peculiarities of the printer require
+        # it.
+        box_x = 0.mm + ops.delta_x
+        box_y = box_ht + ops.delta_y
+        if ops.verbose
+          warn "orientation: #{layout}"
+          warn "page_size = [#{ops.width},#{ops.height}]"
+          warn "[lm, rm] = [#{lm},#{rm}]"
+          warn "[tm, bm] = [#{tm},#{bm}]"
+          warn "[box_x, box_y] = [#{box_x},#{box_y}]"
+          warn "[box_wd, box_ht] = [#{box_wd},#{box_ht}]"
+        end
+        pdf.bounding_box([box_x, box_y], width: box_wd, height: box_ht) do
+          pdf.stroke_bounds
+          pdf.font 'Helvetica', style: :bold, size: 12
+          pdf.text text, align: :center, valign: :center
+        end
+      end
+      self
     end
-end
 
-# system("zathura label.pdf &")
-# system("lpr -P dymo label.pdf &")
+    def print
+      cmd = ops.print_command.gsub('%p', ops.printer).gsub('%o', ops.out_file)
+      system("#{cmd} &")
+    end
 
+    def view
+      cmd = ops.view_command.gsub('%o', ops.out_file)
+      system("#{cmd} &")
+    end
   end
 end
