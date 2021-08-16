@@ -55,6 +55,7 @@ module Labrat
       label_name_option
       delta_options
       margin_options
+      font_options
       printer_name_option
       nl_sep_option
       in_file_option
@@ -162,6 +163,22 @@ module Labrat
                 "Distance from all sides of label (in portrait) to print area") do |x|
         options.left_margin = options.right_margin =
           options.top_margin = options.bottom_margin = parse_dimension(x, 'margin')
+      end
+    end
+
+    # Set the name, size, and style of font.
+    def font_options
+      parser.on("--font-name=NAME",
+                "Name of font to use (default Helvetica)") do |nm|
+        options.font_name = nm
+      end
+      parser.on("--font-size=POINTS",
+                "Size of font to use in points (default 12)") do |pt|
+        options.font_size = pt
+      end
+      parser.on("--font-style=[normal|bold|italic|bold-italic]",
+                "Style of font to use for text (default normal)") do |sty|
+        options.font_style = sty
       end
     end
 

@@ -8,7 +8,8 @@ module Labrat
   class Options
     attr_accessor :width, :height, :label,
                   :left_margin, :right_margin, :top_margin, :bottom_margin,
-                  :delta_x, :delta_y, :printer,
+                  :delta_x, :delta_y,
+                  :font_name, :font_style, :font_size, :printer,
                   :landscape, :nlsep, :file, :out_file,
                   :print_command, :view_command, :view,
                   :verbose, :msg
@@ -17,12 +18,15 @@ module Labrat
       self.width = 24.mm
       self.height = 83.mm
       self.label = nil
-      self.delta_x = 0
-      self.delta_y = 0
       self.left_margin = 4.5.mm
       self.right_margin = 4.5.mm
       self.top_margin = 0
       self.bottom_margin = 0
+      self.delta_x = 0
+      self.delta_y = 0
+      self.font_name = 'Helvetica'
+      self.font_style = 'normal'
+      self.font_size = 12
       self.printer = 'dymo'
       self.landscape = true
       self.nlsep = '++'
@@ -49,6 +53,9 @@ module Labrat
         right_margin: right_margin,
         top_margin: top_margin,
         bottom_margin: bottom_margin,
+        font_name: font_name,
+        font_size: font_size,
+        font_style: font_style,
         delta_x: delta_x,
         delta_y: delta_y,
         printer: printer,
