@@ -38,6 +38,7 @@ RSpec.describe ArgParser do
     expect(help).to include('--file')
     expect(help).to include('--print-command')
     expect(help).to include('--view-command')
+    expect(help).to include('--[no-]view')
     expect(help).to include('--[no-]landscape')
     expect(help).to include('--[no-]portrait')
     expect(help).to include('--[no-]verbose')

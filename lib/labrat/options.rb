@@ -37,6 +37,7 @@ module Labrat
       self.out_file = './label.pdf'
       self.print_command = 'lpr -P %p %o'
       self.view_command = 'zathura %o'
+      self.view = false
       self.verbose = false
       self.msg = nil
     end
@@ -70,7 +71,7 @@ module Labrat
         out_file: out_file,
         print_command: print_command,
         view_command: view_command,
-        view: false,
+        view: view,
         verbose: verbose,
         msg: msg,
       }
