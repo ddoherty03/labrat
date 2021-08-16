@@ -7,6 +7,7 @@ module Labrat
   # label-printing objects to inform its formatting, printing, etc.
   class Options
     attr_accessor :width, :height, :label,
+                  :h_align, :v_align,
                   :left_margin, :right_margin, :top_margin, :bottom_margin,
                   :delta_x, :delta_y,
                   :font_name, :font_style, :font_size, :printer,
@@ -18,6 +19,8 @@ module Labrat
       self.width = 24.mm
       self.height = 83.mm
       self.label = nil
+      self.h_align = :center
+      self.v_align = :center
       self.left_margin = 4.5.mm
       self.right_margin = 4.5.mm
       self.top_margin = 0
@@ -49,6 +52,8 @@ module Labrat
         width: width,
         height: height,
         label: label,
+        h_align: h_align,
+        v_align: v_align,
         left_margin: left_margin,
         right_margin: right_margin,
         top_margin: top_margin,

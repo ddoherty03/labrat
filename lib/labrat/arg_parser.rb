@@ -53,6 +53,7 @@ module Labrat
       # add additional options
       label_dimension_options
       label_name_option
+      align_options
       delta_options
       margin_options
       font_options
@@ -127,6 +128,18 @@ module Labrat
       parser.on("-lNAME", "--label=NAME",
                 "Name of the label to print on") do |name|
         options.label = name.strip
+      end
+    end
+
+    # Set the name, size, and style of font.
+    def align_options
+      parser.on("--h-align=[left|center|right]", [:left, :center, :right],
+                "Horizontal alignment of label text (default center)") do |al|
+        options.h_align = al.to_sym
+      end
+      parser.on("--v-align=[top|center|bottom]", [:top, :center, :bottom],
+                "Vertical alignment of label text (default center)") do |al|
+        options.h_align = al.to_sym
       end
     end
 

@@ -22,6 +22,8 @@ RSpec.describe ArgParser do
     expect(help).to include('--width')
     expect(help).to include('--height')
     expect(help).to include('--label')
+    expect(help).to include('--h-align')
+    expect(help).to include('--v-align')
     expect(help).to include('--left-margin')
     expect(help).to include('--right-margin')
     expect(help).to include('--top-margin')

@@ -62,7 +62,7 @@ module Labrat
         pdf.bounding_box([box_x, box_y], width: box_wd, height: box_ht) do
           pdf.stroke_bounds
           pdf.font ops.font_name, style: ops.font_style.to_sym, size: ops.font_size.to_f
-          pdf.text text, align: :center, valign: :center
+          pdf.text text, align: ops.h_align, valign: ops.v_align
         end
       end
       self
