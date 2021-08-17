@@ -16,9 +16,11 @@ module Labrat
     end
 
     # Return an Options object instance describing the options represented by
-    # an Array of strings given by args.  Throw an exception for errors
-    # encountered parsing the args.
-    def parse(args)
+    # an Array of strings given by args.  If a Hash or Options object prior is
+    # given, the parsed options are merged into it.  Throw an exception for
+    # errors encountered parsing the args.
+    def parse(args, prior = {})
+      options.merge!(prior)
       options.msg = nil
       parser.parse!(args)
       options
