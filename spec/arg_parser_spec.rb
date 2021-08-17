@@ -45,7 +45,7 @@ RSpec.describe ArgParser do
   end
 
   it 'can produce version' do
-    expect(ap.parse(['--version']).msg).to match(/\A[0-9.]+\z/)
+    expect(ap.parse(['--version']).msg).to match(/[0-9.]+/)
   end
 
   it 'produces help on invalid option' do
