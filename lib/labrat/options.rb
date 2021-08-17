@@ -15,36 +15,50 @@ module Labrat
                   :print_command, :view_command, :view,
                   :verbose, :msg
 
-    def initialize
-      self.width = 24.mm
-      self.height = 83.mm
-      self.label = nil
-      self.h_align = :center
-      self.v_align = :center
-      self.left_margin = 4.5.mm
-      self.right_margin = 4.5.mm
-      self.top_margin = 0
-      self.bottom_margin = 0
-      self.delta_x = 0
-      self.delta_y = 0
-      self.font_name = 'Helvetica'
-      self.font_style = 'normal'
-      self.font_size = 12
-      self.printer = 'dymo'
-      self.landscape = true
-      self.nlsep = '++'
-      self.file = nil
-      self.out_file = './label.pdf'
-      self.print_command = 'lpr -P %p %o'
-      self.view_command = 'zathura %o'
-      self.view = false
-      self.verbose = false
-      self.msg = nil
+    # Initialize with an optional hash of default values for the attributes.
+    def initialize(**init)
+      self.width = init[:width] || 24.mm
+      self.height = init[:height] || 83.mm
+      self.label = init[:label] || nil
+      self.h_align = init[:h_align] || :center
+      self.v_align = init[:v_align] || :center
+      self.left_margin = init[:left_margin] || 4.5.mm
+      self.right_margin = init[:right_margin] || 4.5.mm
+      self.top_margin = init[:top_margin] ||  0
+      self.bottom_margin = init[:bottom_margin] || 0
+      self.delta_x = init[:delta_x] ||  0
+      self.delta_y = init[:delta_y] ||  0
+      self.font_name = init[:font_name] || 'Helvetica'
+      self.font_style = init[:font_style] || 'normal'
+      self.font_size = init[:font_size] ||  12
+      self.printer = init[:printer] || 'dymo'
+      self.nlsep = init[:nlsep] || '++'
+      self.file = init[:file] || nil
+      self.out_file = init[:out_file] || 'label.pdf'
+      self.print_command = init[:print_command] || 'lpr -P %p %o'
+      self.view_command = init[:view_command] || 'zathura %o'
+      # Careful with these boolean options
+      self.landscape = init.fetch(:landscape, true)
+      self.view = init.fetch(:view, false)
+      self.verbose = init.fetch(:verbose, false)
+      self.msg = init[:msg] || nil
     end
 
     # Return any string in msg, e.g., the usage help or error.
     def to_s
       msg
+    end
+
+    # Allow hash-like assignment to attributes.  This allows an Options object
+    # to be used, for example, in the OptionParser#parse :into parameter.
+    def []=(att, val)
+      send("#{att}=", val)
+    end
+
+    # Allow hash-like access to attributes.  This allows an Options object
+    # to be used, for example, in the OptionParser#parse :into parameter.
+    def [](att)
+      send("#{att}")
     end
 
     # Return a hash of the values in this Options object.
