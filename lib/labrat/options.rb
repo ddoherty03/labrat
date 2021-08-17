@@ -20,8 +20,8 @@ module Labrat
       self.width = init[:width] || 24.mm
       self.height = init[:height] || 83.mm
       self.label = init[:label] || nil
-      self.h_align = init[:h_align] || :center
-      self.v_align = init[:v_align] || :center
+      self.h_align = init[:h_align]&.to_sym || :center
+      self.v_align = init[:v_align]&.to_sym || :center
       self.left_margin = init[:left_margin] || 4.5.mm
       self.right_margin = init[:right_margin] || 4.5.mm
       self.top_margin = init[:top_margin] ||  0
@@ -29,7 +29,7 @@ module Labrat
       self.delta_x = init[:delta_x] ||  0
       self.delta_y = init[:delta_y] ||  0
       self.font_name = init[:font_name] || 'Helvetica'
-      self.font_style = init[:font_style] || 'normal'
+      self.font_style = init[:font_style]&.to_sym || :normal
       self.font_size = init[:font_size] ||  12
       self.printer = init[:printer] || 'dymo'
       self.nlsep = init[:nlsep] || '++'
