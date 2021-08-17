@@ -94,7 +94,7 @@ module Labrat
     # Update the fields of this Option instance by merging in the values in
     # hsh into self.  Ignore any keys in hsh not corresponding to a setter for
     # an Options object.
-    def merge_hash!(hsh)
+    def merge!(hsh)
       new_hash = to_hash.merge(hsh)
       new_hash.each_pair do |k, val|
         setter = "#{k}=".to_sym
