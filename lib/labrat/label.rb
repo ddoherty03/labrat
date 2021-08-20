@@ -56,6 +56,7 @@ module Labrat
           warn "page_size = [#{ops.width}pt,#{ops.height}pt]"
           warn "[lm, rm] = [#{lm}pt,#{rm}pt]"
           warn "[tm, bm] = [#{tm}pt,#{bm}pt]"
+          warn "[delta_x, delta_y] = [#{ops.delta_x}pt,#{ops.delta_y}pt]"
           warn "[box_x, box_y] = [#{box_x}pt,#{box_y}pt]"
           warn "[box_wd, box_ht] = [#{box_wd}pt,#{box_ht}pt]"
         end
