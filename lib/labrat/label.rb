@@ -4,11 +4,11 @@ require 'pry'
 
 module Labrat
   class Label
-    attr_reader :text, :ops
+    attr_reader :texts, :ops
 
-    def initialize(text, ops)
+    def initialize(texts, ops)
       @ops = ops
-      @text = text.gsub(ops.nlsep, "\n")
+      @texts = texts.map { |t| t.gsub(ops.nlsep, "\n") }
     end
 
     def generate
@@ -60,12 +60,16 @@ module Labrat
           warn "[box_x, box_y] = [#{box_x}pt,#{box_y}pt]"
           warn "[box_wd, box_ht] = [#{box_wd}pt,#{box_ht}pt]"
         end
-        pdf.bounding_box([box_x, box_y], width: box_wd, height: box_ht) do
-          pdf.stroke_bounds
-          pdf.font ops.font_name, style: ops.font_style.to_sym, size: ops.font_size.to_f
-          pdf.text_box(text, width: box_wd, height: box_ht,
-                       align: ops.h_align, valign: ops.v_align,
-                       overflow: :truncate, at: [0, box_ht])
+        last_k = texts.size - 1
+        texts.each_with_index do |text, k|
+          pdf.bounding_box([box_x, box_y], width: box_wd, height: box_ht) do
+            pdf.stroke_bounds
+            pdf.font ops.font_name, style: ops.font_style.to_sym, size: ops.font_size.to_f
+            pdf.text_box(text, width: box_wd, height: box_ht,
+                         align: ops.h_align, valign: ops.v_align,
+                         overflow: :truncate, at: [0, box_ht])
+          end
+          pdf.start_new_page unless k == last_k
         end
       end
       self
@@ -79,6 +83,10 @@ module Labrat
     def view
       cmd = ops.view_command.gsub('%o', ops.out_file)
       system("#{cmd} &")
+    end
+
+    def remove
+      FileUtils.rm(ops.out_file)
     end
   end
 end

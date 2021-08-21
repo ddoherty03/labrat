@@ -1,19 +1,43 @@
 #! /usr/bin/env ruby
+# frozen_string_literal: true
 
 require_relative '../lib/labrat'
 
-ops = Labrat::ArgParser.new.parse(ARGV)
+config = Labrat::Config.read('labrat')
+ops = Labrat::ArgParser.new.parse(ARGV, config)
 if ops.msg
   warn ops.msg
   exit(1)
 end
 
+# There are three possible sources of label text: (1) the non-option
+# command-line arguments, (2) standard input if there are no non-option
+# arguments and no --file argument, and (3) from new-line-separated paragraphs
+# in the file specified by the --file argument.
 non_ops = ARGV.grep_v(/\A--?/)
-if non_ops.empty?
-# Read from STDIN
+texts =
+  if non_ops.empty?
+    if ops.file
+      Labrat.read_label_texts(ops.file, ops.nlsep)
+    else
+      Labrat.read_label_texts(nil, ops.nlsep)
+    end
+  else
+    [non_ops.join(' ')]
+  end
+
+lab = Labrat::Label.new(texts, ops).generate
+if ops.view
+  lab.view
 else
-  text = non_ops.join(' ')
+  lab.print
 end
 
-lab = Labrat::Label.new(text, ops)
-lab.generate
+# texts.each do |txt|
+# lab = Labrat::Label.new(txt, ops).generate
+# if ops.view
+#   lab.view
+# else
+#   lab.print
+# end
+# end
