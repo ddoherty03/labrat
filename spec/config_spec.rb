@@ -142,7 +142,7 @@ RSpec.describe Config do
       nlsep: '%%'
       printer: seiko3
     YAML
-      setup_test_file('/home/ded/.config/labrat/config.yml', config_yml)
+      setup_test_file("/home/#{ENV['USER']}/.config/labrat/config.yml", config_yml)
       hsh = Config.read('labrat', xdg: true, dir_prefix: SANDBOX_DIR)
       op = ArgParser.new.from_hash(hsh)
       expect(op.width).to be_within(EPS).of(33 * MM)
@@ -162,7 +162,7 @@ RSpec.describe Config do
       nlsep: '%%'
       printer: seiko3
     YAML
-      ENV['LABRAT_CONFIG'] = '/home/ded/.labrc'
+      ENV['LABRAT_CONFIG'] = "/home/#{ENV['USER']}/.labrc"
       setup_test_file(ENV['LABRAT_CONFIG'], config_yml)
       hsh = Config.read('labrat', xdg: true, dir_prefix: SANDBOX_DIR)
       op = ArgParser.new.from_hash(hsh)
@@ -188,7 +188,7 @@ RSpec.describe Config do
       height: 102mm
       delta-x: -3mm
     YAML
-      setup_test_file('/home/ded/.config/labrat/config.yml', usr_config_yml)
+      setup_test_file("/home/#{ENV['USER']}/.config/labrat/config.yml", usr_config_yml)
       hsh = Config.read('labrat', xdg: true, dir_prefix: SANDBOX_DIR)
       op = ArgParser.new.from_hash(hsh)
       expect(op.width).to be_within(EPS).of(33 * MM)
