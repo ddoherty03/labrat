@@ -63,8 +63,8 @@ RSpec.describe Config do
       config_yml = <<~YAML
       width: 33mm
       height: 101mm
-      delta_x: -4mm
-      delta_y: 1cm
+      delta-x: -4mm
+      delta-y: 1cm
       nlsep: '%%'
       printer: seiko3
     YAML
@@ -83,15 +83,15 @@ RSpec.describe Config do
       config_yml = <<~YAML
       width: 33mm
       height: 101mm
-      delta_x: -4mm
-      delta_y: 1cm
+      delta-x: -4mm
+      delta-y: 1cm
       nlsep: '%%'
     YAML
       setup_test_file('/lib/junk/labrat/config.yml', config_yml)
       config2_yml = <<~YAML
       width: 3cm
       height: 10cm
-      delta_x: -4pt
+      delta-x: -4pt
       printer: dymo4
       label: avery1234
     YAML
@@ -116,8 +116,8 @@ RSpec.describe Config do
       config_yml = <<~YAML
       width: 33mm
       height: 101mm
-      delta_x: -4mm
-      delta_y: 1cm
+      delta-x: -4mm
+      delta-y: 1cm
       nlsep: '%%'
       printer: seiko3
     YAML
@@ -137,8 +137,8 @@ RSpec.describe Config do
       config_yml = <<~YAML
       width: 33mm
       height: 101mm
-      delta_x: -4mm
-      delta_y: 1cm
+      delta-x: -4mm
+      delta-y: 1cm
       nlsep: '%%'
       printer: seiko3
     YAML
@@ -157,8 +157,8 @@ RSpec.describe Config do
       config_yml = <<~YAML
       width: 33mm
       height: 101mm
-      delta_x: -4mm
-      delta_y: 1cm
+      delta-x: -4mm
+      delta-y: 1cm
       nlsep: '%%'
       printer: seiko3
     YAML
@@ -178,15 +178,15 @@ RSpec.describe Config do
       sys_config_yml = <<~YAML
       width: 33mm
       height: 101mm
-      delta_x: -4mm
-      delta_y: 1cm
+      delta-x: -4mm
+      delta-y: 1cm
       nlsep: '%%'
       printer: seiko3
     YAML
       setup_test_file('/etc/xdg/labrat/config.yml', sys_config_yml)
       usr_config_yml = <<~YAML
       height: 102mm
-      delta_x: -3mm
+      delta-x: -3mm
     YAML
       setup_test_file('/home/ded/.config/labrat/config.yml', usr_config_yml)
       hsh = Config.read('labrat', xdg: true, dir_prefix: SANDBOX_DIR)
@@ -203,8 +203,8 @@ RSpec.describe Config do
       config_yml = <<~YAML
       width: 33mm
       height: 101mm
-      delta_x: -4mm
-      delta_y: 1cm
+      delta-x: -4mm
+      delta-y: 1cm
       nlsep: '%%'
     YAML
       setup_test_file('~/.foncig/labrat/config.yml', config_yml)
@@ -226,8 +226,8 @@ RSpec.describe Config do
       config_yml = <<~YAML
       width: 33mm
       height: 101mm
-      delta_x: -4mm
-      delta_y: 1cm
+      delta-x: -4mm
+      delta-y: 1cm
       nlsep: '%%'
       printer: seiko3
     YAML
@@ -247,8 +247,8 @@ RSpec.describe Config do
       config_yml = <<~YAML
       width: 33mm
       height: 101mm
-      delta_x: -4mm
-      delta_y: 1cm
+      delta-x: -4mm
+      delta-y: 1cm
       nlsep: '%%'
       printer: seiko3
     YAML
@@ -268,8 +268,8 @@ RSpec.describe Config do
       config_yml = <<~YAML
       width: 33mm
       height: 101mm
-      delta_x: -4mm
-      delta_y: 1cm
+      delta-x: -4mm
+      delta-y: 1cm
       nlsep: '%%'
       printer: seiko3
     YAML
@@ -288,8 +288,8 @@ RSpec.describe Config do
       config_yml = <<~YAML
       width: 33mm
       height: 101mm
-      delta_x: -4mm
-      delta_y: 1cm
+      delta-x: -4mm
+      delta-y: 1cm
       nlsep: '%%'
       printer: seiko3
     YAML
@@ -308,8 +308,8 @@ RSpec.describe Config do
       sys_config_yml = <<~YAML
       width: 33mm
       height: 101mm
-      delta_x: -4mm
-      delta_y: 1cm
+      delta-x: -4mm
+      delta-y: 1cm
       nlsep: '%%'
       printer: seiko3
     YAML
@@ -318,8 +318,8 @@ RSpec.describe Config do
 
       usr_config_yml = <<~YAML
       height: 102mm
-      delta_x: -7mm
-      delta_y: +30mm
+      delta-x: -7mm
+      delta-y: +30mm
       nlsep: '++'
     YAML
       setup_test_file('~/.labrat/config.yml', usr_config_yml)
