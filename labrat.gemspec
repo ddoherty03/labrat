@@ -26,6 +26,7 @@ Gem::Specification.new do |spec|
   spec.require_paths = ["lib"]
   spec.post_install_message = 'To install config files, run [sudo] labrat_config.'
   spec.add_dependency "prawn", "~> 2.0"
+  spec.add_dependency "activesupport"
 
   # Note: pry-byebug requires that pry be within the '0.13.0' version box.
   spec.add_development_dependency 'pry', '~> 0.13.0'
