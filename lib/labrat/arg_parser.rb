@@ -208,6 +208,11 @@ module Labrat
       parser.on("-lNAME", "--label=NAME",
                 "Name of the label to print on") do |name|
         options.label = name.strip
+        # Insert at this point the option args found in the Label.db
+        if (lab_hash = LabelDb[name])
+          lab_args = from_hash(lab_hash)
+          parser.parse(lab_args, into: options)
+        end
       end
     end
 
@@ -270,6 +275,7 @@ module Labrat
         options.font_size = pt
       end
       parser.on("--font-style=[normal|bold|italic|bold-italic]",
+                %w[normal bold italic bold-italic],
                 "Style of font to use for text (default normal)") do |sty|
         options.font_style = sty
       end
@@ -381,7 +387,3 @@ module Labrat
     end
   end
 end
-
-# options = Labrat::Optparse.new.parse(ARGV)
-# pp ARGV
-# pp options # example.options
