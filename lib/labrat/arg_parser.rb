@@ -55,6 +55,8 @@ module Labrat
                        "pt, mm, cm, dm, m, in, ft, yd"
       parser.separator "    With no units, pt (points) assumed"
 
+      page_dimension_options
+      page_margin_options
       label_dimension_options
       label_name_option
       align_options
@@ -106,6 +108,80 @@ module Labrat
         end
 
         meas.send(u_meth)
+      end
+    end
+
+    # Define options for specifying the dimensions of a page of labels to be
+    # printed on.
+    def page_dimension_options
+      # Specifies an optional option argument
+      parser.on("-WDIMENSION", "--page-width DIMENSION",
+                "Page width:",
+                "the horizontal dimension of a page of labels as it comes out of the printer") do |wd|
+        options.page_width = parse_dimension(wd, 'page-width')
+      end
+      parser.on("-HDIMENSION", "--page-height DIMENSION",
+                "Page height:",
+                "the vertical dimension of a page of labels as it comes out of the printer") do |ht|
+        options.page_height = parse_dimension(ht, 'page-height')
+      end
+      parser.on("-RNUM_ROWS", "--rows NUM_ROWS", Integer,
+                "Number of rows of labels on a page") do |n|
+        options.rows = n
+      end
+      parser.on("-CNUM_COLUMNS", "--columns NUM_COLUMNS", Integer,
+                "Number of columns of labels on a page") do |n|
+        options.columns = n
+      end
+      parser.on("-SNUM", "--start-label NUM", Integer,
+                "Label number (starting at 1, left-to-right, top-to-bottom)",
+                "  within first page to on which to start printing") do |n|
+        options.columns = n
+      end
+      parser.on("--row-gap DIMENSION",
+                "Row gap:",
+                "the vertical space between rows of labels on a page of labels") do |gap|
+        options.row_gap = parse_dimension(gap, 'row-gap')
+      end
+      parser.on("--column-gap DIMENSION",
+                "Column gap:",
+                "the horizontal space between columns of labels on a page of labels") do |gap|
+        options.column_gap = parse_dimension(gap, 'row-gap')
+      end
+    end
+
+    # Set the page margins for printing on a page of labels.  Left, right,
+    # top, and bottom are named assuming a portrait orientation, that is the
+    # orientation of the page as it comes out of the printer.
+    def page_margin_options
+      parser.on("--right-page-margin=DIMENSION",
+                "Distance from right side of page (in portrait) to print area") do |x|
+        options.right_page_margin = parse_dimension(x, 'right-page-margin')
+      end
+      parser.on("--left-page-margin=DIMENSION",
+                "Distance from left side of page (in portrait) to print area") do |x|
+        options.left_page_margin = parse_dimension(x, 'left-page-margin')
+      end
+      parser.on("--top-page-margin=DIMENSION",
+                "Distance from top side of page (in portrait) to print area") do |x|
+        options.top_page_margin = parse_dimension(x, 'top-page-margin')
+      end
+      parser.on("--bottom-page-margin=DIMENSION",
+                "Distance from bottom side of page (in portrait) to print area") do |x|
+        options.bottom_page_margin = parse_dimension(x, 'bottom-page-margin')
+      end
+      parser.on("--h-page-margin=DIMENSION",
+                "Distance from left and right sides of page (in portrait) to print area") do |x|
+        options.left_page_margin = options.right_page_margin = parse_dimension(x, 'h-page-margin')
+      end
+      parser.on("--v-page-margin=DIMENSION",
+                "Distance from top and bottom sides of page (in portrait) to print area") do |x|
+        options.top_page_margin = options.bottom_page_margin = parse_dimension(x, 'v-page-margin')
+      end
+      parser.on("--page-margin=DIMENSION",
+                "Distance from all sides of page (in portrait) to print area") do |x|
+        options.left_page_margin = options.right_page_margin =
+          options.top_page_margin = options.bottom_page_margin = parse_dimension(x, 'margin')
       end
     end
 
