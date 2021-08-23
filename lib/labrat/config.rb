@@ -153,12 +153,13 @@ module Labrat
     end
 
     # Merge the settings from config files with the name config_name from the
-    # given directories, dirs, into the given Options object.
+    # given directories, dirs, into the given Options object.  Any values of
+    # the top-level hash that are themselves Hashes are merged recursively.
     def self.merge_configs_from(files = [], hash)
       files.each do |f|
         if File.readable?(f)
           yml = File.read(f)
-          hash.merge!(YAML.load(yml))
+          hash.deep_merge!(YAML.load(yml))
         end
       end
       hash
