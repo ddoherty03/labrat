@@ -11,19 +11,20 @@ if ops.msg
 end
 
 # There are three possible sources of label text: (1) the non-option
-# command-line arguments, (2) standard input if there are no non-option
-# arguments and no --file argument, and (3) from new-line-separated paragraphs
-# in the file specified by the --file argument.
+# command-line arguments, if any, are always included, (3) paragraphs in the
+# file specified by the --file argument, if any, are always included, and (3)
+# paragraphs in standard input are included if there are no non-option
+# arguments and no --file argument.
+
 non_ops = ARGV.grep_v(/\A--?/)
-texts =
-  if non_ops.empty?
-    if ops.file
-      Labrat.read_label_texts(ops.file, ops.nlsep)
-    else
-      Labrat.read_label_texts(nil, ops.nlsep)
-    end
+texts = non_ops.empty? ? [] : [non_ops.join(' ')]
+texts +=
+  if ops.file
+    Labrat.read_label_texts(ops.file, ops.nlsep)
+  elsif non_ops.empty?
+    Labrat.read_label_texts(nil, ops.nlsep)
   else
-    [non_ops.join(' ')]
+    []
   end
 
 lab = Labrat::Label.new(texts, ops).generate
@@ -32,12 +33,3 @@ if ops.view
 else
   lab.print
 end
-
-# texts.each do |txt|
-# lab = Labrat::Label.new(txt, ops).generate
-# if ops.view
-#   lab.view
-# else
-#   lab.print
-# end
-# end
