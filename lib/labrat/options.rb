@@ -10,6 +10,7 @@ module Labrat
                   :left_page_margin, :right_page_margin,
                   :top_page_margin, :bottom_page_margin,
                   :rows, :columns, :row_gap, :column_gap, :landscape,
+                  :start_label,
                   :width, :height, :h_align, :v_align,
                   :left_margin, :right_margin, :top_margin, :bottom_margin,
                   :delta_x, :delta_y,
@@ -32,6 +33,7 @@ module Labrat
       self.columns = init[:columns] || 1
       self.row_gap = init[:row_gap] || 0.mm
       self.column_gap = init[:column_gap] || 0.mm
+      self.start_label = init[:start_label] || 1
       self.landscape = init.fetch(:landscape, true)
       # Per-label attributes
       self.width = init[:width] || 24.mm
@@ -91,6 +93,7 @@ module Labrat
         columns: columns,
         row_gap: row_gap,
         column_gap: column_gap,
+        start_label: start_label,
         landscape: landscape,
         # Per-label attributes
         width: width,

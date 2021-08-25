@@ -141,10 +141,10 @@ module Labrat
                 "Number of columns of labels on a page") do |n|
         options.columns = n
       end
-      parser.on("-SNUM", "--start-label NUM", Integer,
+      parser.on("-SNUM", "--start-label=NUM", Integer,
                 "Label number (starting at 1, left-to-right, top-to-bottom)",
                 "  within first page to on which to start printing") do |n|
-        options.columns = n
+        options.start_label = n
       end
       parser.on("--row-gap DIMENSION",
                 "Row gap:",
