@@ -56,7 +56,7 @@ module Labrat
       self.printer = init[:printer] || 'dymo'
       self.out_file = init[:out_file] || 'label.pdf'
       self.print_command = init[:print_command] || 'lpr -P %p %o'
-      self.view_command = init[:view_command] || 'zathura %o'
+      self.view_command = init[:view_command] || 'qpdfview --unique --instance labrat %o'
       self.view = init.fetch(:view, false)
       self.verbose = init.fetch(:verbose, false)
       self.msg = init[:msg] || nil
