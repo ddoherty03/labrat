@@ -16,17 +16,17 @@ avery5160:
   column-gap: 3mm
   width: 66mm
   height: 25mm
-  portrait: true
+  landscape: false
 
 dymo30327:
   page-width: 24mm
   page-height: 87mm
   rows: 1
   columns: 1
-  top-page-margin: 3mm
+  top-page-margin: 0mm
   bottom-page-margin: 0mm
-  left-page-margin: 4.5mm
-  right-page-margin: 4.5mm
+  left-page-margin: 5mm
+  right-page-margin: 5mm
   width: 70mm
   height: 14mm
   top-margin: 0mm
