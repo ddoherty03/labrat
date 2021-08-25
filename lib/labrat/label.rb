@@ -88,5 +88,20 @@ module Labrat
     def remove
       FileUtils.rm(ops.out_file)
     end
+
+    # Return the 0-based row and column on which the k-th (1-based) label
+    # should be printed.
+    def row_col(k)
+      lpp = ops.rows * ops.columns
+      k_on_page = (k + ops.start_label - 2) % lpp
+      k_on_page.divmod(ops.columns)
+    end
+
+    # Should we emit a new page at this point?
+    def needs_new_page?(k, last_k)
+      return false if k == last_k
+      r, c = row_col(k + 1)
+      (r + 1 == ops.rows && c + 1 == ops.columns)
+    end
   end
 end
