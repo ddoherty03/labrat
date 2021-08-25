@@ -2,4 +2,5 @@
 
 module Labrat
   class DimensionError < StandardError; end
+  class ConfigError < StandardError; end
 end

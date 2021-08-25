@@ -7,11 +7,14 @@ module Labrat
   # command-line arguments so that config files, converted to a Hash can also
   # be used with an ArgParser.
   class ArgParser
+    BOOLEAN_SWITCHES = [:landscape, :verbose]
+
     attr_reader :parser, :args, :options
 
     def initialize
       @options = Labrat::Options.new
       @parser = OptionParser.new
+      @parser.summary_width = 30
       define_options
     end
 
@@ -35,7 +38,12 @@ module Labrat
     def from_hash(hsh = {})
       args = []
       hsh.each_pair do |k, v|
-        args << "--#{k}=#{v}"
+        args <<
+          if BOOLEAN_SWITCHES.include?(k.to_sym)
+            v ? "--#{k}" : "--no-#{k}"
+          else
+            "--#{k}=#{v}"
+          end
       end
       parse(args)
     end
@@ -209,10 +217,12 @@ module Labrat
                 "Name of the label to print on") do |name|
         options.label = name.strip
         # Insert at this point the option args found in the Label.db
-        if (lab_hash = LabelDb[name])
-          lab_args = from_hash(lab_hash)
-          parser.parse(lab_args, into: options)
-        end
+        lab_hash = LabelDb[name]
+        raise ConfigError,
+              "Unknown label name '#{name}'.  Did you run labrat_config?" if lab_hash.empty?
+
+        lab_args = from_hash(lab_hash)
+        parser.parse(lab_args, into: options)
       end
     end
 
