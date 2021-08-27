@@ -7,8 +7,6 @@ module Labrat
   # command-line arguments so that config files, converted to a Hash can also
   # be used with an ArgParser.
   class ArgParser
-    BOOLEAN_SWITCHES = [:landscape, :verbose]
-
     attr_reader :parser, :args, :options
 
     def initialize
@@ -39,7 +37,7 @@ module Labrat
       args = []
       hsh.each_pair do |k, v|
         args <<
-          if BOOLEAN_SWITCHES.include?(k.to_sym)
+          if [TrueClass, FalseClass].include?(v.class)
             v ? "--#{k}" : "--no-#{k}"
           else
             "--#{k}=#{v}"
