@@ -65,11 +65,10 @@ module Labrat
 
       page_dimension_options
       page_margin_options
-      label_dimension_options
       label_name_option
       align_options
       delta_options
-      margin_options
+      padding_options
       font_options
       printer_name_option
       nl_sep_option
@@ -86,7 +85,7 @@ module Labrat
       # Normally, options.msg is nil.  If it is set to a string, we want
       # the main program to print the string and exit.
       options.msg = nil
-      parser.on_tail("-h", "--help", "Show this message") do
+      parser.on_tail("--help", "Show this message") do
         # NB: parser.to_s returns the usage message.
         options.msg = parser.to_s
       end
@@ -123,12 +122,12 @@ module Labrat
     # printed on.
     def page_dimension_options
       # Specifies an optional option argument
-      parser.on("-WDIM", "--page-width=DIM",
+      parser.on("-wDIM", "--page-width=DIM",
                 "Page width:",
                 "the horizontal dimension of a page of labels as it comes out of the printer") do |wd|
         options.page_width = parse_dimension(wd, 'page-width')
       end
-      parser.on("-HDIM", "--page-height=DIM",
+      parser.on("-hDIM", "--page-height=DIM",
                 "Page height:",
                 "the vertical dimension of a page of labels as it comes out of the printer") do |ht|
         options.page_height = parse_dimension(ht, 'page-height')
@@ -141,11 +140,6 @@ module Labrat
                 "Number of columns of labels on a page") do |n|
         options.columns = n
       end
-      parser.on("-SNUM", "--start-label=NUM", Integer,
-                "Label number (starting at 1, left-to-right, top-to-bottom)",
-                "  within first page to on which to start printing") do |n|
-        options.start_label = n
-      end
       parser.on("--row-gap=DIM",
                 "Row gap:",
                 "the vertical space between rows of labels on a page of labels") do |gap|
@@ -155,6 +149,11 @@ module Labrat
                 "Column gap:",
                 "the horizontal space between columns of labels on a page of labels") do |gap|
         options.column_gap = parse_dimension(gap, 'row-gap')
+      end
+      parser.on("-SNUM", "--start-label=NUM", Integer,
+                "Label number (starting at 1, left-to-right, top-to-bottom)",
+                "  within first page to on which to start printing") do |n|
+        options.start_label = n
       end
     end
 
@@ -193,22 +192,6 @@ module Labrat
       end
     end
 
-    # Define options for specifying the dimensions of the label to be printed
-    # on.
-    def label_dimension_options
-      # Specifies an optional option argument
-      parser.on("-wDIM", "--width=DIM",
-                "Label width:",
-                "the horizontal dimension of the label as it comes out of the printer") do |wd|
-        options.width = parse_dimension(wd, 'width')
-      end
-      parser.on("-hDIM", "--height=DIM",
-                "Label height:",
-                "the vertical dimension of label as it comes out of the printer") do |ht|
-        options.height = parse_dimension(ht, 'height')
-      end
-    end
-
     # Define a label name.  Perhaps the config files could contain a database
     # of common labels with their dimensions, so that --width and --height
     # need not be specified.
@@ -242,35 +225,35 @@ module Labrat
     # hold the text of the label.  Left, right, top, and bottom are named
     # assuming a portrait orientation, that is the orientation the label has
     # as it comes out of the printer.
-    def margin_options
-      parser.on("--right-margin=DIM",
+    def padding_options
+      parser.on("--right-pad=DIM",
                 "Distance from right side of label (in portrait) to print area") do |x|
-        options.right_margin = parse_dimension(x, 'right-margin')
+        options.right_pad = parse_dimension(x, 'right-pad')
       end
-      parser.on("--left-margin=DIM",
+      parser.on("--left-pad=DIM",
                 "Distance from left side of label (in portrait) to print area") do |x|
-        options.left_margin = parse_dimension(x, 'left-margin')
+        options.left_pad = parse_dimension(x, 'left-pad')
       end
-      parser.on("--top-margin=DIM",
+      parser.on("--top-pad=DIM",
                 "Distance from top side of label (in portrait) to print area") do |x|
-        options.top_margin = parse_dimension(x, 'top-margin')
+        options.top_pad = parse_dimension(x, 'top-pad')
       end
-      parser.on("--bottom-margin=DIM",
+      parser.on("--bottom-pad=DIM",
                 "Distance from bottom side of label (in portrait) to print area") do |x|
-        options.bottom_margin = parse_dimension(x, 'bottom-margin')
+        options.bottom_pad = parse_dimension(x, 'bottom-pad')
       end
-      parser.on("--h-margin=DIM",
+      parser.on("--h-pad=DIM",
                 "Distance from left and right sides of label (in portrait) to print area") do |x|
-        options.left_margin = options.right_margin = parse_dimension(x, 'h-margin')
+        options.left_pad = options.right_pad = parse_dimension(x, 'h-pad')
       end
-      parser.on("--v-margin=DIM",
+      parser.on("--v-pad=DIM",
                 "Distance from top and bottom sides of label (in portrait) to print area") do |x|
-        options.top_margin = options.bottom_margin = parse_dimension(x, 'v-margin')
+        options.top_pad = options.bottom_pad = parse_dimension(x, 'v-pad')
       end
-      parser.on("--margin=DIM",
+      parser.on("--pad=DIM",
                 "Distance from all sides of label (in portrait) to print area") do |x|
-        options.left_margin = options.right_margin =
-          options.top_margin = options.bottom_margin = parse_dimension(x, 'margin')
+        options.left_pad = options.right_pad =
+          options.top_pad = options.bottom_pad = parse_dimension(x, 'pad')
       end
     end
 

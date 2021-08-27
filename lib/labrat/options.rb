@@ -11,8 +11,8 @@ module Labrat
                   :top_page_margin, :bottom_page_margin,
                   :rows, :columns, :row_gap, :column_gap, :landscape,
                   :start_label,
-                  :width, :height, :h_align, :v_align,
-                  :left_margin, :right_margin, :top_margin, :bottom_margin,
+                  :h_align, :v_align,
+                  :left_pad, :right_pad, :top_pad, :bottom_pad,
                   :delta_x, :delta_y,
                   :font_name, :font_style, :font_size,
                   :file, :nlsep,
@@ -24,9 +24,9 @@ module Labrat
       self.label = init[:label] || nil
       # Per-page attributes
       self.page_width = init[:page_width] || 24.mm
-      self.page_height = init[:page_height] || 83.mm
-      self.left_page_margin = init[:left_page_margin] || 0.mm
-      self.right_page_margin = init[:right_page_margin] || 0.mm
+      self.page_height = init[:page_height] || 87.mm
+      self.left_page_margin = init[:left_page_margin] || 5.mm
+      self.right_page_margin = init[:right_page_margin] || 5.mm
       self.top_page_margin = init[:top_page_margin] ||  0.mm
       self.bottom_page_margin = init[:bottom_page_margin] || 0.mm
       self.rows = init[:rows] || 1
@@ -36,19 +36,17 @@ module Labrat
       self.start_label = init[:start_label] || 1
       self.landscape = init.fetch(:landscape, true)
       # Per-label attributes
-      self.width = init[:width] || 24.mm
-      self.height = init[:height] || 83.mm
       self.h_align = init[:h_align]&.to_sym || :center
       self.v_align = init[:v_align]&.to_sym || :center
-      self.left_margin = init[:left_margin] || 4.5.mm
-      self.right_margin = init[:right_margin] || 4.5.mm
-      self.top_margin = init[:top_margin] ||  0
-      self.bottom_margin = init[:bottom_margin] || 0
+      self.left_pad = init[:left_pad] || 4.5.mm
+      self.right_pad = init[:right_pad] || 4.5.mm
+      self.top_pad = init[:top_pad] ||  0
+      self.bottom_pad = init[:bottom_pad] || 0
       self.delta_x = init[:delta_x] ||  0
       self.delta_y = init[:delta_y] ||  0
       self.font_name = init[:font_name] || 'Helvetica'
       self.font_style = init[:font_style]&.to_sym || :normal
-      self.font_size = init[:font_size] ||  12
+      self.font_size = init[:font_size] || 12
       # Input attributes
       self.file = init[:file] || nil
       self.nlsep = init[:nlsep] || '++'
@@ -96,14 +94,12 @@ module Labrat
         start_label: start_label,
         landscape: landscape,
         # Per-label attributes
-        width: width,
-        height: height,
         h_align: h_align,
         v_align: v_align,
-        left_margin: left_margin,
-        right_margin: right_margin,
-        top_margin: top_margin,
-        bottom_margin: bottom_margin,
+        left_pad: left_pad,
+        right_pad: right_pad,
+        top_pad: top_pad,
+        bottom_pad: bottom_pad,
         delta_x: delta_x,
         delta_y: delta_y,
         font_name: font_name,

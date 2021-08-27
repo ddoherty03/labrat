@@ -5,8 +5,8 @@ RSpec.describe Options do
     let(:ops) { Options.new }
 
     it 'has hard-coded default values for file folder label' do
-      expect(ops.width).to be_within(EPS).of(24 * MM)
-      expect(ops.height).to be_within(EPS).of(83 * MM)
+      expect(ops.page_width).to be_within(EPS).of(24 * MM)
+      expect(ops.page_height).to be_within(EPS).of(87 * MM)
       expect(ops.label).to be nil
       expect(ops.h_align).to eq(:center)
       expect(ops.v_align).to eq(:center)
@@ -16,9 +16,9 @@ RSpec.describe Options do
   describe 'Initialization with hash' do
     let(:init_hash) do
       {
-        width: 33 * MM,
-        height: 77 * MM,
-        top_margin: 1 * CM,
+        page_width: 33 * MM,
+        page_height: 77 * MM,
+        top_page_margin: 1 * CM,
         junk: 'willy',
         verbose: true,
         landscape: false,
@@ -27,9 +27,9 @@ RSpec.describe Options do
     let(:ops) { Options.new(**init_hash) }
 
     it 'attributes can be initialized with a hash to new' do
-      expect(ops.width).to be_within(EPS).of(33 * MM)
-      expect(ops.height).to be_within(EPS).of(77 * MM)
-      expect(ops.top_margin).to be_within(EPS).of(10 * MM)
+      expect(ops.page_width).to be_within(EPS).of(33 * MM)
+      expect(ops.page_height).to be_within(EPS).of(77 * MM)
+      expect(ops.top_page_margin).to be_within(EPS).of(10 * MM)
       expect(ops.label).to be nil
       expect(ops.h_align).to eq(:center)
       expect(ops.v_align).to eq(:center)
@@ -42,14 +42,14 @@ RSpec.describe Options do
     let(:ops) { Options.new }
 
     it 'can set an attribute with []= bracket syntax' do
-      expect(ops.left_margin).to be_within(EPS).of(4.5 * MM)
-      ops.left_margin = 0.7 * CM
-      expect(ops.left_margin).to be_within(EPS).of(7 * MM)
+      expect(ops.left_page_margin).to be_within(EPS).of(5 * MM)
+      ops[:left_page_margin] = 0.7 * CM
+      expect(ops.left_page_margin).to be_within(EPS).of(7 * MM)
     end
 
     it 'can read an attribute with [] bracket syntax' do
-      expect(ops.left_margin).to be_within(EPS).of(4.5 * MM)
-      expect(ops[:left_margin]).to be_within(EPS).of(4.5 * MM)
+      expect(ops.left_page_margin).to be_within(EPS).of(5 * MM)
+      expect(ops[:left_page_margin]).to be_within(EPS).of(5 * MM)
     end
   end
 

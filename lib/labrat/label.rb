@@ -43,7 +43,7 @@ module Labrat
                         row_gutter: ops.row_gap, column_gutter: ops.column_gap)
         # if ops.verbose
         #   warn "orientation: #{layout}"
-        #   warn "page_size = [#{ops.width}pt,#{ops.height}pt]"
+        #   warn "page_size = [#{ops.page-width}pt,#{ops.page-height}pt]"
         #   warn "[lpm, rpm] = [#{lpm}pt,#{rpm}pt]"
         #   warn "[tpm, bpm] = [#{tpm}pt,#{bpm}pt]"
         #   warn "[delta_x, delta_y] = [#{ops.delta_x}pt,#{ops.delta_y}pt]"
@@ -56,11 +56,10 @@ module Labrat
           row, col = row_col(k + 1)
           pdf.grid(row, col).bounding_box do
             bounds = pdf.bounds
-            box_wd = (bounds.right - bounds.left) - ops.left_margin - ops.right_margin
-            box_ht = (bounds.top - bounds.bottom) - ops.top_margin - ops.bottom_margin
-            box_x = ops.left_margin + ops.delta_x
-            box_y = ops.bottom_margin + box_ht + ops.delta_y
-            # pdf.bounding_box([box_x, box_y], width: box_wd, height: box_ht) do
+            box_wd = (bounds.right - bounds.left) - ops.left_pad - ops.right_pad
+            box_ht = (bounds.top - bounds.bottom) - ops.top_pad - ops.bottom_pad
+            box_x = ops.left_pad + ops.delta_x
+            box_y = ops.bottom_pad + box_ht + ops.delta_y
             pdf.stroke_bounds
             pdf.font ops.font_name, style: ops.font_style.to_sym, size: ops.font_size.to_f
             pdf.text_box(text, width: box_wd, height: box_ht,

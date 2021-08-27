@@ -9,8 +9,8 @@ RSpec.describe ArgParser do
     it 'can parse default options with no args' do
       op = ap.parse([])
       expect(op).to be_instance_of(Options)
-      expect(op.width).to be_within(EPS).of(24 * MM)
-      expect(op.height).to be_within(EPS).of(83 * MM)
+      expect(op.page_width).to be_within(EPS).of(24 * MM)
+      expect(op.page_height).to be_within(EPS).of(87 * MM)
       expect(op.delta_x).to be_within(EPS).of(0 * MM)
       expect(op.delta_y).to be_within(EPS).of(0 * MM)
       expect(op.printer).to eq('dymo')
@@ -20,35 +20,35 @@ RSpec.describe ArgParser do
 
     it 'can take an in initial hash to merge into' do
       start_hash = {
-        width: 30 * MM,
-        height: 75 * MM,
+        page_width: 30 * MM,
+        page_height: 75 * MM,
         v_align: :top,
         printer: 'seiko',
         nlsep: '__',
       }
-      op = ap.parse(['--height=88mm', '--nlsep=##'], start_hash)
-      expect(op.width).to be_within(EPS).of(30 * MM)
-      expect(op.right_margin).to be_within(EPS).of(4.5 * MM)
+      op = ap.parse(['-h 88mm', '--nlsep=##'], start_hash)
+      expect(op.page_width).to be_within(EPS).of(30 * MM)
+      expect(op.right_page_margin).to be_within(EPS).of(5 * MM)
       expect(op.v_align).to eq(:top)
       expect(op.printer).to eq('seiko')
-      expect(op.height).to be_within(EPS).of(88 * MM)
+      expect(op.page_height).to be_within(EPS).of(88 * MM)
       expect(op.nlsep).to eq('##')
     end
 
     it 'can take an in initial Options instance to merge into' do
       start_op = Options.new(
-        width: 30 * MM,
-        height: 75 * MM,
+        page_width: 30 * MM,
+        page_height: 75 * MM,
         v_align: :top,
         printer: 'seiko',
         nlsep: '__',
       )
-      op = ap.parse(['--height=88mm', '--nlsep=##'], start_op)
-      expect(op.width).to be_within(EPS).of(30 * MM)
-      expect(op.right_margin).to be_within(EPS).of(4.5 * MM)
+      op = ap.parse(['-h 88mm', '--nlsep=##'], start_op)
+      expect(op.page_width).to be_within(EPS).of(30 * MM)
+      expect(op.right_pad).to be_within(EPS).of(4.5 * MM)
       expect(op.v_align).to eq(:top)
       expect(op.printer).to eq('seiko')
-      expect(op.height).to be_within(EPS).of(88 * MM)
+      expect(op.page_height).to be_within(EPS).of(88 * MM)
       expect(op.nlsep).to eq('##')
     end
   end
@@ -56,28 +56,37 @@ RSpec.describe ArgParser do
   describe 'handling of specific options' do
     it 'can produce help' do
       help = ap.parse(['--help']).msg
-      expect(help).to include('--width')
-      expect(help).to include('--height')
       expect(help).to include('--label')
+      expect(help).to include('--page-width')
+      expect(help).to include('--page-height')
+      expect(help).to include('--left-page-margin')
+      expect(help).to include('--right-page-margin')
+      expect(help).to include('--top-page-margin')
+      expect(help).to include('--bottom-page-margin')
+      expect(help).to include('--rows')
+      expect(help).to include('--columns')
+      expect(help).to include('--row-gap')
+      expect(help).to include('--column-gap')
+      expect(help).to include('--[no-]landscape')
+      expect(help).to include('--start-label')
       expect(help).to include('--h-align')
       expect(help).to include('--v-align')
-      expect(help).to include('--left-margin')
-      expect(help).to include('--right-margin')
-      expect(help).to include('--top-margin')
-      expect(help).to include('--bottom-margin')
+      expect(help).to include('--left-pad')
+      expect(help).to include('--right-pad')
+      expect(help).to include('--top-pad')
+      expect(help).to include('--bottom-pad')
+      expect(help).to include('--delta-x')
+      expect(help).to include('--delta-y')
       expect(help).to include('--font-name')
       expect(help).to include('--font-style')
       expect(help).to include('--font-size')
-      expect(help).to include('--delta-x')
-      expect(help).to include('--delta-y')
-      expect(help).to include('--printer')
-      expect(help).to include('--nlsep')
       expect(help).to include('--file')
+      expect(help).to include('--nlsep')
+      expect(help).to include('--printer')
+      expect(help).to include('--out-file')
       expect(help).to include('--print-command')
       expect(help).to include('--view-command')
       expect(help).to include('--[no-]view')
-      expect(help).to include('--[no-]landscape')
-      expect(help).to include('--[no-]portrait')
       expect(help).to include('--[no-]verbose')
     end
 
@@ -99,19 +108,19 @@ RSpec.describe ArgParser do
       expect(err_msg).to include(option)
     end
 
-    it 'can set the dimensions of the label' do
+    it 'can set the dimensions of the page' do
       # Points
       ops = ap.parse(['-w', '44', '-h', '180.5'])
-      expect(ops.width).to be_within(EPS).of(44.0)
-      expect(ops.height).to be_within(EPS).of(180.5)
+      expect(ops.page_width).to be_within(EPS).of(44.0)
+      expect(ops.page_height).to be_within(EPS).of(180.5)
       # Long options
-      ops = ap.parse(['--width=4cm', '--height', '60mm'])
-      expect(ops.width).to be_within(EPS).of(40 * MM)
-      expect(ops.height).to be_within(EPS).of(60 * MM)
+      ops = ap.parse(['--page-width=4cm', '--page-height', '60mm'])
+      expect(ops.page_width).to be_within(EPS).of(40 * MM)
+      expect(ops.page_height).to be_within(EPS).of(60 * MM)
       # Short options
       ops = ap.parse(['-w', '0.5in', '-h', '3.4375in'])
-      expect(ops.width).to be_within(EPS).of(0.5 * IN)
-      expect(ops.height).to be_within(EPS).of(3.4375 * IN)
+      expect(ops.page_width).to be_within(EPS).of(0.5 * IN)
+      expect(ops.page_height).to be_within(EPS).of(3.4375 * IN)
     end
 
     it 'can set the name of a label' do
@@ -128,7 +137,7 @@ RSpec.describe ArgParser do
       expect(ops.delta_y).to be_within(EPS).of(3.4375 * IN)
     end
 
-    it 'can set convert certain units' do
+    it 'can convert certain units' do
       # pt, mm, cm, dm, m, in, ft, yd
       units = %i[pt mm cm dm m in ft yd]
       units.each do |unit|

@@ -61,8 +61,8 @@ RSpec.describe Config do
   describe 'Reading XDG config files' do
     it 'can read from an xdg system config file' do
       config_yml = <<~YAML
-      width: 33mm
-      height: 101mm
+      page-width: 33mm
+      page-height: 101mm
       delta-x: -4mm
       delta-y: 1cm
       nlsep: '%%'
@@ -71,8 +71,8 @@ RSpec.describe Config do
       setup_test_file('/etc/xdg/labrat/config.yml', config_yml)
       hsh = Config.read('labrat', xdg: true, dir_prefix: SANDBOX_DIR)
       op = ArgParser.new.from_hash(hsh)
-      expect(op.width).to be_within(EPS).of(33 * MM)
-      expect(op.height).to be_within(EPS).of(101 * MM)
+      expect(op.page_width).to be_within(EPS).of(33 * MM)
+      expect(op.page_height).to be_within(EPS).of(101 * MM)
       expect(op.delta_x).to be_within(EPS).of(-4 * MM)
       expect(op.delta_y).to be_within(EPS).of(1 * CM)
       expect(op.nlsep).to eq('%%')
@@ -81,19 +81,20 @@ RSpec.describe Config do
 
     it 'can read from an XDG_CONFIG_DIRS xdg system directory config file' do
       config_yml = <<~YAML
-      width: 33mm
-      height: 101mm
+      page-width: 33mm
+      page-height: 101mm
       delta-x: -4mm
       delta-y: 1cm
       nlsep: '%%'
     YAML
       setup_test_file('/lib/junk/labrat/config.yml', config_yml)
       config2_yml = <<~YAML
-      width: 3cm
-      height: 10cm
+      page-width: 3cm
+      page-height: 10cm
       delta-x: -4pt
       printer: dymo4
-      label: avery1234
+      rows: 10
+      columns: 3
     YAML
       setup_test_file('/lib/lowjunk/labrat/config.yml', config2_yml)
 
@@ -101,21 +102,22 @@ RSpec.describe Config do
       ENV['XDG_CONFIG_DIRS'] = "/lib/junk:#{ENV['XDG_CONFIG_DIRS']}:/lib/lowjunk"
       hsh = Config.read('labrat', xdg: true, dir_prefix: SANDBOX_DIR)
       op = ArgParser.new.from_hash(hsh)
-      expect(op.width).to be_within(EPS).of(33 * MM)
-      expect(op.height).to be_within(EPS).of(101 * MM)
+      expect(op.page_width).to be_within(EPS).of(33 * MM)
+      expect(op.page_height).to be_within(EPS).of(101 * MM)
       expect(op.delta_x).to be_within(EPS).of(-4 * MM)
       expect(op.delta_y).to be_within(EPS).of(1 * CM)
       expect(op.nlsep).to eq('%%')
       # Since these were not specified in the high-priority config, but were in
       # the low-priority config, they get set.
       expect(op.printer).to eq('dymo4')
-      expect(op.label).to eq('avery1234')
+      expect(op.rows).to eq(10)
+      expect(op.columns).to eq(3)
     end
 
     it 'can read from an xdg system ENV-specified config file' do
       config_yml = <<~YAML
-      width: 33mm
-      height: 101mm
+      page-width: 33mm
+      page-height: 101mm
       delta-x: -4mm
       delta-y: 1cm
       nlsep: '%%'
@@ -125,8 +127,8 @@ RSpec.describe Config do
       setup_test_file(ENV['LABRAT_SYS_CONFIG'], config_yml)
       hsh = Config.read('labrat', xdg: true, dir_prefix: SANDBOX_DIR)
       op = ArgParser.new.from_hash(hsh)
-      expect(op.width).to be_within(EPS).of(33 * MM)
-      expect(op.height).to be_within(EPS).of(101 * MM)
+      expect(op.page_width).to be_within(EPS).of(33 * MM)
+      expect(op.page_height).to be_within(EPS).of(101 * MM)
       expect(op.delta_x).to be_within(EPS).of(-4 * MM)
       expect(op.delta_y).to be_within(EPS).of(1 * CM)
       expect(op.nlsep).to eq('%%')
@@ -135,8 +137,8 @@ RSpec.describe Config do
 
     it 'can read from an xdg user config file' do
       config_yml = <<~YAML
-      width: 33mm
-      height: 101mm
+      page-width: 33mm
+      page-height: 101mm
       delta-x: -4mm
       delta-y: 1cm
       nlsep: '%%'
@@ -145,8 +147,8 @@ RSpec.describe Config do
       setup_test_file("/home/#{ENV['USER']}/.config/labrat/config.yml", config_yml)
       hsh = Config.read('labrat', xdg: true, dir_prefix: SANDBOX_DIR)
       op = ArgParser.new.from_hash(hsh)
-      expect(op.width).to be_within(EPS).of(33 * MM)
-      expect(op.height).to be_within(EPS).of(101 * MM)
+      expect(op.page_width).to be_within(EPS).of(33 * MM)
+      expect(op.page_height).to be_within(EPS).of(101 * MM)
       expect(op.delta_x).to be_within(EPS).of(-4 * MM)
       expect(op.delta_y).to be_within(EPS).of(1 * CM)
       expect(op.nlsep).to eq('%%')
@@ -155,8 +157,8 @@ RSpec.describe Config do
 
     it 'can read from an xdg ENV-specified user config file' do
       config_yml = <<~YAML
-      width: 33mm
-      height: 101mm
+      page-width: 33mm
+      page-height: 101mm
       delta-x: -4mm
       delta-y: 1cm
       nlsep: '%%'
@@ -166,8 +168,8 @@ RSpec.describe Config do
       setup_test_file(ENV['LABRAT_CONFIG'], config_yml)
       hsh = Config.read('labrat', xdg: true, dir_prefix: SANDBOX_DIR)
       op = ArgParser.new.from_hash(hsh)
-      expect(op.width).to be_within(EPS).of(33 * MM)
-      expect(op.height).to be_within(EPS).of(101 * MM)
+      expect(op.page_width).to be_within(EPS).of(33 * MM)
+      expect(op.page_height).to be_within(EPS).of(101 * MM)
       expect(op.delta_x).to be_within(EPS).of(-4 * MM)
       expect(op.delta_y).to be_within(EPS).of(1 * CM)
       expect(op.nlsep).to eq('%%')
@@ -176,8 +178,8 @@ RSpec.describe Config do
 
     it 'can merge an xdg user config into an xdg system config file' do
       sys_config_yml = <<~YAML
-      width: 33mm
-      height: 101mm
+      page-width: 33mm
+      page-height: 101mm
       delta-x: -4mm
       delta-y: 1cm
       nlsep: '%%'
@@ -185,14 +187,14 @@ RSpec.describe Config do
     YAML
       setup_test_file('/etc/xdg/labrat/config.yml', sys_config_yml)
       usr_config_yml = <<~YAML
-      height: 102mm
+      page-height: 102mm
       delta-x: -3mm
     YAML
       setup_test_file("/home/#{ENV['USER']}/.config/labrat/config.yml", usr_config_yml)
       hsh = Config.read('labrat', xdg: true, dir_prefix: SANDBOX_DIR)
       op = ArgParser.new.from_hash(hsh)
-      expect(op.width).to be_within(EPS).of(33 * MM)
-      expect(op.height).to be_within(EPS).of(102 * MM)
+      expect(op.page_width).to be_within(EPS).of(33 * MM)
+      expect(op.page_height).to be_within(EPS).of(102 * MM)
       expect(op.delta_x).to be_within(EPS).of(-3 * MM)
       expect(op.delta_y).to be_within(EPS).of(1 * CM)
       expect(op.nlsep).to eq('%%')
@@ -201,8 +203,8 @@ RSpec.describe Config do
 
     it 'can read from an XDG_CONFIG_HOME xdg user directory config file' do
       config_yml = <<~YAML
-      width: 33mm
-      height: 101mm
+      page-width: 33mm
+      page-height: 101mm
       delta-x: -4mm
       delta-y: 1cm
       nlsep: '%%'
@@ -213,8 +215,8 @@ RSpec.describe Config do
       ENV['XDG_CONFIG_HOME'] = "~/.foncig"
       hsh = Config.read('labrat', xdg: true, dir_prefix: SANDBOX_DIR)
       op = ArgParser.new.from_hash(hsh)
-      expect(op.width).to be_within(EPS).of(33 * MM)
-      expect(op.height).to be_within(EPS).of(101 * MM)
+      expect(op.page_width).to be_within(EPS).of(33 * MM)
+      expect(op.page_height).to be_within(EPS).of(101 * MM)
       expect(op.delta_x).to be_within(EPS).of(-4 * MM)
       expect(op.delta_y).to be_within(EPS).of(1 * CM)
       expect(op.nlsep).to eq('%%')
@@ -224,8 +226,8 @@ RSpec.describe Config do
   describe 'Reading classic config files' do
     it 'can read from an classic system config file' do
       config_yml = <<~YAML
-      width: 33mm
-      height: 101mm
+      page-width: 33mm
+      page-height: 101mm
       delta-x: -4mm
       delta-y: 1cm
       nlsep: '%%'
@@ -235,8 +237,8 @@ RSpec.describe Config do
       setup_test_file(ENV['LABRAT_SYS_CONFIG'], config_yml)
       hsh = Config.read('labrat', xdg: false, dir_prefix: SANDBOX_DIR)
       op = ArgParser.new.from_hash(hsh)
-      expect(op.width).to be_within(EPS).of(33 * MM)
-      expect(op.height).to be_within(EPS).of(101 * MM)
+      expect(op.page_width).to be_within(EPS).of(33 * MM)
+      expect(op.page_height).to be_within(EPS).of(101 * MM)
       expect(op.delta_x).to be_within(EPS).of(-4 * MM)
       expect(op.delta_y).to be_within(EPS).of(1 * CM)
       expect(op.nlsep).to eq('%%')
@@ -245,8 +247,8 @@ RSpec.describe Config do
 
     it "can read from an classic user config file in ENV['LABRAT_CONFIG']" do
       config_yml = <<~YAML
-      width: 33mm
-      height: 101mm
+      page-width: 33mm
+      page-height: 101mm
       delta-x: -4mm
       delta-y: 1cm
       nlsep: '%%'
@@ -256,8 +258,8 @@ RSpec.describe Config do
       setup_test_file(ENV['LABRAT_CONFIG'], config_yml)
       hsh = Config.read('labrat', xdg: false, dir_prefix: SANDBOX_DIR)
       op = ArgParser.new.from_hash(hsh)
-      expect(op.width).to be_within(EPS).of(33 * MM)
-      expect(op.height).to be_within(EPS).of(101 * MM)
+      expect(op.page_width).to be_within(EPS).of(33 * MM)
+      expect(op.page_height).to be_within(EPS).of(101 * MM)
       expect(op.delta_x).to be_within(EPS).of(-4 * MM)
       expect(op.delta_y).to be_within(EPS).of(1 * CM)
       expect(op.nlsep).to eq('%%')
@@ -266,8 +268,8 @@ RSpec.describe Config do
 
     it 'can read from an classic user rc-style config file in HOME' do
       config_yml = <<~YAML
-      width: 33mm
-      height: 101mm
+      page-width: 33mm
+      page-height: 101mm
       delta-x: -4mm
       delta-y: 1cm
       nlsep: '%%'
@@ -276,8 +278,8 @@ RSpec.describe Config do
       setup_test_file('~/.labratrc', config_yml)
       hsh = Config.read('labrat', xdg: false, dir_prefix: SANDBOX_DIR)
       op = ArgParser.new.from_hash(hsh)
-      expect(op.width).to be_within(EPS).of(33 * MM)
-      expect(op.height).to be_within(EPS).of(101 * MM)
+      expect(op.page_width).to be_within(EPS).of(33 * MM)
+      expect(op.page_height).to be_within(EPS).of(101 * MM)
       expect(op.delta_x).to be_within(EPS).of(-4 * MM)
       expect(op.delta_y).to be_within(EPS).of(1 * CM)
       expect(op.nlsep).to eq('%%')
@@ -286,8 +288,8 @@ RSpec.describe Config do
 
     it 'can read from an classic ~/.labrat config dir in HOME' do
       config_yml = <<~YAML
-      width: 33mm
-      height: 101mm
+      page-width: 33mm
+      page-height: 101mm
       delta-x: -4mm
       delta-y: 1cm
       nlsep: '%%'
@@ -296,8 +298,8 @@ RSpec.describe Config do
       setup_test_file('~/.labrat/config', config_yml)
       hsh = Config.read('labrat', xdg: false, dir_prefix: SANDBOX_DIR)
       op = ArgParser.new.from_hash(hsh)
-      expect(op.width).to be_within(EPS).of(33 * MM)
-      expect(op.height).to be_within(EPS).of(101 * MM)
+      expect(op.page_width).to be_within(EPS).of(33 * MM)
+      expect(op.page_height).to be_within(EPS).of(101 * MM)
       expect(op.delta_x).to be_within(EPS).of(-4 * MM)
       expect(op.delta_y).to be_within(EPS).of(1 * CM)
       expect(op.nlsep).to eq('%%')
@@ -306,8 +308,8 @@ RSpec.describe Config do
 
     it 'can read from classic system and user config files' do
       sys_config_yml = <<~YAML
-      width: 33mm
-      height: 101mm
+      page-width: 33mm
+      page-height: 101mm
       delta-x: -4mm
       delta-y: 1cm
       nlsep: '%%'
@@ -317,7 +319,7 @@ RSpec.describe Config do
       setup_test_file(ENV['LABRAT_SYS_CONFIG'], sys_config_yml)
 
       usr_config_yml = <<~YAML
-      height: 102mm
+      page-height: 102mm
       delta-x: -7mm
       delta-y: +30mm
       nlsep: '++'
@@ -325,8 +327,8 @@ RSpec.describe Config do
       setup_test_file('~/.labrat/config.yml', usr_config_yml)
       hsh = Config.read('labrat', xdg: false, dir_prefix: SANDBOX_DIR)
       op = ArgParser.new.from_hash(hsh)
-      expect(op.width).to be_within(EPS).of(33 * MM)
-      expect(op.height).to be_within(EPS).of(102 * MM)
+      expect(op.page_width).to be_within(EPS).of(33 * MM)
+      expect(op.page_height).to be_within(EPS).of(102 * MM)
       expect(op.delta_x).to be_within(EPS).of(-7 * MM)
       expect(op.delta_y).to be_within(EPS).of(3 * CM)
       expect(op.nlsep).to eq('++')
