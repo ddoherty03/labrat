@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 
-SANDBOX_DIR = File.join(__dir__, 'support/sandbox')
-
 RSpec.describe Config do
   describe '#row_col' do
     describe 'Assume 1 row, 1 column' do

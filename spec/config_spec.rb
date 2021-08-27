@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 
-SANDBOX_DIR = File.join(__dir__, 'support/sandbox')
-
 RSpec.describe Config do
   before :each do
     # Save these, since they're not specific to this app.
@@ -17,14 +15,6 @@ RSpec.describe Config do
     ENV['LABRAT_SYS_CONFIG'] = nil
     ENV['LABRAT_CONFIG'] = nil
     FileUtils.rm_rf(SANDBOX_DIR)
-  end
-
-  def setup_test_file(path, content)
-    path = File.expand_path(path)
-    test_path = File.join(SANDBOX_DIR, path)
-    dir_part = File.dirname(test_path)
-    FileUtils.mkdir_p(dir_part) unless Dir.exist?(dir_part)
-    File.write(test_path, content)
   end
 
   describe 'Basic YAML reading' do
