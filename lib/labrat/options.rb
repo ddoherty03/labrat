@@ -52,7 +52,7 @@ module Labrat
       self.nlsep = init[:nlsep] || '++'
       # Output attributes
       self.printer = init[:printer] || 'dymo'
-      self.out_file = init[:out_file] || 'label.pdf'
+      self.out_file = init[:out_file] || 'labrat.pdf'
       self.print_command = init[:print_command] || 'lpr -P %p %o'
       self.view_command = init[:view_command] || 'qpdfview --unique --instance labrat %o'
       self.view = init.fetch(:view, false)
