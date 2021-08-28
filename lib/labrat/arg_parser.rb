@@ -74,6 +74,7 @@ module Labrat
       out_file_option
       print_and_view_command_options
       view_option
+      template_option
       landscape_option
       portrait_option
       verbose_option
@@ -366,6 +367,16 @@ module Labrat
       # Boolean switch.
       parser.on("-V", "--[no-]view", "View rather than print") do |v|
         options.view = v
+      end
+    end
+
+    # Ignore any content from in-file, stdin, or the command-line and just
+    # produce a template showing the boundaries of each label on a page of
+    # labels.
+    def template_option
+      parser.on("-T", "--[no-]template",
+                "Print a template of a page of labels and ignore any content.") do |t|
+        options.template = t
       end
     end
 

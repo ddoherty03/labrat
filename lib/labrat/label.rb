@@ -50,23 +50,25 @@ module Labrat
         #   warn "[box_x, box_y] = [#{box_x}pt,#{box_y}pt]"
         #   warn "[box_wd, box_ht] = [#{box_wd}pt,#{box_ht}pt]"
         # end
-        # pdf.grid.show_all
-        last_k = texts.size - 1
-        texts.each_with_index do |text, k|
-          row, col = row_col(k + 1)
-          pdf.grid(row, col).bounding_box do
-            bounds = pdf.bounds
-            box_wd = (bounds.right - bounds.left) - ops.left_pad - ops.right_pad
-            box_ht = (bounds.top - bounds.bottom) - ops.top_pad - ops.bottom_pad
-            box_x = ops.left_pad + ops.delta_x
-            box_y = ops.bottom_pad + box_ht + ops.delta_y
-            pdf.stroke_bounds
-            pdf.font ops.font_name, style: ops.font_style.to_sym, size: ops.font_size.to_f
-            pdf.text_box(text, width: box_wd, height: box_ht,
-                         align: ops.h_align, valign: ops.v_align,
-                         overflow: :truncate, at: [box_x, box_y])
-            # binding.break if k == 0
-            pdf.start_new_page if needs_new_page?(k, last_k)
+        if ops.template
+          pdf.grid.show_all
+        else
+          last_k = texts.size - 1
+          texts.each_with_index do |text, k|
+            row, col = row_col(k + 1)
+            pdf.grid(row, col).bounding_box do
+              bounds = pdf.bounds
+              box_wd = (bounds.right - bounds.left) - ops.left_pad - ops.right_pad
+              box_ht = (bounds.top - bounds.bottom) - ops.top_pad - ops.bottom_pad
+              box_x = ops.left_pad + ops.delta_x
+              box_y = ops.bottom_pad + box_ht + ops.delta_y
+              pdf.stroke_bounds
+              pdf.font ops.font_name, style: ops.font_style.to_sym, size: ops.font_size.to_f
+              pdf.text_box(text, width: box_wd, height: box_ht,
+                           align: ops.h_align, valign: ops.v_align,
+                           overflow: :truncate, at: [box_x, box_y])
+              pdf.start_new_page if needs_new_page?(k, last_k)
+            end
           end
         end
       end

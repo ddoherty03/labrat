@@ -17,7 +17,7 @@ module Labrat
                   :font_name, :font_style, :font_size,
                   :file, :nlsep,
                   :printer, :out_file, :print_command, :view_command, :view,
-                  :verbose, :msg
+                  :template, :verbose, :msg
 
     # Initialize with an optional hash of default values for the attributes.
     def initialize(**init)
@@ -56,6 +56,7 @@ module Labrat
       self.print_command = init[:print_command] || 'lpr -P %p %o'
       self.view_command = init[:view_command] || 'qpdfview --unique --instance labrat %o'
       self.view = init.fetch(:view, false)
+      self.template = init.fetch(:landscape, false)
       self.verbose = init.fetch(:verbose, false)
       self.msg = init[:msg] || nil
     end
@@ -114,6 +115,7 @@ module Labrat
         print_command: print_command,
         view_command: view_command,
         view: view,
+        template: template,
         verbose: verbose,
         msg: msg,
       }
