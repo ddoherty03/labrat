@@ -78,6 +78,18 @@ module Labrat
       send("#{att}")
     end
 
+    # For testing, return an Array of the attributes.
+    def self.attrs
+      instance_methods(false).grep(/\A[a-z_]+=\Z/).
+        map { |a| a.to_s.sub(/=\z/, '') }
+    end
+
+    # For testing, return an Array of the flags-form of the attributes, i.e.,
+    # with the underscores, _, replaced with hyphens.
+    def self.flags
+      attrs.map { |a| a.gsub('_', '-') }
+    end
+
     # Return a hash of the values in this Options object.
     def to_hash
       {
