@@ -11,11 +11,37 @@ RSpec.describe ArgParser do
       expect(op).to be_instance_of(Options)
       expect(op.page_width).to be_within(EPS).of(24 * MM)
       expect(op.page_height).to be_within(EPS).of(87 * MM)
+      expect(op.left_page_margin).to be_within(EPS).of(5 * MM)
+      expect(op.right_page_margin).to be_within(EPS).of(5 * MM)
+      expect(op.top_page_margin).to be_within(EPS).of(0 * MM)
+      expect(op.bottom_page_margin).to be_within(EPS).of(0 * MM)
+      expect(op.rows).to eq(1)
+      expect(op.columns).to eq(1)
+      expect(op.row_gap).to be_within(EPS).of(0 * MM)
+      expect(op.column_gap).to be_within(EPS).of(0 * MM)
+      expect(op.start_label).to eq(1)
+      expect(op.landscape).to be(true)
+      expect(op.h_align).to eq(:center)
+      expect(op.v_align).to eq(:center)
+      expect(op.left_pad).to be_within(EPS).of(4.5 * MM)
+      expect(op.right_pad).to be_within(EPS).of(4.5 * MM)
+      expect(op.top_pad).to be_within(EPS).of(0 * MM)
+      expect(op.bottom_pad).to be_within(EPS).of(0 * MM)
       expect(op.delta_x).to be_within(EPS).of(0 * MM)
       expect(op.delta_y).to be_within(EPS).of(0 * MM)
-      expect(op.printer).to eq('dymo')
-      expect(op.nlsep).to eq('++')
+      expect(op.font_name).to eq('Helvetica')
+      expect(op.font_style).to eq(:normal)
+      expect(op.font_size).to eq(12)
       expect(op.file).to be_nil
+      expect(op.nlsep).to eq('++')
+      expect(op.printer).to eq('dymo')
+      expect(op.out_file.class).to eq(String)
+      expect(op.print_command.class).to eq(String)
+      expect(op.view_command.class).to eq(String)
+      expect(op.view).to be(false)
+      expect(op.template).to be(false)
+      expect(op.verbose).to be(false)
+      expect(op.msg).to be_nil
     end
 
     it 'can take an in initial hash to merge into' do
@@ -86,6 +112,7 @@ RSpec.describe ArgParser do
       expect(help).to include('--out-file')
       expect(help).to include('--print-command')
       expect(help).to include('--view-command')
+      expect(help).to include('--[no-]template')
       expect(help).to include('--[no-]view')
       expect(help).to include('--[no-]verbose')
     end
@@ -237,5 +264,4 @@ RSpec.describe ArgParser do
       expect(ops.verbose).to be false
     end
   end
-
 end
