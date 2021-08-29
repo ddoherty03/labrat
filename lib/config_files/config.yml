@@ -1,0 +1,121 @@
+# Sample user-level config file for the installing user.
+
+# These settings correspond to the default values for all the options.  To
+# change the default for you, uncomment a setting and set it to your desired
+# default.  You can override these with command-line flags, such as
+# --page-width=44mm.
+
+# Any option that takes a dimension can use pt, mm, cm, dm, m, in, ft, or yd.
+# A dimension without a unit attached designates Adobe points, i.e., 1/72in.
+
+# The following describe the size of the labels to be printed indirectly by
+# describing the size of the page on which they are printed, the page margins,
+# the number of rows and columns, and the size of the gap between rows and
+# columns, and the orientation of printing within each grid.  Each label is
+# printed within a grid element resulting from the foregoing.  These defaults
+# are based on a Dymo file folder label, which prints only one per page and is
+# printed in landscape.
+
+# page-width:  24mm
+# page-height: 87mm
+# left-page-margin: 5mm
+# right-page-margin: 5.mm
+# top-page-margin: 0mm
+# bottom-page-margin: 0.mm
+# rows: 1
+# columns: 1
+# row-gap: 0mm
+# column-gap: 0mm
+# landscape: true
+
+# Rather than setting the above attribytes in an ad-hoc manner, it is probably
+# better to define a label name in the labeldb.yml file (either in the user
+# config directory ~/.config/labrat/labeldb.yml or in the system config
+# directory /etc/xdg/labrat/labeldb.yml) and then just specify a label name
+# here or on the command-line.  The name of a label with its dimensions to be
+# used by default.
+
+# For example, this is a defined label type and the its dimensions are the
+# default for labrat.
+#
+# label: dymo30327
+
+# Each of the following deal with formatting at the label level.  What you see
+# is the default.
+
+# These can be one of (1) left, (2) right, or (3) center.  They determine the
+# alignment of the label text within a label.
+#
+# h-align: center
+# v-align: center
+
+# Dimensions for the padding within each label.
+#
+# left-pad: 4.5mm
+# right-pad: 4.5mm
+# top-pad:  0mm
+# bottom-pad: 0mm
+
+# On a multi-label page of labels, you may want to start printing in a label
+# slot other than the first, e.g., if you are printing on a partially-used
+# sheet.  The labels are numbered left to right, top to bottom, starting with
+# 1.
+#
+# start-label: 1
+
+# The name of the font to use to print the text of the label.
+#
+# font_name: Helvetica
+# The font style can be one of (1) normal, (2) bold, (3) italic, or (4)
+# bold-italic.
+#
+# font-style: normal
+# The size of the font to use.
+#
+# font-size: 12pt
+
+# These dimensions should normally be left at zero, but are here to make up
+# for defects in printer drivers that fail to print a pdf exactly as it is
+# shown in a pdf previewer.  They nudge the final label text left or right
+# (delta_x) or up or down (delta_y) to compensate for any such defects.
+#
+# delta-x:  0
+# delta-y: 0
+
+# A file from which to read label texts, one per blank-line separated
+# paragraph.  A value of null here means no input file, and it would be
+# unusual to define one in the configuration file, but if you wanted to you
+# could put the path name here and labrat will perform ~ expansion on it.
+# Relative paths are relative to the directory from which labrat is run.
+#
+# file: null
+
+# A string sequence that is interpreted as a line-break can be defined.  Such
+# a sequence is particularly helpful when you provide the label text on the
+# command-line, though it will be applied to file-read label texts as well.
+# nlsep: '++'
+
+# The name of the printer to use in substituting for the %p placeholder in the
+# print-command setting below.
+#
+# printer: 'dymo'
+
+# The file to write the pdf on.  It is used in substituting for the %o
+# placeholder in the print-command and view-command settings below.
+#
+# out-file: labrat.pdf
+
+# These are the commands for printing and viewing the out-file.  The
+# view-command is something you may want to change, depending on your
+# preferences, though qpdfview is quite good in that it provides a tabbed view
+# and allows a unique instance to be dedicated to labrat with the --unique and
+# --instance flags.
+#
+# print-command: lpr -P %p %o
+# view-command: qpdfview --unique --instance labrat %o
+
+# The following correspond to the -V, -T, and -v flags respectively.
+#
+# view: false
+# template: false
+# verbose: false
