@@ -1,0 +1,7 @@
+1. Include aliases for labels in the db, or perhaps allow one label command to
+   include another label command, provided infinite recursion does not occur.
+   Perhaps check depth of reference?
+2. Include a --list command to list all known label types.
+3. Include verbose diagnostics for each phase of label production: read
+   configs (say which were found), read labeldb (say where found), read
+   command-line arguments (echo those found), echo non-opts argument.
