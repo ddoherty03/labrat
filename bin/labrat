@@ -19,7 +19,9 @@ end
 non_ops = ARGV.grep_v(/\A--?/)
 texts = non_ops.empty? ? [] : [non_ops.join(' ')]
 texts +=
-  if ops.file
+  if ops.template
+    []
+  elsif ops.file
     Labrat.read_label_texts(ops.file, ops.nlsep)
   elsif non_ops.empty?
     Labrat.read_label_texts(nil, ops.nlsep)
