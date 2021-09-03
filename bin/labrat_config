@@ -1,6 +1,0 @@
-#! /usr/bin/env ruby
-
-# Install system and sample user config files into XDG config locations.  Only
-#  install if those direcotries can be created and written to.  Thus, the
-#  system config will only get installed if the script is run with sudo, but
-#  the use config should always get installed.

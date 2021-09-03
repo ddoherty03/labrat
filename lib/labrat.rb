@@ -2,6 +2,7 @@
 
 require 'active_support'
 require 'active_support/core_ext'
+require 'fat_core/enumerable'
 require 'prawn'
 require 'prawn/measurement_extensions'
 require 'optparse'

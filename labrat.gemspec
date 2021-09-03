@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
-require_relative "lib/labrat/version"
+# require 'fat_core'
+require_relative "lib/labrat"
 
 Gem::Specification.new do |spec|
   spec.name          = "labrat"
@@ -24,9 +25,10 @@ Gem::Specification.new do |spec|
   spec.bindir        = 'bin'
   spec.executables   = spec.files.grep(%r{\Abin/}) { |f| File.basename(f) }
   spec.require_paths = ["lib"]
-  spec.post_install_message = 'To install config files, run [sudo] labrat_config.'
+  spec.post_install_message = 'To install config and label database files, run [sudo] labrat-install g.'
   spec.add_dependency "prawn", "~> 2.0"
   spec.add_dependency "activesupport"
+  spec.add_dependency "fat_core"
 
   # Note: pry-byebug requires that pry be within the '0.13.0' version box.
   spec.add_development_dependency 'pry', '~> 0.13.0'

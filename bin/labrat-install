@@ -1,0 +1,44 @@
+#! /usr/bin/ruby
+
+puts "LOAD_PATH:"
+$:.each { |p| puts p }
+
+require 'pry'
+
+begin
+  require 'fileutils'
+
+  binding.pry
+  sys_src_path = File.join(__dir__, '../lib/config_files/labeldb.yml')
+  sys_src_path = File.expand_path(sys_src_path)
+  sys_dest_path = '/etc/xdg/labrat/labeldb.yml'
+  sys_dest_dir = File.dirname(sys_dest_path)
+
+  FileUtils.mkdir_p(sys_dest_dir) unless Dir.exist?(sys_dest_dir)
+  FileUtils.cp(sys_src_path, sys_dest_path)
+
+  # if File.writable(sys_dest_path)
+  # else
+  #   warn "To install system labeldb, run as sudo"
+  # end
+
+  usr_src_path = File.join(__dir__, '../lib/config_files/labeldb_usr.yml')
+  usr_src_path = File.expand_path(usr_src_path)
+  usr_dest_path = File.expand_path('~/.config/labrat/labeldb.yml')
+  usr_dest_dir = File.dirname(usr_dest_path)
+
+  FileUtils.mkdir_p(usr_dest_dir) unless Dir.exist?(usr_dest_dir)
+  FileUtils.cp(usr_src_path, usr_dest_path)
+
+# if File.writable('/etc/xdg')
+#   FileUtils.mkdir_p('/etc/xdg/labrat')
+#   FileUtils.cp(sys_src_path, sys_dest_path)
+# else
+#   warn "To install system labeldb, run as sudo"
+# end
+
+rescue Errno::EACCES => e
+  warn "To install system labeldb, run as sudo"
+rescue => e
+  fail e
+end
