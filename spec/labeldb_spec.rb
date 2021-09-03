@@ -5,9 +5,9 @@ RSpec.describe LabelDb do
     # Save these, since they're not specific to this app.
     @xdg_config_dirs = ENV['XDG_CONFIG_DIRS']
     @xdg_config_home = ENV['XDG_CONFIG_HOME']
-    @sys_db_path = File.join(__dir__, '../lib/config_files/system_label_db.yml')
+    @sys_db_path = File.join(__dir__, '../lib/config_files/labeldb.yml')
     @sys_db = File.read(@sys_db_path)
-    @user_db_path = File.join(__dir__, '../lib/config_files/user_label_db.yml')
+    @user_db_path = File.join(__dir__, '../lib/config_files/labeldb_usr.yml')
     @user_db = File.read(@user_db_path)
   end
 

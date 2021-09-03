@@ -3,19 +3,6 @@
 # out-file, etc., only things such as page and label dimensions that would
 # apply to all users of a particular label type.
 
-avery5160:
-  page-width: 8.5in
-  page-height: 11in
-  rows: 10
-  columns: 3
-  top-page-margin: 13mm
-  bottom-page-margin: 12mm
-  left-page-margin: 5mm
-  right-page-margin: 5mm
-  row-gap: 0mm
-  column-gap: 3mm
-  landscape: false
-
 dymo30327:
   page-width: 24mm
   page-height: 87mm
@@ -30,3 +17,846 @@ dymo30327:
   left-pad: 2mm
   right-pad: 2mm
   landscape: true
+
+# Compatible with: 15660, 15700, 15960, 16460, 16790, 18160, 18260, 18660,
+# 22837, 28660, 32660, 38260, 45160, 48160, 48260, 48360, 48460, 48860, 48960,
+# 5136, 5260, 55160, 5520, 55360, 5620, 5630, 5660, 58160, 58660, 5960, 6240,
+# 6521, 6525, 6526, 6585, 75160, 80509, 8160, 8215, 8250, 8460, 85560, 8620,
+# 8660, 88560, 8860, 8920, 95520, 95915, Presta 94200
+avery5160:
+  page-width: 8.5in
+  page-height: 11in
+  rows: 10
+  columns: 3
+  top-page-margin: 13mm
+  bottom-page-margin: 12mm
+  left-page-margin: 5mm
+  right-page-margin: 5mm
+  row-gap: 0mm
+  column-gap: 3mm
+  landscape: false
+
+avery15660:
+  label: avery5160
+
+avery15700:
+  label: avery5160
+
+avery15960:
+  label: avery5160
+
+avery16460:
+  label: avery5160
+
+avery16790:
+  label: avery5160
+
+avery18160:
+  label: avery5160
+
+avery18260:
+  label: avery5160
+
+avery18660:
+  label: avery5160
+
+avery22837:
+  label: avery5160
+
+avery28660:
+  label: avery5160
+
+avery32660:
+  label: avery5160
+
+avery38260:
+  label: avery5160
+
+avery45160:
+  label: avery5160
+
+avery48160:
+  label: avery5160
+
+avery48260:
+  label: avery5160
+
+avery48360:
+  label: avery5160
+
+avery48460:
+  label: avery5160
+
+avery48860:
+  label: avery5160
+
+avery48960:
+  label: avery5160
+
+avery5136:
+  label: avery5160
+
+avery5260:
+  label: avery5160
+
+avery55160:
+  label: avery5160
+
+avery5520:
+  label: avery5160
+
+avery55360:
+  label: avery5160
+
+avery5620:
+  label: avery5160
+
+avery5630:
+  label: avery5160
+
+avery5660:
+  label: avery5160
+
+avery58160:
+  label: avery5160
+
+avery58660:
+  label: avery5160
+
+avery5960:
+  label: avery5160
+
+avery6240:
+  label: avery5160
+
+avery6521:
+  label: avery5160
+
+avery6525:
+  label: avery5160
+
+avery6526:
+  label: avery5160
+
+avery6585:
+  label: avery5160
+
+avery75160:
+  label: avery5160
+
+avery80509:
+  label: avery5160
+
+avery8160:
+  label: avery5160
+
+avery8215:
+  label: avery5160
+
+avery8250:
+  label: avery5160
+
+avery8460:
+  label: avery5160
+
+avery85560:
+  label: avery5160
+
+avery8620:
+  label: avery5160
+
+avery8660:
+  label: avery5160
+
+avery88560:
+  label: avery5160
+
+avery8860:
+  label: avery5160
+
+avery8920:
+  label: avery5160
+
+avery95520:
+  label: avery5160
+
+avery95915:
+  label: avery5160
+
+presta94200:
+  label: avery5160
+
+# Compatible with: 15513, 15702, 16791, 18163, 18863, 38363, 38863, 48163,
+# 48263, 48363, 48463, 48863, 5137, 5263, 55163, 5523, 55463, 58163, 5963,
+# 6427, 6527, 6528, 8163, 8253, 8363, 8463, 85563, 8563, 8923, 95523, 95910,
+# 95945
+avery5163:
+  page-width: 8.5in
+  page-height: 11in
+  rows: 5
+  columns: 2
+  top-page-margin: 12mm
+  bottom-page-margin: 13mm
+  left-page-margin: 4mm
+  right-page-margin: 4mm
+  row-gap: 0mm
+  column-gap: 5mm
+  landscape: false
+
+avery15513::
+  label: avery5163
+
+  label: avery5163
+
+avery15702:
+  label: avery5163
+
+avery16791:
+  label: avery5163
+
+avery18163:
+  label: avery5163
+
+avery18863:
+  label: avery5163
+
+avery38363:
+  label: avery5163
+
+avery38863:
+  label: avery5163
+
+avery48163:
+  label: avery5163
+
+avery48263:
+  label: avery5163
+
+avery48363:
+  label: avery5163
+
+avery48463:
+  label: avery5163
+
+avery48863:
+  label: avery5163
+
+avery5137:
+  label: avery5163
+
+avery5263:
+  label: avery5163
+
+avery55163:
+  label: avery5163
+
+avery5523:
+  label: avery5163
+
+avery55463:
+  label: avery5163
+
+avery58163:
+  label: avery5163
+
+avery5963:
+  label: avery5163
+
+avery6427:
+  label: avery5163
+
+avery6527:
+  label: avery5163
+
+avery6528:
+  label: avery5163
+
+avery8163:
+  label: avery5163
+
+avery8253:
+  label: avery5163
+
+avery8363:
+  label: avery5163
+
+avery8463:
+  label: avery5163
+
+avery85563:
+  label: avery5163
+
+avery8563:
+  label: avery5163
+
+avery8923:
+  label: avery5163
+
+avery95523:
+  label: avery5163
+
+avery95910:
+  label: avery5163
+
+avery95945:
+  label: avery5163
+
+# Compatible with: 45366, 48266, 48366, 5029, 5566, 6505, 75366, 8066, 8366,
+# 8478, 8590, 8593, Presta 94210
+avery5366:
+  page-width: 8.5in
+  page-height: 11in
+  rows: 15
+  columns: 2
+  top-page-margin: 12mm
+  bottom-page-margin: 13mm
+  left-page-margin: 13.5mm
+  right-page-margin: 13.5mm
+  row-gap: 0mm
+  column-gap: 14.5mm
+  landscape: false
+
+avery45366:
+  label: avery5366
+
+avery48266:
+  label: avery5366
+
+avery48366:
+  label: avery5366
+
+avery5029:
+  label: avery5366
+
+avery5566:
+  label: avery5366
+
+avery6505:
+  label: avery5366
+
+avery75366:
+  label: avery5366
+
+avery8066:
+  label: avery5366
+
+avery8366:
+  label: avery5366
+
+avery8478:
+  label: avery5366
+
+avery8590:
+  label: avery5366
+
+avery8593:
+  label: avery5366
+
+presta94210:
+  label: avery5366
+
+# Compatible with: 15264, 45464, 48264, 48464, 48864, 5264, 55164, 5524,
+# 55464, 58164, 6436, 8164, 8254, 8464, 8564, 95905, 95940
+avery5164:
+  page-width: 8.5in
+  page-height: 11in
+  rows: 3
+  columns: 2
+  top-page-margin: 12.5mm
+  bottom-page-margin: 13mm
+  left-page-margin: 4mm
+  right-page-margin: 4mm
+  row-gap: 0mm
+  column-gap: 5mm
+  landscape: false
+
+avery15264:
+  label: avery5164
+
+avery45464:
+  label: avery5164
+
+avery48264:
+  label: avery5164
+
+avery48464:
+  label: avery5164
+
+avery48864:
+  label: avery5164
+
+avery5264:
+  label: avery5164
+
+avery55164:
+  label: avery5164
+
+avery5524:
+  label: avery5164
+
+avery55464:
+  label: avery5164
+
+avery58164:
+  label: avery5164
+
+avery6436:
+  label: avery5164
+
+avery8164:
+  label: avery5164
+
+avery8254:
+  label: avery5164
+
+avery8464:
+  label: avery5164
+
+avery8564:
+  label: avery5164
+
+avery95905:
+  label: avery5164
+
+avery95940:
+  label: avery5164
+
+# Compatible with: 15695, 18195, 18294, 18695, 38667, 42895, 48335, 5155,
+# 6430, 6520, 6523, 6524, 8195, 88695, Presta 94208
+avery5195:
+  page-width: 8.5in
+  page-height: 11in
+  rows: 15
+  columns: 4
+  top-page-margin: 14mm
+  bottom-page-margin: 14mm
+  left-page-margin: 7.5mm
+  right-page-margin: 8mm
+  row-gap: 0mm
+  column-gap: 7.7mm
+  landscape: false
+
+avery15695:
+  label: avery5195
+
+avery18195:
+  label: avery5195
+
+avery18294:
+  label: avery5195
+
+avery18695:
+  label: avery5195
+
+avery38667:
+  label: avery5195
+
+avery42895:
+  label: avery5195
+
+avery48335:
+  label: avery5195
+
+avery5155:
+  label: avery5195
+
+avery6430:
+  label: avery5195
+
+avery6520:
+  label: avery5195
+
+avery6523:
+  label: avery5195
+
+avery6524:
+  label: avery5195
+
+avery8195:
+  label: avery5195
+
+avery88695:
+  label: avery5195
+
+presta94208:
+  label: avery5195
+
+# Compatible with: 15667, 18167, 18667, 48267, 48467, 48867, 5267, 5667, 5967,
+# 8167, 8667, 8867, 8927, 95667, Presta 36445, Presta 36446, Presta 36447,
+# Presta 36448, Presta 36449, Presta 36504, Presta 36505, Presta 36506, Presta
+# 36507, Presta 36508, Presta 36544, Presta 36545, Presta 36546, Presta 36547,
+# Presta 36548, Presta 94203
+avery5167:
+  page-width: 8.5in
+  page-height: 11in
+  rows: 20
+  columns: 4
+  top-page-margin: 12mm
+  bottom-page-margin: 13mm
+  left-page-margin: 7.5mm
+  right-page-margin: 8mm
+  row-gap: 0mm
+  column-gap: 7.45mm
+  landscape: false
+
+avery15667:
+  label: avery5167
+
+avery18167:
+  label: avery5167
+
+avery18667:
+  label: avery5167
+
+avery48267:
+  label: avery5167
+
+avery48467:
+  label: avery5167
+
+avery48867:
+  label: avery5167
+
+avery5267:
+  label: avery5167
+
+avery5667:
+  label: avery5167
+
+avery5967:
+  label: avery5167
+
+avery8167:
+  label: avery5167
+
+avery8667:
+  label: avery5167
+
+avery8867:
+  label: avery5167
+
+avery8927:
+  label: avery5167
+
+avery95667:
+  label: avery5167
+
+presta36445:
+  label: avery5167
+
+presta36446:
+  label: avery5167
+
+presta36447:
+  label: avery5167
+
+presta36448:
+  label: avery5167
+
+presta36449:
+  label: avery5167
+
+presta36504:
+  label: avery5167
+
+presta36505:
+  label: avery5167
+
+presta36506:
+  label: avery5167
+
+presta36507:
+  label: avery5167
+
+presta36508:
+  label: avery5167
+
+presta36544:
+  label: avery5167
+
+presta36545:
+  label: avery5167
+
+presta36546:
+  label: avery5167
+
+presta36547:
+  label: avery5167
+
+presta36548:
+  label: avery5167
+
+presta94203:
+  label: avery5167
+
+# Compatible with: 18262, 48462, 48862, 5262, 5522, 5654, 5962, 6445, 6455,
+# 8162, 8252, 8462, 95522, Presta 94206
+avery5162:
+  page-width: 8.5in
+  page-height: 11in
+  rows: 7
+  columns: 2
+  top-page-margin: 21mm
+  bottom-page-margin: 21.5mm
+  left-page-margin: 3.7mm
+  right-page-margin: 5mm
+  row-gap: 0mm
+  column-gap: 5mm
+  landscape: false
+
+avery18262:
+  label: avery5162
+
+avery48462:
+  label: avery5162
+
+avery48862:
+  label: avery5162
+
+avery5262:
+  label: avery5162
+
+avery5522:
+  label: avery5162
+
+avery5654:
+  label: avery5162
+
+avery5962:
+  label: avery5162
+
+avery6445:
+  label: avery5162
+
+avery6455:
+  label: avery5162
+
+avery8162:
+  label: avery5162
+
+avery8252:
+  label: avery5162
+
+avery8462:
+  label: avery5162
+
+avery95522:
+  label: avery5162
+
+presta94206:
+  label: avery5162
+
+# Compatible with: 5261, 5961, 8161, 8461, Presta 36450, Presta 36451, Presta
+# 36452, Presta 36453, Presta 36454, Presta 36509, Presta 36510, Presta 36511,
+# Presta 36512, Presta 36513, Presta 36549, Presta 36550, Presta 36551, Presta
+# 36552, Presta 36553, Presta 94202
+avery5161:
+  page-width: 8.5in
+  page-height: 11in
+  rows: 10
+  columns: 2
+  top-page-margin: 12mm
+  bottom-page-margin: 13mm
+  left-page-margin: 4.5mm
+  right-page-margin: 4mm
+  row-gap: 0mm
+  column-gap: 5mm
+  landscape: false
+
+avery5261:
+  label: avery5161
+
+avery5961:
+  label: avery5161
+
+avery8161:
+  label: avery5161
+
+avery8461:
+  label: avery5161
+
+presta36450:
+  label: avery5161
+
+presta36451:
+  label: avery5161
+
+presta36452:
+  label: avery5161
+
+presta36453:
+  label: avery5161
+
+presta36454:
+  label: avery5161
+
+presta36509:
+  label: avery5161
+
+presta36510:
+  label: avery5161
+
+presta36511:
+  label: avery5161
+
+presta36512:
+  label: avery5161
+
+presta36513:
+  label: avery5161
+
+presta36549:
+  label: avery5161
+
+presta36550:
+  label: avery5161
+
+presta36551:
+  label: avery5161
+
+presta36552:
+  label: avery5161
+
+presta36553:
+  label: avery5161
+
+presta94202:
+  label: avery5161
+
+# Compatible with: 5066, 5166, 5666, 5766, 5866, 5966, 6466, 6500
+avery5266:
+  page-width: 8.5in
+  page-height: 11in
+  rows: 15
+  columns: 2
+  top-page-margin: 12.5mm
+  bottom-page-margin: 13mm
+  left-page-margin: 13mm
+  right-page-margin: 14mm
+  row-gap: 0mm
+  column-gap: 14mm
+  landscape: false
+
+avery5066:
+  label: avery5266
+
+avery5166:
+  label: avery5266
+
+avery5666:
+  label: avery5266
+
+avery5766:
+  label: avery5266
+
+avery5866:
+  label: avery5266
+
+avery5966:
+  label: avery5266
+
+avery6466:
+  label: avery5266
+
+avery6500:
+  label: avery5266
+
+# Compatible with: 27950, 8168, 95935
+avery5168:
+  page-width: 8.5in
+  page-height: 11in
+  rows: 2
+  columns: 2
+  top-page-margin: 13mm
+  bottom-page-margin: 13mm
+  left-page-margin: 13mm
+  right-page-margin: 13mm
+  row-gap: 0mm
+  column-gap: 12.5mm
+  landscape: false
+
+avery27950:
+  label: avery5168
+
+avery8168:
+  label: avery5168
+
+avery95935:
+  label: avery5168
+
+# Compatible with: 15516, 18126, 48126, 5138, 5526, 5912, 5917, 6440, 8126,
+# 8426, 95526, 95900, 95930
+avery5126:
+  page-width: 8.5in
+  page-height: 11in
+  rows: 2
+  columns: 1
+  top-page-margin: 1mm
+  bottom-page-margin: 1mm
+  left-page-margin: 1mm
+  right-page-margin: 1mm
+  row-gap: 0mm
+  column-gap: 0mm
+  landscape: false
+
+avery15516:
+  label: avery5126
+
+avery18126:
+  label: avery5126
+
+avery48126:
+  label: avery5126
+
+avery5138:
+  label: avery5126
+
+avery5526:
+  label: avery5126
+
+avery5912:
+  label: avery5126
+
+avery5917:
+  label: avery5126
+
+avery6440:
+  label: avery5126
+
+avery8126:
+  label: avery5126
+
+avery8426:
+  label: avery5126
+
+avery95526:
+  label: avery5126
+
+avery95900:
+  label: avery5126
+
+avery95930:
+  label: avery5126
+
+# Compatible with: 5816, 5817, 5821
+avery5815:
+  page-width: 8.5in
+  page-height: 11in
+  rows: 4
+  columns: 2
+  top-page-margin: 13mm
+  bottom-page-margin: 12mm
+  left-page-margin: 4.5mm
+  right-page-margin: 4mm
+  row-gap: 0mm
+  column-gap: 4mm
+  landscape: false
+
+avery5816:
+  label: avery5815
+
+avery5817:
+  label: avery5815
+
+avery5821:
+  label: avery5815

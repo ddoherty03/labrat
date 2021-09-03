@@ -1,0 +1,24 @@
+# User database of label settings to override or augment system-level
+# settings.  For labels known from the system-level config, you might want to
+# add user-specific settings, such as the destination printer for that
+# particular label type.
+dymo30327:
+  printer-name: dymo
+
+# Or you might want a full definition of a label type not defined in the
+# system-level database.  Here is a commented-out definition of a common avery
+# label type that you can adapt for your own label type.  Just give it a
+# unique name unless you want to replace the system-level definition.
+
+# avery5160:
+#   page-width: 8.5in
+#   page-height: 11in
+#   rows: 10
+#   columns: 3
+#   top-page-margin: 13mm
+#   bottom-page-margin: 12mm
+#   left-page-margin: 5mm
+#   right-page-margin: 5mm
+#   row-gap: 0mm
+#   column-gap: 3mm
+#   landscape: false
