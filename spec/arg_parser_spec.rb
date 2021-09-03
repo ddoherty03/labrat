@@ -95,6 +95,7 @@ RSpec.describe ArgParser do
       expect(help).to include('--column-gap')
       expect(help).to include('--[no-]landscape')
       expect(help).to include('--start-label')
+      expect(help).to include('--list-labels')
       expect(help).to include('--h-align')
       expect(help).to include('--v-align')
       expect(help).to include('--left-pad')

@@ -64,6 +64,7 @@ module Labrat
       page_dimension_options
       page_margin_options
       label_name_option
+      list_labels_option
       align_options
       delta_options
       padding_options
@@ -200,11 +201,32 @@ module Labrat
         options.label = name.strip
         # Insert at this point the option args found in the Label.db
         lab_hash = LabelDb[name]
-        raise ConfigError,
-              "Unknown label name '#{name}'.  Did you run labrat_config?" if lab_hash.empty?
+        raise LabelNameError,
+              "Unknown label name '#{name}'." if lab_hash.empty?
 
         lab_args = from_hash(lab_hash)
         parser.parse(lab_args, into: options)
+      end
+    end
+
+    def list_labels_option
+      parser.on("--list-labels",
+                "List known labels and exit") do
+        db_paths = Labrat::LabelDb.db_paths
+        lab_names = Labrat::LabelDb.known_names
+        if db_paths.empty?
+          warn "Have you run labrat-install yet?"
+        else
+          warn "Label databases at:"
+          db_paths.each do |p|
+            warn "#{p}\n"
+          end
+          warn "\nKnown labels:\n"
+          lab_names.groups_of(6).each do |_n, grp|
+            warn "  #{grp.join(', ')}"
+          end
+        end
+        exit(0)
       end
     end
 
