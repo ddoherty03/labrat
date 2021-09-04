@@ -3,35 +3,53 @@
 
 require_relative '../lib/labrat'
 
-config = Labrat::Config.read('labrat')
-ops = Labrat::ArgParser.new.parse(ARGV, config)
-if ops.msg
-  warn ops.msg
-  exit(1)
-end
-
-# There are three possible sources of label text: (1) the non-option
-# command-line arguments, if any, are always included, (3) paragraphs in the
-# file specified by the --file argument, if any, are always included, and (3)
-# paragraphs in standard input are included if there are no non-option
-# arguments and no --file argument.
-
-non_ops = ARGV.grep_v(/\A--?/)
-texts = non_ops.empty? ? [] : [non_ops.join(' ')]
-texts +=
-  if ops.template
-    []
-  elsif ops.file
-    Labrat.read_label_texts(ops.file, ops.nlsep)
-  elsif non_ops.empty?
-    Labrat.read_label_texts(nil, ops.nlsep)
-  else
-    []
+begin
+  config = Labrat::Config.read('labrat')
+  ops = Labrat::ArgParser.new.parse(ARGV, config)
+  if ops.msg
+    warn ops.msg
+    exit(1)
   end
 
-lab = Labrat::Label.new(texts, ops).generate
-if ops.view
-  lab.view
-else
-  lab.print
+  # There are three possible sources of label text: (1) the non-option
+  # command-line arguments, if any, are always included, (3) paragraphs in the
+  # file specified by the --file argument, if any, are always included, and (3)
+  # paragraphs in standard input are included if there are no non-option
+  # arguments and no --file argument.
+
+  non_ops = ARGV.grep_v(/\A--?/)
+  texts = non_ops.empty? ? [] : [non_ops.join(' ')]
+  texts +=
+    if ops.template
+      []
+    elsif ops.file
+      Labrat.read_label_texts(ops.file, ops.nlsep)
+    elsif non_ops.empty?
+      Labrat.read_label_texts(nil, ops.nlsep)
+    else
+      []
+    end
+
+  lab = Labrat::Label.new(texts, ops).generate
+  if ops.view
+    lab.view
+  else
+    lab.print
+  end
+
+rescue Labrat::LabelNameError => e
+  warn e
+  lab_names = Labrat::LabelDb.known_names
+  if lab_names.empty?
+    warn "Have you run labrat-install yet?"
+  else
+    warn "Known labels:\n"
+    lab_names.groups_of(6).each do |_n, grp|
+      warn "  #{grp.join(', ')}"
+    end
+    exit(1)
+  end
+rescue Labrat::DimensionError => e
+  warn e
+  exit(1)
 end
