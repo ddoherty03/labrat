@@ -1,7 +1,9 @@
 # frozen_string_literal: true
 
-# require 'fat_core'
-require_relative "lib/labrat"
+lib = File.expand_path('../lib', __FILE__)
+$LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
+
+require "labrat"
 
 Gem::Specification.new do |spec|
   spec.name          = "labrat"
