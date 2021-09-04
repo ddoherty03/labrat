@@ -1,44 +1,77 @@
-#! /usr/bin/ruby
-
-puts "LOAD_PATH:"
-$:.each { |p| puts p }
-
-require 'pry'
+#! /usr/bin/env ruby
 
 begin
   require 'fileutils'
 
-  binding.pry
-  sys_src_path = File.join(__dir__, '../lib/config_files/labeldb.yml')
-  sys_src_path = File.expand_path(sys_src_path)
-  sys_dest_path = '/etc/xdg/labrat/labeldb.yml'
-  sys_dest_dir = File.dirname(sys_dest_path)
+  ###################################################################
+  # System config
+  ###################################################################
+  sys_dest_dir = '/etc/xdg/labrat'
+  unless Dir.exist?(sys_dest_dir)
+    warn "Creating system config directory '#{sys_dest_dir}'."
+    mcmd = "sudo mkdir -p '#{sys_dest_dir}'"
+    system(mcmd)
+  end
 
-  FileUtils.mkdir_p(sys_dest_dir) unless Dir.exist?(sys_dest_dir)
-  FileUtils.cp(sys_src_path, sys_dest_path)
+  # Install system label db file
+  sys_src_db_path = File.join(__dir__, '../lib/config_files/labeldb.yml')
+  sys_src_db_path = File.expand_path(sys_src_db_path)
+  sys_dest_db_path = File.join(sys_dest_dir, 'labeldb.yml')
+  if File.exist?(sys_dest_db_path)
+    warn "System label db file '#{sys_dest_db_path}' exists."
+    warn "  Delete it and re-run labrat-install to re-install it."
+  else
+    warn "Installing system label db file '#{sys_dest_db_path}'."
+    icmd = "sudo install -m 0664 '#{sys_src_db_path}' '#{sys_dest_dir}'"
+    system(icmd)
+  end
 
-  # if File.writable(sys_dest_path)
-  # else
-  #   warn "To install system labeldb, run as sudo"
-  # end
+  # Install system config file
+  sys_src_cfg_path = File.join(__dir__, '../lib/config_files/config.yml')
+  sys_src_cfg_path = File.expand_path(sys_src_cfg_path)
+  sys_dest_cfg_path = File.join(sys_dest_dir, 'config.yml')
+  if File.exist?(sys_dest_cfg_path)
+    warn "System config file '#{sys_dest_cfg_path}' exists."
+    warn "  Delete it and re-run labrat-install to re-install it."
+  else
+    warn "Installing system config file '#{sys_dest_cfg_path}'."
+    icmd = "sudo install -m 0664 '#{sys_src_cfg_path}' '#{sys_dest_dir}'"
+    system(icmd)
+  end
 
-  usr_src_path = File.join(__dir__, '../lib/config_files/labeldb_usr.yml')
-  usr_src_path = File.expand_path(usr_src_path)
-  usr_dest_path = File.expand_path('~/.config/labrat/labeldb.yml')
-  usr_dest_dir = File.dirname(usr_dest_path)
+  ###################################################################
+  # User config
+  ###################################################################
+  usr_dest_dir = File.expand_path('~/.config/labrat')
+  unless Dir.exist?(usr_dest_dir)
+    warn "Creating user config directory '#{usr_dest_dir}'."
+    mcmd = "mkdir -p '#{usr_dest_dir}'"
+    system(mcmd)
+  end
 
-  FileUtils.mkdir_p(usr_dest_dir) unless Dir.exist?(usr_dest_dir)
-  FileUtils.cp(usr_src_path, usr_dest_path)
+  # Install user label db file
+  usr_src_db_path = File.join(__dir__, '../lib/config_files/labeldb_usr.yml')
+  usr_src_db_path = File.expand_path(usr_src_db_path)
+  usr_dest_db_path = File.join(usr_dest_dir, 'labeldb.yml')
+  if File.exist?(usr_dest_db_path)
+    warn "User label db file '#{usr_dest_db_path}' exists."
+    warn "  Delete it and re-run labrat-install to re-install it."
+  else
+    warn "Installing user label db file '#{usr_dest_db_path}'."
+    icmd = "install -m 0664 '#{usr_src_db_path}' '#{usr_dest_db_path}'"
+    system(icmd)
+  end
 
-# if File.writable('/etc/xdg')
-#   FileUtils.mkdir_p('/etc/xdg/labrat')
-#   FileUtils.cp(sys_src_path, sys_dest_path)
-# else
-#   warn "To install system labeldb, run as sudo"
-# end
-
-rescue Errno::EACCES => e
-  warn "To install system labeldb, run as sudo"
-rescue => e
-  fail e
+  # Install user config file
+  usr_src_cfg_path = File.join(__dir__, '../lib/config_files/config.yml')
+  usr_src_cfg_path = File.expand_path(usr_src_cfg_path)
+  usr_dest_cfg_path = File.join(usr_dest_dir, 'config.yml')
+  if File.exist?(usr_dest_cfg_path)
+    warn "User config file '#{usr_dest_cfg_path}' exists."
+    warn "  Delete it and re-run labrat-install to re-install it."
+  else
+    warn "Installing user config file '#{usr_dest_cfg_path}'."
+    icmd = "install -m 0664 '#{usr_src_cfg_path}' '#{usr_dest_dir}'"
+    system(icmd)
+  end
 end
