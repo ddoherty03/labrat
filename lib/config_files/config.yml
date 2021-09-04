@@ -1,9 +1,9 @@
-# Sample user-level config file for the installing user.
+# Sample config file for labrat.
 
 # These settings correspond to the default values for all the options.  To
 # change the default for you, uncomment a setting and set it to your desired
-# default.  You can override these with command-line flags, such as
-# --page-width=44mm.
+# default.  You can override these with command-line flags, having the same
+# name as the config options, such as --page-width=44mm.
 
 # Any option that takes a dimension can use pt, mm, cm, dm, m, in, ft, or yd.
 # A dimension without a unit attached designates Adobe points, i.e., 1/72in.
