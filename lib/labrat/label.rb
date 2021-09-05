@@ -55,6 +55,8 @@ module Labrat
           ops.font_size = 16
           pdf.grid.show_all
         end
+        raise EmptyLabelError, "Empty label" if waste_of_labels?
+
         last_k = texts.size - 1
         texts.each_with_index do |text, k|
           row, col = row_col(k + 1)
@@ -103,6 +105,12 @@ module Labrat
       return false if k == last_k
       r, c = row_col(k + 1)
       (r + 1 == ops.rows && c + 1 == ops.columns)
+    end
+
+    # Would we just be printing blank labels?
+    def waste_of_labels?
+      (texts.nil? || texts.empty? || texts.all?(&:blank?)) &&
+        !ops.view
     end
   end
 end

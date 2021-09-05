@@ -37,6 +37,9 @@ begin
     lab.print
   end
 
+rescue Labrat::EmptyLabelError => e
+  warn "#{e}: refusing to print"
+  exit(1)
 rescue Labrat::LabelNameError => e
   warn e
   lab_names = Labrat::LabelDb.known_names
