@@ -66,7 +66,6 @@ module Labrat
             box_ht = (bounds.top - bounds.bottom) - ops.top_pad - ops.bottom_pad
             box_x = ops.left_pad + ops.delta_x
             box_y = ops.bottom_pad + box_ht + ops.delta_y
-            pdf.stroke_bounds
             pdf.font ops.font_name, style: ops.font_style.to_sym, size: ops.font_size.to_f
             pdf.text_box(text, width: box_wd, height: box_ht,
                          align: ops.h_align, valign: ops.v_align,
