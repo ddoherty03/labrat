@@ -165,7 +165,7 @@ module Labrat
       files.each do |f|
         if File.readable?(f)
           yml = File.read(f)
-          hash.deep_merge!(YAML.load(yml))
+          hash.deep_merge!(YAML.load(yml) || {})
         end
       end
       hash
