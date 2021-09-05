@@ -49,7 +49,7 @@ module Labrat
         # end
         if ops.template
           # Replace any texts with the numbers and show the grid.
-          texts = (1..(ops.rows * ops.columns)).map(&:to_s)
+          self.texts = (1..(ops.rows * ops.columns)).map(&:to_s)
           ops.font_name = 'Helvetica'
           ops.font_style = 'bold'
           ops.font_size = 16
