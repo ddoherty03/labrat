@@ -860,3 +860,146 @@ avery5817:
 
 avery5821:
   label: avery5815
+
+# Compatible with: 15265, 15665, 18665, 48165, 5265, 5353, 64506, 8165, 8255,
+# 8465, 8665, 95920
+avery5165:
+  page-width: 8.5in
+  page-height: 11in
+  rows: 1
+  columns: 1
+  top-page-margin: 0mm
+  bottom-page-margin: 0mm
+  left-page-margin: 0mm
+  right-page-margin: 0mm
+  row-gap: 0mm
+  column-gap: 0mm
+  landscape: false
+
+avery15265:
+  label: avery5165
+
+avery15665:
+  label: avery5165
+
+avery18665:
+  label: avery5165
+
+avery48165:
+  label: avery5165
+
+avery5265:
+  label: avery5165
+
+avery5353:
+  label: avery5165
+
+avery64506:
+  label: avery5165
+
+avery8165:
+  label: avery5165
+
+avery8255:
+  label: avery5165
+
+avery8465:
+  label: avery5165
+
+avery8665:
+  label: avery5165
+
+avery95920:
+  label: avery5165
+
+# Compatible with: 15663, 5663, 6522, 7663, 8663
+avery18663:
+  page-width: 8.5in
+  page-height: 11in
+  rows: 5
+  columns: 2
+  top-page-margin: 13mm
+  bottom-page-margin: 12mm
+  left-page-margin: 5mm
+  right-page-margin: 5mm
+  row-gap: 0mm
+  column-gap: 3mm
+  landscape: false
+
+avery15663:
+  label: avery18663
+
+avery5663:
+  label: avery18663
+
+avery6522:
+  label: avery18663
+
+avery7663:
+  label: avery18663
+
+avery8663:
+  label: avery18663
+
+# Compatible with: 45008
+avery5360:
+  page-width: 8.5in
+  page-height: 11in
+  rows: 7
+  columns: 3
+  top-page-margin: 5.5mm
+  bottom-page-margin: 7mm
+  left-page-margin: 1mm
+  right-page-margin: 1mm
+  row-gap: 0mm
+  column-gap: 0mm
+  landscape: false
+
+avery45008:
+  label: avery5360
+
+# Compatible with: 8986
+avery8987:
+  page-width: 8.5in
+  page-height: 11in
+  rows: 10
+  columns: 3
+  top-page-margin: 15mm
+  bottom-page-margin: 16mm
+  left-page-margin: 10mm
+  right-page-margin: 10mm
+  row-gap: 6.3mm
+  column-gap: 13mm
+  landscape: false
+
+avery8986:
+  label: avery8987
+
+# Compatible with: 15662, 5662, 8662, 88662, 95662
+avery18662:
+  page-width: 8.5in
+  page-height: 11in
+  rows: 7
+  columns: 2
+  top-page-margin: 20.4mm
+  bottom-page-margin: 21.8mm
+  left-page-margin: 5mm
+  right-page-margin: 5mm
+  row-gap: 0mm
+  column-gap: 3mm
+  landscape: false
+
+avery15662:
+  label: avery18662
+
+avery5662:
+  label: avery18662
+
+avery8662:
+  label: avery18662
+
+avery88662:
+  label: avery18662
+
+avery95662:
+  label: avery18662
