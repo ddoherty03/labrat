@@ -1,8 +1,5 @@
 # frozen_string_literal: true
 
-require 'pry'
-require 'debug'
-
 module Labrat
   class Label
     attr_reader :texts, :ops
