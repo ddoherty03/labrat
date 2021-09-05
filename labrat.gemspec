@@ -25,7 +25,7 @@ Gem::Specification.new do |spec|
     `git ls-files -z`.split("\x0").reject { |f| f.match(%r{\A(?:test|spec|features)/}) }
   end
   spec.bindir        = 'bin'
-  spec.executables   = spec.files.grep(%r{\Abin/}) { |f| File.basename(f) }
+  spec.executables   = spec.files.grep(%r{\Abin/labrat}) { |f| File.basename(f) }
   spec.require_paths = ["lib"]
   spec.post_install_message = 'To install config and label database files, run [sudo] labrat-install g.'
   spec.add_dependency "prawn", "~> 2.0"
