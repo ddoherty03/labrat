@@ -10,15 +10,16 @@ module Labrat
     end
 
     def generate
-      layout = ops.landscape ? :landscape : :portrait
-      # The default margin is 0.5in, way too big for labels, so it is
-      # important to set these here.  The margins' designation as "top,"
+      # The default margin is 0.5in on all sides, way too big for labels, so
+      # it is important to set these here.  The margins' designation as "top,"
       # "left," "bottom," and "right" take into account the page layout.  That
       # is, the left margin is on the left in both portrait and landscape
       # orientations.  But I want the user to be able to set the margins
       # according to the label type, independent of the orientation.  I adopt
       # the convention that the margins are named assuming a portrait
       # orientation and swap them here so that when Prawn swaps them again,
+      # they come out correct.
+      layout = ops.landscape ? :landscape : :portrait
       if layout == :portrait
         tpm = ops.top_page_margin
         bpm = ops.bottom_page_margin
@@ -91,8 +92,8 @@ module Labrat
       FileUtils.rm(ops.out_file)
     end
 
-    # Return the 0-based row and column on which the k-th (1-based) label
-    # should be printed.
+    # Return the 0-based row and column within a page on which the k-th
+    # (1-based) label should be printed.
     def row_col(k)
       lpp = ops.rows * ops.columns
       k_on_page = (k + ops.start_label - 2) % lpp

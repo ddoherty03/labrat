@@ -1,26 +1,20 @@
-# Your application should store and load data and configuration files to/from
-# the directories pointed by the following environment variables:
-
-# $XDG_CONFIG_HOME (default: "$HOME/.config"): user-specific configuration files.
-# $XDG_CONFIG_DIRS (default: "/etc/xdg"): precedence-ordered set of system configuration directories.
-
 module Labrat
-  # This class is responsible for finding a config file, reading it, and
-  # setting up an Options object to reflect the configuration.  We will use
-  # YAML as the configuration format and look for the config file in some
-  # standard places.
+  # This class is responsible for finding a config files, reading them, and
+  # returning a Hash to reflect the configuration.  We use YAML as the
+  # configuration format and look for the config file in the standard places.
   class Config
-    # Read the YAML-ized config files for app_name directories located in
-    # either the xdg locations (containing any variant of base: base,
-    # base.yml, or base.yaml) or in the classic locations (/etc/app_namerc,
-    # /etc/app_name, ~/.app_namerc~, or ~/.app_name/base[.ya?ml]), or in both
-    # and return a hash that set reflects the merging of those files according
-    # to the following priorities, from highest to lowest:
+    # Return a Hash of the YAML-ized config files for app_name directories.
+    # Config file may be located in either the xdg locations (containing any
+    # variant of base: base, base.yml, or base.yaml) or in the classic
+    # locations (/etc/app_namerc, /etc/app_name, ~/.app_namerc~, or
+    # ~/.app_name/base[.ya?ml]). Return a hash that reflects the merging of
+    # those files according to the following priorities, from highest to
+    # lowest:
     #
-    # 1. A config file pointed to by the environment variable APP_NAME_CONFIG
+    # 1. A config file pointed to by the environment variable APPNAME_CONFIG
     # 2. User classic config files
     # 3. User xdg config files for app_name,
-    # 4. A config file pointed to by the environment variable APP_NAME_SYS_CONFIG
+    # 4. A config file pointed to by the environment variable APPNAME_SYS_CONFIG
     # 5. System classic config files,
     # 6. System xdg config files for for app_name,
     #
