@@ -60,6 +60,30 @@ module Labrat
       { system: sys_configs.compact, user: usr_configs.compact }
     end
 
+    # Merge the settings from the given config files into the given hash
+    # object.  Any values of the top-level hash that are themselves Hashes are
+    # merged recursively.
+    def self.merge_configs_from(files = [], hash)
+      files.each do |f|
+        if File.readable?(f)
+          yml = File.read(f)
+          hash.deep_merge!(YAML.load(yml) || {})
+        end
+      end
+      hash
+    end
+
+    ########################################################################
+    # XDG config files
+    ########################################################################
+
+    # From the XDG standard:
+    # Your application should store and load data and configuration files to/from
+    # the directories pointed by the following environment variables:
+    #
+    # $XDG_CONFIG_HOME (default: "$HOME/.config"): user-specific configuration files.
+    # $XDG_CONFIG_DIRS (default: "/etc/xdg"): precedence-ordered set of system configuration directories.
+
     # Return the absolute path names of all XDG system config files for
     # app_name with the basename variants of base. Return the lowest priority
     # files first, highest last. Prefix the search locations with dir_prefix
@@ -78,6 +102,33 @@ module Labrat
       end
       configs
     end
+
+    # Return the absolute path name of any XDG user config files for app_name
+    # with the basename variants of base. The XDG_CONFIG_HOME environment
+    # variable for the user configs is intended to be the name of a single xdg
+    # config directory, not a list of colon-separated directories as for the
+    # system config. Return the name of a config file for this app in
+    # XDG_CONFIG_HOME (or ~/.config by default).  Prefix the search location
+    # with dir_prefix if given.
+    def self.find_xdg_user_config_file(app_name, base, dir_prefix)
+      dir_prefix ||= ''
+      base ||= (base&.strip || app_name)
+      xdg_search_dir = ENV['XDG_CONFIG_HOME'] || ['~/.config']
+      dir = File.expand_path(File.join(xdg_search_dir, app_name))
+      dir = File.join(dir_prefix, dir) unless dir_prefix.strip.empty?
+      return nil unless Dir.exist?(dir)
+
+      base_candidates = ["#{base}", "#{base}.yml", "#{base}.yaml",
+                         "#{base}.cfg", "#{base}.config"]
+      config_fname = base_candidates.find { |b| File.readable?(File.join(dir, b)) }
+      if config_fname
+        File.join(dir, config_fname)
+      end
+    end
+
+    ########################################################################
+    # Classic config files
+    ########################################################################
 
     # Return the absolute path names of all "classic" system config files for
     # app_name with the basename variants of base. Return the lowest priority
@@ -106,29 +157,6 @@ module Labrat
       configs
     end
 
-    # Return the absolute path name of any XDG user config files for app_name
-    # with the basename variants of base. The XDG_CONFIG_HOME environment
-    # variable for the user configs is intended to be the name of a single xdg
-    # config directory, not a list of colon-separated directories as for the
-    # system config. Return the name of a config file for this app in
-    # XDG_CONFIG_HOME (or ~/.config by default).  Prefix the search location
-    # with dir_prefix if given.
-    def self.find_xdg_user_config_file(app_name, base, dir_prefix)
-      dir_prefix ||= ''
-      base ||= (base&.strip || app_name)
-      xdg_search_dir = ENV['XDG_CONFIG_HOME'] || ['~/.config']
-      dir = File.expand_path(File.join(xdg_search_dir, app_name))
-      dir = File.join(dir_prefix, dir) unless dir_prefix.strip.empty?
-      return nil unless Dir.exist?(dir)
-
-      base_candidates = ["#{base}", "#{base}.yml", "#{base}.yaml",
-                         "#{base}.cfg", "#{base}.config"]
-      config_fname = base_candidates.find { |b| File.readable?(File.join(dir, b)) }
-      if config_fname
-        File.join(dir, config_fname)
-      end
-    end
-
     # Return the absolute path names of all "classic" system config files for
     # app_name with the basename variants of base. Return the lowest priority
     # files first, highest last.  Prefix the search locations with dir_prefix if
@@ -150,24 +178,6 @@ module Labrat
         config_fname = File.join(config_dir, base_fname)
       end
       config_fname
-    end
-
-    # Merge the settings from config files with the name config_name from the
-    # given directories, dirs, into the given Options object.  Any values of
-    # the top-level hash that are themselves Hashes are merged recursively.
-    def self.merge_configs_from(files = [], hash)
-      files.each do |f|
-        if File.readable?(f)
-          yml = File.read(f)
-          hash.deep_merge!(YAML.load(yml) || {})
-        end
-      end
-      hash
-    end
-
-    # Merge the given YAML string into the given Options object and return it.
-    def self.merge_config_string(str, hsh)
-      YAML.load(str).merge(hsh)
     end
   end
 end
