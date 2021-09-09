@@ -152,6 +152,7 @@ RSpec.describe ArgParser do
     end
 
     it 'can set the name of a label' do
+      LabelDb['dymo30327'] = {page_width: 18}
       ops = ap.parse(['--label=dymo30327'])
       expect(ops.label).to eq('dymo30327')
     end

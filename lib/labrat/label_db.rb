@@ -20,6 +20,12 @@ module Labrat
       db[labname.to_sym] || {}
     end
 
+    # Set a runtime configuration for a single labelname.
+    def self.[]=(labname, config = {})
+      read unless db
+      db[labname.to_sym] = config
+    end
+
     # Return an Array of label names.
     def self.known_names
       read unless db
