@@ -22,11 +22,11 @@ module Labrat
     # config files is skipped. Any dir_prefix is pre-pended to search
     # locations environment, xdg and classic config paths so you can run this
     # on a temporary directory set up for testing.
-    def self.read(app_name, base: 'config', dir_prefix: '', xdg: true)
+    def self.read(app_name, base: 'config', dir_prefix: '', xdg: true, prior: {})
       paths = config_paths(app_name, base: base, dir_prefix: dir_prefix, xdg: xdg)
       sys_configs = paths[:system]
       usr_configs = paths[:user]
-      merge_configs_from((sys_configs + usr_configs).compact, {})
+      merge_configs_from((sys_configs + usr_configs).compact, prior)
     end
 
     def self.config_paths(app_name, base: 'config', dir_prefix: '', xdg: true)
