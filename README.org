@@ -14,35 +14,134 @@ a long time to start up and demands that you register every time you open it.
 
 I longed for a way to just print a file label from the command line, and even
 better, from within my editor, Emacs.  After giving up looking for such a
-thing without success, I decided to write my own.  Hence labrat.  With it,
-printing a file folder label is as simple as:
+thing without success, I decided to write my own.  Hence labrat.  With
+it---after due configuration---printing a file folder label is as simple as:
 
 #+begin_src sh
   $ labrat 'First Line of Label++And the Second Line'
   #+end_src
 
-After proper configuration, the
+Or, you can preview the label in your previewer of choice (mine is qpdfview)
+by adding the -V flag:
 
+#+begin_src sh
+  $ labrat -V 'First Line of Label++And the Second Line'
+  #+end_src
 
-
-Welcome to your new gem! In this directory, you'll find the files you need to
-be able to package up your Ruby library into a gem. Put your Ruby code in the
-file `lib/labrat`. To experiment with that code, run `bin/console` for an
-interactive prompt.
-
-TODO: Delete this and the text above, and describe your gem
+Even better, I have included with labrat an elisp file (=labrat.el=) that will
+invoke labrat to form a label with the text of the paragraph at or before
+point.  So within Emacs, you can bind a key to the commands, =labrat-print=
+and =labrat-view= to print the current or prior paragraph as your default
+label.  Thus, in Emacs, I have ~C-z C-l C-l~ bound to =labrat-print= and ~C-z
+C-l C-v~ to =labrat-view=, and I can type a label in any buffer and get it
+printed with very little ceremony.
 
 ** Installation
 
-Add this line to your application's Gemfile:
+Since labrat is distributed as a Ruby gem, you have to have a ruby
+installation.  You can then install =labrat= with:
 
 #+begin_SRC sh
   $ gem install labrat
 #+end_SRC
 
+After installation, you should install the user and system configuration files
+with:
+
+#+begin_SRC sh
+  $ labrat-install
+#+end_SRC
+
+This will install a system-wide config file in =/etc/xdg/labrat/config.yml=
+and a system-wide label database in =/etc/xdg/labrat/labeldb.yml=.  It will
+also install a sample user config file in =~/.config/labrat/labrat.el= and a
+sample label database in =~/.config/labrat/labeldb.yml=.  For the benefit of
+Emacs user, it also installs the =labrat.el= elisp library in
+=~/.config/labrat= as well, though you may want to move it to a different
+location.
+
+You can invoke =labrat-install= multiple times because it will refuse to
+overwrite any existing config or database files that you may have edited.  If
+you want to re-install them you have to move them out of the way.
+
 ** Usage
 
-TODO: Write usage instructions here
+You can control how =labrat= composes a label completely from the
+command-line, though that would be a very tedious thing to have to do.
+Better, set up your preferred configuration in your user config file, so that
+all you need to supply on the command line is the text of the label.  Every
+command-line option has an equivalent configuration option using the long form
+of the option as a key in a YAML configuration format.
+
+Here is the output of =labrat --help= that documents all of the options:
+
+#+begin_example
+$ labrat --help
+Usage: labrat [options] <label-text>
+
+Print or view (with -V) a label with the given <label-text>.
+All non-option arguments are used for the text with a special
+marker ('++' by default) indicating a line-break.
+
+Specific options:
+  Note: for DIM, valid units are: pt, mm, cm, dm, m, in, ft, yd
+    With no units, pt (points) assumed
+    -w, --page-width=DIM           Page width:
+                                   the horizontal dimension of a page of labels as it comes out of the printer
+    -h, --page-height=DIM          Page height:
+                                   the vertical dimension of a page of labels as it comes out of the printer
+    -R, --rows=NUM_ROWS            Number of rows of labels on a page
+    -C, --columns=NUM_COLUMNS      Number of columns of labels on a page
+        --row-gap=DIM              Row gap:
+                                   the vertical space between rows of labels on a page of labels
+        --column-gap=DIM           Column gap:
+                                   the horizontal space between columns of labels on a page of labels
+    -S, --start-label=NUM          Label number (starting at 1, left-to-right, top-to-bottom)
+                                     within first page to on which to start printing
+        --right-page-margin=DIM    Distance from right side of page (in portrait) to print area
+        --left-page-margin=DIM     Distance from left side of page (in portrait) to print area
+        --top-page-margin=DIM      Distance from top side of page (in portrait) to print area
+        --bottom-page-margin=DIM   Distance from bottom side of page (in portrait) to print area
+        --h-page-margin=DIM        Distance from left and right sides of page (in portrait) to print area
+        --v-page-margin=DIM        Distance from top and bottom sides of page (in portrait) to print area
+        --page-margin=DIM          Distance from all sides of page (in portrait) to print area
+    -l, --label=NAME               Name of the label to print on
+        --list-labels              List known labels and exit
+        --h-align=[left|center|right]
+                                   Horizontal alignment of label text (default center)
+        --v-align=[top|center|bottom]
+                                   Vertical alignment of label text (default center)
+    -x, --delta-x=DIM              Left-right adjustment as label text is oriented
+    -y, --delta-y=DIM              Up-down adjustment as label text is oriented
+        --right-pad=DIM            Distance from right side of label (in portrait) to print area
+        --left-pad=DIM             Distance from left side of label (in portrait) to print area
+        --top-pad=DIM              Distance from top side of label (in portrait) to print area
+        --bottom-pad=DIM           Distance from bottom side of label (in portrait) to print area
+        --h-pad=DIM                Distance from left and right sides of label (in portrait) to print area
+        --v-pad=DIM                Distance from top and bottom sides of label (in portrait) to print area
+        --pad=DIM                  Distance from all sides of label (in portrait) to print area
+        --font-name=NAME           Name of font to use (default Helvetica)
+        --font-size=POINTS         Size of font to use in points (default 12)
+        --font-style=[normal|bold|italic|bold-italic]
+                                   Style of font to use for text (default normal)
+    -p, --printer=NAME             Name of the label printer to print on
+    -n, --nlsep=SEPARATOR          Specify text to be interpreted as a line-break (default '++')
+    -f, --file=FILENAME            Read labels from given file instead of command-line
+    -o, --out-file=FILENAME        Put generated label in the given file
+    -%, --print-command=PRINTCMD   Command to use for printing with %p for printer name; %o for label file name
+    -:, --view-command=VIEWCMD     Command to use for viewing with %o for label file name
+    -V, --[no-]view                View rather than print
+    -T, --[no-]template            Print a template of a page of labels and ignore any content.
+    -L, --[no-]landscape           Print label in landscape (default true), i.e., with the left of
+                                   the label text starting at the top as the label in printed
+    -P, --[no-]portrait            Print label in portrait (default false), i.e., left-to-right
+                                   top-to-bottom as the label in printed. Negated landscape
+    -v, --[no-]verbose             Run verbosely
+
+Common options:
+        --help                     Show this message
+        --version                  Show version
+#+end_example
 
 * Development
 
