@@ -74,4 +74,12 @@ begin
     icmd = "install -m 0664 '#{usr_src_cfg_path}' '#{usr_dest_dir}'"
     system(icmd)
   end
+
+  # Install Emacs lisp library
+  lsp_src_path = File.join(__dir__, '../lib/lisp/labrat.el')
+  lsp_src_path = File.expand_path(lsp_src_path)
+  lsp_dest_path = File.join(usr_dest_dir, 'labrat.el')
+  warn "Installing Emacs lisp library '#{lsp_dest_path}'."
+  icmd = "install -m 0664 '#{lsp_src_path}' '#{lsp_dest_path}'"
+  system(icmd)
 end
