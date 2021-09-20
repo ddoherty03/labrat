@@ -53,7 +53,7 @@ inserted in the <label> position, but with each new-line replaced with the
 value of the variable labrat-nlsep, '++' by default."
   (interactive)
   (call-process "~/src/labrat/bin/labrat" nil '(:file "~/labrat.out") t
-                "-P" (labrat/par-at-point)))
+                (labrat/par-at-point)))
 
 (provide 'labrat)
 ;;; labrat.el ends here
