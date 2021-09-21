@@ -34,7 +34,7 @@ module Labrat
       self.row_gap = init[:row_gap] || 0.mm
       self.column_gap = init[:column_gap] || 0.mm
       self.start_label = init[:start_label] || 1
-      self.landscape = init.fetch(:landscape, true)
+      self.landscape = init.fetch(:landscape, false)
       # Per-label attributes
       self.h_align = init[:h_align]&.to_sym || :center
       self.v_align = init[:v_align]&.to_sym || :center

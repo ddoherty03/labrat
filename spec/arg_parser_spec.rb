@@ -20,7 +20,7 @@ RSpec.describe ArgParser do
       expect(op.row_gap).to be_within(EPS).of(0 * MM)
       expect(op.column_gap).to be_within(EPS).of(0 * MM)
       expect(op.start_label).to eq(1)
-      expect(op.landscape).to be(true)
+      expect(op.landscape).to be(false)
       expect(op.h_align).to eq(:center)
       expect(op.v_align).to eq(:center)
       expect(op.left_pad).to be_within(EPS).of(4.5 * MM)

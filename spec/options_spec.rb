@@ -19,7 +19,7 @@ RSpec.describe Options do
       expect(ops.row_gap).to be_within(EPS).of(0 * MM)
       expect(ops.column_gap).to be_within(EPS).of(0 * MM)
       expect(ops.start_label).to eq(1)
-      expect(ops.landscape).to eq(true)
+      expect(ops.landscape).to eq(false)
       expect(ops.h_align).to eq(:center)
       expect(ops.v_align).to eq(:center)
       expect(ops.left_pad).to be_within(EPS).of(4.5 * MM)
