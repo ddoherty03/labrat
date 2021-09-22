@@ -16,34 +16,27 @@ module Labrat
       define_options
     end
 
-    # Return an Options object instance describing the options represented by
-    # an Array of strings given by args.  If a Hash or Options object prior is
-    # given, the parsed options are merged into it.  Throw an exception for
-    # errors encountered parsing the args.
-    def parse(args, prior = {})
-      options.merge!(prior)
+    # Parse and set the options object to reflect the values of the given
+    # args, after merging in any prior settings into options.  Return the
+    # resulting options instance.  The args argument can be either a Hash or,
+    # as usual, an Array of Strings from the command-line.x  Throw an exception
+    # for errors encountered parsing the args.
+    def parse(args, prior: {}, verbose: false)
       options.msg = nil
-      parser.parse!(args)
+      options.verbose = verbose
+      options.merge!(prior)
+      case args
+      when Hash
+        parser.parse!(args.optionize)
+      when Array
+        parser.parse!(args)
+      else
+        raise "ArgParser cannot parse args of class '#{args.class}'"
+      end
       options
     rescue OptionParser::ParseError => e
       options.msg = "Error: #{e}\n\n#{parser}"
       options
-    end
-
-    # Convert the given Hash into a Array of Strings that represent an
-    # equivalent set of command-line args and pass them into the #parse
-    # method.
-    def from_hash(hsh = {})
-      args = []
-      hsh.each_pair do |k, v|
-        args <<
-          if [TrueClass, FalseClass].include?(v.class)
-            v ? "--#{k}" : "--no-#{k}"
-          else
-            "--#{k}=#{v}"
-          end
-      end
-      parse(args)
     end
 
     private
@@ -208,7 +201,7 @@ module Labrat
         raise LabelNameError,
               "Unknown label name '#{name}'." if lab_hash.empty?
 
-        lab_args = from_hash(lab_hash)
+        lab_args = lab_hash.optionize
         parser.parse(lab_args, into: options)
       end
     end

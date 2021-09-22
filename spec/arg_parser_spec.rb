@@ -1,3 +1,4 @@
+
 RSpec.describe ArgParser do
   let(:ap) { ArgParser.new }
 
@@ -52,7 +53,7 @@ RSpec.describe ArgParser do
         printer: 'seiko',
         nlsep: '__',
       }
-      op = ap.parse(['-h 88mm', '--nlsep=##'], start_hash)
+      op = ap.parse(['-h 88mm', '--nlsep=##'], prior: start_hash)
       expect(op.page_width).to be_within(EPS).of(30 * MM)
       expect(op.right_page_margin).to be_within(EPS).of(5 * MM)
       expect(op.v_align).to eq(:top)
@@ -69,7 +70,7 @@ RSpec.describe ArgParser do
         printer: 'seiko',
         nlsep: '__',
       )
-      op = ap.parse(['-h 88mm', '--nlsep=##'], start_op)
+      op = ap.parse(['-h 88mm', '--nlsep=##'], prior: start_op)
       expect(op.page_width).to be_within(EPS).of(30 * MM)
       expect(op.right_pad).to be_within(EPS).of(4.5 * MM)
       expect(op.v_align).to eq(:top)

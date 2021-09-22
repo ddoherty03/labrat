@@ -22,11 +22,11 @@ module Labrat
     # config files is skipped. Any dir_prefix is pre-pended to search
     # locations environment, xdg and classic config paths so you can run this
     # on a temporary directory set up for testing.
-    def self.read(app_name, base: 'config', dir_prefix: '', xdg: true, prior: {})
+    def self.read(app_name, base: 'config', dir_prefix: '', xdg: true, verbose: false)
       paths = config_paths(app_name, base: base, dir_prefix: dir_prefix, xdg: xdg)
       sys_configs = paths[:system]
       usr_configs = paths[:user]
-      merge_configs_from((sys_configs + usr_configs).compact, prior)
+      merge_configs_from((sys_configs + usr_configs).compact, verbose: verbose)
     end
 
     def self.config_paths(app_name, base: 'config', dir_prefix: '', xdg: true)
@@ -60,14 +60,17 @@ module Labrat
       { system: sys_configs.compact, user: usr_configs.compact }
     end
 
-    # Merge the settings from the given config files into the given hash
-    # object.  Any values of the top-level hash that are themselves Hashes are
-    # merged recursively.
-    def self.merge_configs_from(files = [], hash)
+    # Merge the settings from the given Array of config files in order from
+    # lowest priority to highest priority, starting with an empty hash.  Any
+    # values of the top-level hash that are themselves Hashes are merged
+    # recursively.
+    def self.merge_configs_from(files = [], verbose: false)
+      hash = {}
       files.each do |f|
         if File.readable?(f)
-          yml = File.read(f)
-          hash.deep_merge!(YAML.load(yml) || {})
+          yml_hash = YAML.load(File.read(f))&.methodize || {}
+          yml_hash.report("Merging from file '#{f}") if verbose
+          hash.deep_merge!(yml_hash)
         end
       end
       hash

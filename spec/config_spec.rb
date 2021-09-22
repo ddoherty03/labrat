@@ -60,7 +60,7 @@ RSpec.describe Config do
     YAML
       setup_test_file('/etc/xdg/labrat/config.yml', config_yml)
       hsh = Config.read('labrat', xdg: true, dir_prefix: SANDBOX_DIR)
-      op = ArgParser.new.from_hash(hsh)
+      op = ArgParser.new.parse(hsh)
       expect(op.page_width).to be_within(EPS).of(33 * MM)
       expect(op.page_height).to be_within(EPS).of(101 * MM)
       expect(op.delta_x).to be_within(EPS).of(-4 * MM)
@@ -91,7 +91,7 @@ RSpec.describe Config do
       # The first directory in the ENV variable list should take precedence.
       ENV['XDG_CONFIG_DIRS'] = "/lib/junk:#{ENV['XDG_CONFIG_DIRS']}:/lib/lowjunk"
       hsh = Config.read('labrat', xdg: true, dir_prefix: SANDBOX_DIR)
-      op = ArgParser.new.from_hash(hsh)
+      op = ArgParser.new.parse(hsh)
       expect(op.page_width).to be_within(EPS).of(33 * MM)
       expect(op.page_height).to be_within(EPS).of(101 * MM)
       expect(op.delta_x).to be_within(EPS).of(-4 * MM)
@@ -116,7 +116,7 @@ RSpec.describe Config do
       ENV['LABRAT_SYS_CONFIG'] = '/etc/labrat.yml'
       setup_test_file(ENV['LABRAT_SYS_CONFIG'], config_yml)
       hsh = Config.read('labrat', xdg: true, dir_prefix: SANDBOX_DIR)
-      op = ArgParser.new.from_hash(hsh)
+      op = ArgParser.new.parse(hsh)
       expect(op.page_width).to be_within(EPS).of(33 * MM)
       expect(op.page_height).to be_within(EPS).of(101 * MM)
       expect(op.delta_x).to be_within(EPS).of(-4 * MM)
@@ -136,7 +136,7 @@ RSpec.describe Config do
     YAML
       setup_test_file("/home/#{ENV['USER']}/.config/labrat/config.yml", config_yml)
       hsh = Config.read('labrat', xdg: true, dir_prefix: SANDBOX_DIR)
-      op = ArgParser.new.from_hash(hsh)
+      op = ArgParser.new.parse(hsh)
       expect(op.page_width).to be_within(EPS).of(33 * MM)
       expect(op.page_height).to be_within(EPS).of(101 * MM)
       expect(op.delta_x).to be_within(EPS).of(-4 * MM)
@@ -157,7 +157,7 @@ RSpec.describe Config do
       ENV['LABRAT_CONFIG'] = "/home/#{ENV['USER']}/.labrc"
       setup_test_file(ENV['LABRAT_CONFIG'], config_yml)
       hsh = Config.read('labrat', xdg: true, dir_prefix: SANDBOX_DIR)
-      op = ArgParser.new.from_hash(hsh)
+      op = ArgParser.new.parse(hsh)
       expect(op.page_width).to be_within(EPS).of(33 * MM)
       expect(op.page_height).to be_within(EPS).of(101 * MM)
       expect(op.delta_x).to be_within(EPS).of(-4 * MM)
@@ -182,7 +182,7 @@ RSpec.describe Config do
     YAML
       setup_test_file("/home/#{ENV['USER']}/.config/labrat/config.yml", usr_config_yml)
       hsh = Config.read('labrat', xdg: true, dir_prefix: SANDBOX_DIR)
-      op = ArgParser.new.from_hash(hsh)
+      op = ArgParser.new.parse(hsh)
       expect(op.page_width).to be_within(EPS).of(33 * MM)
       expect(op.page_height).to be_within(EPS).of(102 * MM)
       expect(op.delta_x).to be_within(EPS).of(-3 * MM)
@@ -204,7 +204,7 @@ RSpec.describe Config do
       # The first directory in the ENV variable list should take precedence.
       ENV['XDG_CONFIG_HOME'] = "~/.foncig"
       hsh = Config.read('labrat', xdg: true, dir_prefix: SANDBOX_DIR)
-      op = ArgParser.new.from_hash(hsh)
+      op = ArgParser.new.parse(hsh)
       expect(op.page_width).to be_within(EPS).of(33 * MM)
       expect(op.page_height).to be_within(EPS).of(101 * MM)
       expect(op.delta_x).to be_within(EPS).of(-4 * MM)
@@ -226,7 +226,7 @@ RSpec.describe Config do
       ENV['LABRAT_SYS_CONFIG'] = '/etc/labrat/config.yaml'
       setup_test_file(ENV['LABRAT_SYS_CONFIG'], config_yml)
       hsh = Config.read('labrat', xdg: false, dir_prefix: SANDBOX_DIR)
-      op = ArgParser.new.from_hash(hsh)
+      op = ArgParser.new.parse(hsh)
       expect(op.page_width).to be_within(EPS).of(33 * MM)
       expect(op.page_height).to be_within(EPS).of(101 * MM)
       expect(op.delta_x).to be_within(EPS).of(-4 * MM)
@@ -247,7 +247,7 @@ RSpec.describe Config do
       ENV['LABRAT_CONFIG'] = '~/junk/random/lr.y'
       setup_test_file(ENV['LABRAT_CONFIG'], config_yml)
       hsh = Config.read('labrat', xdg: false, dir_prefix: SANDBOX_DIR)
-      op = ArgParser.new.from_hash(hsh)
+      op = ArgParser.new.parse(hsh)
       expect(op.page_width).to be_within(EPS).of(33 * MM)
       expect(op.page_height).to be_within(EPS).of(101 * MM)
       expect(op.delta_x).to be_within(EPS).of(-4 * MM)
@@ -267,7 +267,7 @@ RSpec.describe Config do
     YAML
       setup_test_file('~/.labratrc', config_yml)
       hsh = Config.read('labrat', xdg: false, dir_prefix: SANDBOX_DIR)
-      op = ArgParser.new.from_hash(hsh)
+      op = ArgParser.new.parse(hsh)
       expect(op.page_width).to be_within(EPS).of(33 * MM)
       expect(op.page_height).to be_within(EPS).of(101 * MM)
       expect(op.delta_x).to be_within(EPS).of(-4 * MM)
@@ -287,7 +287,7 @@ RSpec.describe Config do
     YAML
       setup_test_file('~/.labrat/config', config_yml)
       hsh = Config.read('labrat', xdg: false, dir_prefix: SANDBOX_DIR)
-      op = ArgParser.new.from_hash(hsh)
+      op = ArgParser.new.parse(hsh)
       expect(op.page_width).to be_within(EPS).of(33 * MM)
       expect(op.page_height).to be_within(EPS).of(101 * MM)
       expect(op.delta_x).to be_within(EPS).of(-4 * MM)
@@ -316,7 +316,7 @@ RSpec.describe Config do
     YAML
       setup_test_file('~/.labrat/config.yml', usr_config_yml)
       hsh = Config.read('labrat', xdg: false, dir_prefix: SANDBOX_DIR)
-      op = ArgParser.new.from_hash(hsh)
+      op = ArgParser.new.parse(hsh)
       expect(op.page_width).to be_within(EPS).of(33 * MM)
       expect(op.page_height).to be_within(EPS).of(102 * MM)
       expect(op.delta_x).to be_within(EPS).of(-7 * MM)
