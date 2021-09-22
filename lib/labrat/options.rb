@@ -92,12 +92,14 @@ module Labrat
     # Allow hash-like assignment to attributes.  This allows an Options object
     # to be used, for example, in the OptionParser#parse :into parameter.
     def []=(att, val)
+      att = att.to_s.gsub('-', '_')
       send("#{att}=", val)
     end
 
     # Allow hash-like access to attributes.  This allows an Options object
     # to be used, for example, in the OptionParser#parse :into parameter.
     def [](att)
+      att = att.to_s.gsub('-', '_')
       send("#{att}")
     end
 
@@ -113,7 +115,9 @@ module Labrat
       attrs.map { |a| a.gsub('_', '-') }
     end
 
-    # Return a hash of the values in this Options object.
+    # Return a hash of the values in this Options object.  This is the
+    # canonical form of a Hash for Labrat, i.e., symbolic keys with any
+    # hyphens translated into underscores.  Don't include the msg attribute.
     def to_hash
       {
         label: label,
@@ -152,7 +156,6 @@ module Labrat
         view: view,
         template: template,
         verbose: verbose,
-        msg: msg,
       }
     end
 

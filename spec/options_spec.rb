@@ -88,7 +88,8 @@ RSpec.describe Options do
     it 'can convert itself into a Hash' do
       hsh = ops.to_hash
       expect(hsh.class).to eq(Hash)
-      expect(hsh.keys.size).to be >= Options.attrs.size
+      # NB: Options#to_hash excludes :msg key
+      expect(hsh.keys.size).to be >= Options.attrs.size - 1
     end
 
     let(:hash) do
