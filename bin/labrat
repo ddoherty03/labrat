@@ -22,7 +22,7 @@ begin
   texts +=
     if ops.template
       []
-    elsif ops.file
+    elsif !ops.file.blank?
       Labrat.read_label_texts(ops.file, ops.nlsep)
     elsif non_ops.empty?
       Labrat.read_label_texts(nil, ops.nlsep)
