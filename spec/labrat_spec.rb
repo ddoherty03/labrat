@@ -8,7 +8,7 @@ RSpec.describe Labrat do
   describe 'file reading' do
     let(:lab_fname) { File.join(__dir__, 'support/spec_labels.txt') }
 
-    it 'can read labels from a named file' do
+    it 'can read label texts from a named file' do
       lab_txts = Labrat.read_label_texts(lab_fname, '++')
       expect(lab_txts.size).to eq(3)
       expect(lab_txts[0]).to match(/\AFour score/)
@@ -16,7 +16,7 @@ RSpec.describe Labrat do
       expect(lab_txts[2]).to match(/\+\+the proposition/)
     end
 
-    it 'can read labels from standard input' do
+    it 'can read label texts from standard input' do
       $stdin = File.open(lab_fname)
       # Using nil as a file name parameter to read_label_texts causes labels
       # to be read from standard input.
