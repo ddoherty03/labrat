@@ -198,6 +198,7 @@ module Labrat
         options.label = name.strip
         # Insert at this point the option args found in the Label.db
         lab_hash = LabelDb[name.to_sym]
+        lab_hash.report("Config from labeldb entry '#{name}'") if options.verbose
         raise LabelNameError,
               "Unknown label name '#{name}'." if lab_hash.empty?
 

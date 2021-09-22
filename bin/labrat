@@ -4,12 +4,16 @@
 require_relative '../lib/labrat'
 
 begin
-  config = Labrat::Config.read('labrat')
-  ops = Labrat::ArgParser.new.parse(ARGV, config)
+  # We need to know whether the verbose option is present before any
+  # examination of the config files or command-line options is done, so this
+  # is a bit of a hack.
+  verb = ARGV.include?('--verbose') || ARGV.include?('-v')
+  ops = Labrat::Options.set_options(ARGV, verbose: verb)
   if ops.msg
     warn ops.msg
     exit(1)
   end
+  ops.to_hash.report("Final option set") if verb
 
   # There are three possible sources of label text: (1) the non-option
   # command-line arguments, if any, are always included, (3) paragraphs in the
