@@ -61,6 +61,29 @@ module Labrat
       self.msg = init[:msg] || nil
     end
 
+    # High-level setting of options from config files, and given command-line
+    # args.
+    def self.set_options(args, verbose: false)
+      # Default, built-in config; set verbose to param.
+      default_config = Labrat::Options.new(verbose: verbose).to_hash
+      default_config.report("Default settings") if verbose
+
+      # Config files
+      file_config = Labrat::Config.read('labrat', verbose: verbose)
+      file_config.report("Settings from merged config files") if verbose
+      file_options = Labrat::ArgParser.new.parse(file_config, prior: default_config, verbose: verbose)
+
+      # Command-line
+      if verbose
+        warn "Settings from command-line:"
+        args.each do |arg|
+          warn arg.to_s
+        end
+        warn ""
+      end
+      Labrat::ArgParser.new.parse(args, prior: file_options, verbose: verbose)
+    end
+
     # Return any string in msg, e.g., the usage help or error.
     def to_s
       msg
