@@ -42,7 +42,7 @@ This invokes the \"labrat -V\ <label>\" command with the paragraph at or before 
 inserted in the <label> position, but with each new-line replaced with the
 value of the variable labrat-nlsep, '++' by default."
   (interactive)
-  (call-process "~/src/labrat/bin/labrat" nil '(:file "~/labrat.out") t
+  (call-process labrat-executable nil nil nil
                 "-V" (labrat/par-at-point)))
 
 (defun labrat-print ()
@@ -52,7 +52,7 @@ This invokes the \"labrat -P <label>\" command with the paragraph at or before p
 inserted in the <label> position, but with each new-line replaced with the
 value of the variable labrat-nlsep, '++' by default."
   (interactive)
-  (call-process "~/src/labrat/bin/labrat" nil '(:file "~/labrat.out") t
+  (call-process labrat-executable nil nil nil
                 (labrat/par-at-point)))
 
 (provide 'labrat)
