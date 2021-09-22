@@ -315,6 +315,14 @@ module Labrat
       end
     end
 
+    def start_label_option
+      parser.on("-SNUM", "--start-label=NUM", Integer,
+                "Start printing at label number NUM (starting at 1, left-to-right, top-to-bottom)",
+                "  within first page only.  Later pages always start at label 1.") do |n|
+        options.start_label = n
+      end
+    end
+
     # On a command-line, specifying where a line-break should occur is not
     # convenient when shell interpretation and quoting rules are taken into
     # account.  This allows the user to use some distinctive marker ('++' by
@@ -348,7 +356,7 @@ module Labrat
       end
     end
 
-    def print_and_view_command_options
+    def command_options
       # NB: the % is supposed to remind me of the rollers on a printer
       parser.on("-%PRINTCMD", "--print-command=PRINTCMD",
                 "Command to use for printing with %p for printer name; %o for label file name") do |cmd|
