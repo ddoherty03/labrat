@@ -197,7 +197,7 @@ module Labrat
                 "Use options for label type NAME from label database") do |name|
         options.label = name.strip
         # Insert at this point the option args found in the Label.db
-        lab_hash = LabelDb[name]
+        lab_hash = LabelDb[name.to_sym]
         raise LabelNameError,
               "Unknown label name '#{name}'." if lab_hash.empty?
 
