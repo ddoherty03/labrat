@@ -7,7 +7,7 @@ module Labrat
   # command-line arguments so that config files, converted to a Hash can also
   # be used with an ArgParser.
   class ArgParser
-    attr_reader :parser, :args, :options
+    attr_reader :parser, :options
 
     def initialize
       @options = Labrat::Options.new
