@@ -50,10 +50,8 @@ module Labrat
       parser.separator "marker ('++' by default, see --nlsep) indicating a line-break."
       parser.separator ""
       parser.separator "Below, NUM indicates an integer, DIM, indicates a linear dimension,"
-                       "valid DIM units are: pt, mm, cm, dm, m, in, ft, yd."
-                       "A DIM with no units assumes pt (points)."
-      parser.separator "    "
-
+      parser.separator "valid DIM units are: pt, mm, cm, dm, m, in, ft, yd."
+      parser.separator "A DIM with no units assumes pt (points)."
       parser.separator ""
       parser.separator "Meta options:"
       label_name_option
