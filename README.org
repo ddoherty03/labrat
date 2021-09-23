@@ -52,19 +52,23 @@ with:
   $ labrat-install
 #+end_SRC
 
-This will install a system-wide config file in =/etc/xdg/labrat/config.yml=
-and a system-wide label database in =/etc/xdg/labrat/labeldb.yml=.  It will
-also install a sample user config file in =~/.config/labrat/labrat.el= and a
-sample label database in =~/.config/labrat/labeldb.yml=.  For the benefit of
-Emacs user, it also installs the =labrat.el= elisp library in
-=~/.config/labrat= as well, though you may want to move it to a different
+This will install an annotated system-wide config file in
+=/etc/xdg/labrat/config.yml= and a system-wide label database in
+=/etc/xdg/labrat/labeldb.yml=.
+
+It will also install an annotated sample user config file in
+=~/.config/labrat/labrat.el= and a sample label database in
+=~/.config/labrat/labeldb.yml=.
+
+For the benefit of Emacs user, it also installs the =labrat.el= elisp library
+in =~/.config/labrat= as well, though you may want to move it to a different
 location.
 
 You can invoke =labrat-install= multiple times because it will refuse to
 overwrite any existing config or database files that you may have edited.  If
 you want to re-install them you have to move them out of the way.
 
-** Usage
+** Setting options
 
 You can control how =labrat= composes a label completely from the
 command-line, though that would be a very tedious thing to have to do.
@@ -73,75 +77,75 @@ all you need to supply on the command line is the text of the label.  Every
 command-line option has an equivalent configuration option using the long form
 of the option as a key in a YAML configuration format.
 
-Here is the output of =labrat --help= that documents all of the options:
+Labrat reads options from the following locations, with the locations listed
+from lowest to highest priority.  In other words, options set in the
+first-listed location can be overriden by settings in later-listed locations.
 
-#+begin_example
-$ labrat --help
-Usage: labrat [options] <label-text>
+1. It reads system-wide options from =/etc/xdg/labrat/config.yml=.  This is a
+   YAML formatted file in which the long form of the option, without the
+   leading '--', is used as a key with the setting as the value.
+2. It reads a user configuration from =~/.config/labrat/config.yml=.  It also
+   uses the YAML format based on the long form of option names.
+3. Finally, it reads options from the command-line, where, of course, the
+   leading hyphens are mandatory.
 
-Print or view (with -V) a label with the given <label-text>.
-All non-option arguments are used for the text with a special
-marker ('++' by default) indicating a line-break.
+** Dimensions and other values in options
+Many of the options deal with specifying some sort of distance.  Those are
+designated with the placeholder ~DIM~.  A ~DIM~ is an integer or floating
+point number followed by an optional unit of measurement.  If no unit is
+given, the unit ~pt~ for "points" are assumed.  Here are the valid units that
+you can use:
 
-Specific options:
-  Note: for DIM, valid units are: pt, mm, cm, dm, m, in, ft, yd
-    With no units, pt (points) assumed
-    -w, --page-width=DIM           Page width:
-                                   the horizontal dimension of a page of labels as it comes out of the printer
-    -h, --page-height=DIM          Page height:
-                                   the vertical dimension of a page of labels as it comes out of the printer
-    -R, --rows=NUM_ROWS            Number of rows of labels on a page
-    -C, --columns=NUM_COLUMNS      Number of columns of labels on a page
-        --row-gap=DIM              Row gap:
-                                   the vertical space between rows of labels on a page of labels
-        --column-gap=DIM           Column gap:
-                                   the horizontal space between columns of labels on a page of labels
-    -S, --start-label=NUM          Label number (starting at 1, left-to-right, top-to-bottom)
-                                     within first page to on which to start printing
-        --right-page-margin=DIM    Distance from right side of page (in portrait) to print area
-        --left-page-margin=DIM     Distance from left side of page (in portrait) to print area
-        --top-page-margin=DIM      Distance from top side of page (in portrait) to print area
-        --bottom-page-margin=DIM   Distance from bottom side of page (in portrait) to print area
-        --h-page-margin=DIM        Distance from left and right sides of page (in portrait) to print area
-        --v-page-margin=DIM        Distance from top and bottom sides of page (in portrait) to print area
-        --page-margin=DIM          Distance from all sides of page (in portrait) to print area
-    -l, --label=NAME               Name of the label to print on
-        --list-labels              List known labels and exit
-        --h-align=[left|center|right]
-                                   Horizontal alignment of label text (default center)
-        --v-align=[top|center|bottom]
-                                   Vertical alignment of label text (default center)
-    -x, --delta-x=DIM              Left-right adjustment as label text is oriented
-    -y, --delta-y=DIM              Up-down adjustment as label text is oriented
-        --right-pad=DIM            Distance from right side of label (in portrait) to print area
-        --left-pad=DIM             Distance from left side of label (in portrait) to print area
-        --top-pad=DIM              Distance from top side of label (in portrait) to print area
-        --bottom-pad=DIM           Distance from bottom side of label (in portrait) to print area
-        --h-pad=DIM                Distance from left and right sides of label (in portrait) to print area
-        --v-pad=DIM                Distance from top and bottom sides of label (in portrait) to print area
-        --pad=DIM                  Distance from all sides of label (in portrait) to print area
-        --font-name=NAME           Name of font to use (default Helvetica)
-        --font-size=POINTS         Size of font to use in points (default 12)
-        --font-style=[normal|bold|italic|bold-italic]
-                                   Style of font to use for text (default normal)
-    -p, --printer=NAME             Name of the label printer to print on
-    -n, --nlsep=SEPARATOR          Specify text to be interpreted as a line-break (default '++')
-    -f, --file=FILENAME            Read labels from given file instead of command-line
-    -o, --out-file=FILENAME        Put generated label in the given file
-    -%, --print-command=PRINTCMD   Command to use for printing with %p for printer name; %o for label file name
-    -:, --view-command=VIEWCMD     Command to use for viewing with %o for label file name
-    -V, --[no-]view                View rather than print
-    -T, --[no-]template            Print a template of a page of labels and ignore any content.
-    -L, --[no-]landscape           Print label in landscape (default true), i.e., with the left of
-                                   the label text starting at the top as the label in printed
-    -P, --[no-]portrait            Print label in portrait (default false), i.e., left-to-right
-                                   top-to-bottom as the label in printed. Negated landscape
-    -v, --[no-]verbose             Run verbosely
+- ~pt~ :: Points, or Adobe points, or "big points", equal to exactly 1/72 of
+  an inch, the default if no unit is given
+- ~mm~ :: Millimeters,
+- ~cm~ :: Centimeters, equal to 10 millimeters,
+- ~dm~ :: Decimeters, equal to 10 centimeters,
+- ~in~ :: Inches,
+- ~ft~ :: Feet, equal to 12 inches,
+- ~yd~ :: Yard, equal to 3 feet.
 
-Common options:
-        --help                     Show this message
-        --version                  Show version
-#+end_example
+Most other options are strings, which need to be quoted on the command-line if
+they contain any spaces or other characters special to your shell.  In the
+configuration files, string values need not be quoted.
+
+** Page Setup Options
+Labrat can handle multi-label pages such as Avery-style label sheets.  These
+options deal with the page-level dimensions of the, potentially, multi-label
+page.  By contrast, the dimensions of individual labels are dealt with by the
+label setup options described in the next section.
+
+When specifying page dimensions, labrat regards all dimension-related
+directions, left, right, top, bottom to refer to the page as is comes out of
+the printer, unaffected by whether the labels are printed in landscape or
+portrait.  This hopefully eliminates some confusion in the use of those terms.
+Even a specialty label printer, such as the Dymo LabelWriter series, in which
+the long skinny labels come out of the printer sideways, regard the page
+dimensions in the orientation that the labels come out: that is, the "page"
+has a relatively narrow width compared to its tall height.
+
+With that in mind, specifying the page dimensions is just a matter of getting
+out a ruler and measuring.
+
+- ~-w, --page-width=DIM~ :: Horizontal dimension of a page of labels as it comes out of the printer
+- ~-h, --page-height=DIM~ :: Vertical dimension of a page of labels as it comes out of the printer
+- ~-R, --rows=NUM~ :: Number of rows of labels on a page
+- ~-C, --columns=NUM~ :: Number of columns of labels on a page
+- ~--row-gap=DIM~ :: Vertical space between rows of labels on a page
+- ~--column-gap=DIM~ :: Horizontal space between columns of labels on a page
+- ~--right-page-margin=DIM~ :: Distance from right side of page (in portrait) to print area
+- ~--left-page-margin=DIM~ :: Distance from left side of page (in portrait) to print area
+- ~--top-page-margin=DIM~ :: Distance from top side of page (in portrait) to print area
+- ~--bottom-page-margin=DIM~ :: Distance from bottom side of page (in portrait) to print area
+- ~--h-page-margin=DIM~ :: Distance from left and right sides of page (in portrait) to print area
+- ~--v-page-margin=DIM~ :: Distance from top and bottom sides of page (in portrait) to print area
+- ~--page-margin=DIM~ :: Distance from all sides of page (in portrait) to print area
+
+** Label Setup Options
+
+** Processing Options
+
+** The Label Database and the --label=<name> Option
 
 * Development
 
