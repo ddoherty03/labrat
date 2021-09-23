@@ -2,7 +2,8 @@
 
 module Labrat
   class Label
-    attr_reader :texts, :ops
+    attr_reader :ops
+    attr_accessor :texts
 
     def initialize(texts, ops)
       @ops = ops
