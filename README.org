@@ -36,6 +36,32 @@ label.  Thus, in Emacs, I have ~C-z C-l C-l~ bound to =labrat-print= and ~C-z
 C-l C-v~ to =labrat-view=, and I can type a label in any buffer and get it
 printed with very little ceremony.
 
+** A Tip on File Folder Labels
+As mentioned, one of my main motivation for writing labrat was the need to
+easily create file-folder labels.  I got into creating files after reading
+"Getting Things Done" by XXXXX may years ago.  One of his recommendations for
+keeping organized is having a file system so that documents can be easily
+archived and retrieved.
+
+For many years I used Dymo's 30327 label, which is just the right size for
+file folders.  But after several years of use, I started to notice something
+alarming: I could no longer read the text of the labels, they had nearly faded
+into oblivion.  The problem is that the labels use a thermal printing
+technology that is affected by light, and over a period of years, they get
+lighter and lighter.  You may have seen the same thing on old thermal-printed
+store receipts.
+
+After looking for alternative printers, I found the solution, not in a new
+printer technology, but in a new label technology.  DuraReady makes labels
+that can be printed on a thermal printer like the Dymo LaserWriter, but print
+on a "Gloss white polypropylene BOPP plastic."  I'm not sure what that is, but
+the labels come out with nice black lettering on a white background and they
+don't fade.  Check it out [[https://www.duraready.com/file-folder-labels/1034d-9/16-x-3-7/16-white-bopp-plastic-label/][here]].
+
+Thermal labels may be fine for ephemeral applications like name tags or
+shipping labels, but are terrible for long-term applications like file
+folders.
+
 ** Installation
 
 Since labrat is distributed as a Ruby gem, you have to have a ruby
