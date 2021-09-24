@@ -123,20 +123,16 @@ RSpec.describe ArgParser do
       expect(ap.parse(['--version']).msg).to match(/[0-9.]+/)
     end
 
-    it 'produces help on invalid option' do
+    it 'raises an error on invalid option' do
       bad_option = '--lsflkwroi'
-      ops = ap.parse([bad_option])
-      err_msg = ops.msg
-      expect(err_msg).to include('Error: invalid option')
-      expect(err_msg).to include(bad_option)
+      expect { ap.parse([bad_option]) }.to raise_exception(OptionError)
+      expect { ap.parse([bad_option]) }.to raise_exception(/#{bad_option}/)
     end
 
-    it 'produces help on missing option arg' do
-      option = '--delta_x'
-      ops = ap.parse([option])
-      err_msg = ops.msg
-      expect(err_msg).to include('Error: missing argument:')
-      expect(err_msg).to include(option)
+    it 'raises an error on missing option arg' do
+      option = '--delta-x'
+      expect { ap.parse([option]) }.to raise_exception(OptionError)
+      expect { ap.parse([option]) }.to raise_exception(/missing argument: #{option}/)
     end
 
     it 'can set the dimensions of the page' do

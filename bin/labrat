@@ -41,6 +41,9 @@ begin
     lab.print
   end
 
+rescue Labrat::OptionError => e
+  warn "#{e}"
+  exit(1)
 rescue Labrat::EmptyLabelError => e
   warn "#{e}: refusing to print"
   exit(1)
