@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    labrat (0.1.6)
+    labrat (0.1.7)
       activesupport
       fat_core
       prawn (~> 2.0)
@@ -96,4 +96,4 @@ DEPENDENCIES
   rubocop (~> 1.7)
 
 BUNDLED WITH
-   2.2.8
+   2.2.26
