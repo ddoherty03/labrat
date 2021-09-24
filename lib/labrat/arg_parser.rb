@@ -27,9 +27,9 @@ module Labrat
       options.merge!(prior)
       case args
       when Hash
-        parser.parse!(args.optionize)
+        parser.parse(args.optionize)
       when Array
-        parser.parse!(args)
+        parser.parse(args)
       else
         raise "ArgParser cannot parse args of class '#{args.class}'"
       end
