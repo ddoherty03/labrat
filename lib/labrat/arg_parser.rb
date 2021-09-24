@@ -202,7 +202,7 @@ module Labrat
               "Unknown label name '#{name}'." if lab_hash.empty?
 
         lab_args = lab_hash.optionize
-        parser.parse(lab_args)
+        parse(lab_args, verbose: options.verbose)
       end
     end
 
