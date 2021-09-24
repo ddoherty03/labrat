@@ -36,7 +36,7 @@ module Labrat
       options
     rescue OptionParser::ParseError => e
       options.msg = "Error: #{e}\n\nTry `labrat --help` for usage."
-      options
+      raise Labrat::OptionError, options.msg
     end
 
     private
