@@ -236,7 +236,7 @@ module Labrat
       end
       parser.on("--v-align=[top|center|bottom]", [:top, :center, :bottom],
                 "Vertical alignment of label text (default center)") do |al|
-        options.h_align = al.to_sym
+        options.v_align = al.to_sym
         warn "  ::v-align <- #{al}::" if options.verbose
       end
     end
