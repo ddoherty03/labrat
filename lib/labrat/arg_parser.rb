@@ -137,10 +137,12 @@ module Labrat
       parser.on("-RNUM", "--rows=NUM", Integer,
                 "Number of rows of labels on a page") do |n|
         options.rows = n
+        warn "  ::rows <- #{n}::" if options.verbose
       end
       parser.on("-CNUM", "--columns=NUM", Integer,
                 "Number of columns of labels on a page") do |n|
         options.columns = n
+        warn "  ::columns <- #{n}::" if options.verbose
       end
       parser.on("--row-gap=DIM",
                 "Vertical space between rows of labels on a page") do |gap|
@@ -428,6 +430,7 @@ module Labrat
       # Boolean switch.
       parser.on("-v", "--[no-]verbose", "Run verbosely") do |v|
         options.verbose = v
+        warn "  ::verbose <- #{v}::" if options.verbose
       end
     end
   end
