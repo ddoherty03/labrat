@@ -35,7 +35,7 @@ module Labrat
       end
       options
     rescue OptionParser::ParseError => e
-      options.msg = "Error: #{e}\n\n#{parser}"
+      options.msg = "Error: #{e}\n\nTry `labrat --help` for usage."
       options
     end
 
@@ -112,12 +112,13 @@ module Labrat
         meas = match[:measure].to_f
         u_meth = match[:unit].to_sym
         unless meas.respond_to?(u_meth)
-          msg = "unknown #{where} unit: '#{match[:unit]}'\n"\
+          msg = "Error: unknown #{where} unit: '#{match[:unit]}'\n"\
           "  valid units are: pt, mm, cm, dm, m, in, ft, yd"
           raise Labrat::DimensionError, msg
         end
-
-        meas.send(u_meth)
+        points = meas.send(u_meth)
+        warn "  ::#{where} <- #{str} (#{points}pt)::" if options.verbose
+        points
       end
     end
 
@@ -231,10 +232,12 @@ module Labrat
       parser.on("--h-align=[left|center|right]", [:left, :center, :right],
                 "Horizontal alignment of label text (default center)") do |al|
         options.h_align = al.to_sym
+        warn "  ::h-align <- #{al}::" if options.verbose
       end
       parser.on("--v-align=[top|center|bottom]", [:top, :center, :bottom],
                 "Vertical alignment of label text (default center)") do |al|
         options.h_align = al.to_sym
+        warn "  ::v-align <- #{al}::" if options.verbose
       end
     end
 
@@ -279,15 +282,18 @@ module Labrat
       parser.on("--font-name=NAME",
                 "Name of font to use (default Helvetica)") do |nm|
         options.font_name = nm
+        warn "  ::font-name <- '#{nm}'::" if options.verbose
       end
       parser.on("--font-size=NUM",
                 "Size of font to use in points (default 12)") do |pt|
         options.font_size = pt
+        warn "  ::font-size <- #{pt}::" if options.verbose
       end
       parser.on("--font-style=[normal|bold|italic|bold-italic]",
                 %w[normal bold italic bold-italic],
                 "Style of font to use for text (default normal)") do |sty|
         options.font_style = sty
+        warn "  ::font-style <- #{sty}::" if options.verbose
       end
     end
 
@@ -311,6 +317,7 @@ module Labrat
       parser.on("-pNAME", "--printer=NAME",
                 "Name of the label printer to print on") do |name|
         options.printer = name
+        warn "  ::printer <- '#{name}'::" if options.verbose
       end
     end
 
@@ -319,6 +326,7 @@ module Labrat
                 "Start printing at label number NUM (starting at 1, left-to-right, top-to-bottom)",
                 "  within first page only.  Later pages always start at label 1.") do |n|
         options.start_label = n
+        warn "  ::start-label <- #{n}::" if options.verbose
       end
     end
 
@@ -330,6 +338,7 @@ module Labrat
       parser.on("-nSEP", "--nlsep=SEPARATOR",
                 "Specify text to be translated into a line-break (default '++')") do |nl|
         options.nlsep = nl
+        warn "  ::nl-sep <- '#{nl}'::" if options.verbose
       end
     end
 
@@ -339,6 +348,7 @@ module Labrat
       parser.on("-fFILENAME", "--file=FILENAME",
                 "Read labels from given file instead of command-line") do |file|
         options.file = file.strip
+        warn "  ::file <- '#{file}'::" if options.verbose
       end
     end
 
@@ -352,6 +362,7 @@ module Labrat
           file = "#{file}.pdf"
         end
         options.out_file = file
+        warn "  ::out-file <- '#{file}'::" if options.verbose
       end
     end
 
@@ -360,22 +371,25 @@ module Labrat
       parser.on("-%PRINTCMD", "--print-command=PRINTCMD",
                 "Command to use for printing with %p for printer name; %o for label file name") do |cmd|
         options.print_command = cmd.strip
+        warn "  ::print-command <- '#{cmd}'::" if options.verbose
       end
       # NB: the : is supposed to remind me of two eyeballs viewing the PDF
       parser.on("-:VIEWCMD", "--view-command=VIEWCMD",
                 "Command to use for viewing with %o for label file name") do |cmd|
         options.view_command = cmd.strip
+        warn "  ::view-command <- '#{cmd}'::" if options.verbose
       end
     end
 
     # Whether the label ought to be printed in landscape orientation, that is,
-    # turned 90 degrees clockwise from the orientation the label has coming
-    # out of the printer.
+    # the text turned 90 degrees clockwise from the orientation the label has
+    # coming out of the printer.
     def landscape_option
       parser.on("-L", "--[no-]landscape",
                 "Orient label in landscape (default false), i.e., with the left of",
                 "the label text starting at the top as the label as printed") do |l|
         options.landscape = l
+        warn "  ::landscape <- #{l}::" if options.verbose
       end
     end
 
@@ -385,6 +399,7 @@ module Labrat
                 "Orient label in portrait (default true), i.e., left-to-right",
                 "top-to-bottom as the label as printed. Negated landscape") do |p|
         options.landscape = !p
+        warn "  portrait option executed as ::landscape <- #{!p}::" if options.verbose
       end
     end
 
@@ -393,6 +408,7 @@ module Labrat
       # Boolean switch.
       parser.on("-V", "--[no-]view", "View rather than print") do |v|
         options.view = v
+        warn "  ::view <- #{v}::" if options.verbose
       end
     end
 
@@ -403,6 +419,7 @@ module Labrat
       parser.on("-T", "--[no-]template",
                 "Print a template of a page of labels and ignore any content.") do |t|
         options.template = t
+        warn "  ::template <- #{t}::" if options.verbose
       end
     end
 

@@ -13,7 +13,7 @@ begin
     warn ops.msg
     exit(1)
   end
-  ops.to_hash.report("Final option set") if verb
+  ops.to_hash.report("\nFinal option set") if verb
 
   # There are three possible sources of label text: (1) the non-option
   # command-line arguments, if any, are always included, (3) paragraphs in the

@@ -25,10 +25,10 @@ class Hash
   def report(title)
     warn "#{title}:"
     if empty?
-      warn "[[Empty]]"
+      warn "  [[Empty]]"
     else
       each do |k, v|
-        warn "#{k}: #{v}"
+        warn "  #{k}: #{v}"
       end
     end
     warn ""

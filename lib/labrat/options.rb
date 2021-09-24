@@ -75,7 +75,7 @@ module Labrat
 
       # Command-line
       if verbose
-        warn "Settings from command-line:"
+        warn "\nCommand-line:"
         args.each do |arg|
           warn arg.to_s
         end
