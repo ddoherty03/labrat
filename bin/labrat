@@ -17,17 +17,17 @@ begin
 
   # There are three possible sources of label text: (1) the non-option
   # command-line arguments, if any, are always included, (3) paragraphs in the
-  # file specified by the --file argument, if any, are always included, and (3)
+  # file specified by the --in-file argument, if any, are always included, and (3)
   # paragraphs in standard input are included if there are no non-option
-  # arguments and no --file argument.
+  # arguments and no --in-file argument.
 
   non_ops = ARGV.grep_v(/\A--?/)
   texts = non_ops.empty? ? [] : [non_ops.join(' ')]
   texts +=
     if ops.template
       []
-    elsif !ops.file.blank?
-      Labrat.read_label_texts(ops.file, ops.nlsep)
+    elsif !ops.in_file.blank?
+      Labrat.read_label_texts(ops.in_file, ops.nlsep)
     elsif non_ops.empty?
       Labrat.read_label_texts(nil, ops.nlsep)
     else
