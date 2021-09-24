@@ -345,10 +345,10 @@ module Labrat
     # For batch printing of labels, the user might want to just feed a file of
     # labels to be printed.  This option allows a file name to be give.
     def in_file_option
-      parser.on("-fFILENAME", "--file=FILENAME",
+      parser.on("-fFILENAME", "--in-file=FILENAME",
                 "Read labels from given file instead of command-line") do |file|
-        options.file = file.strip
-        warn "  ::file <- '#{file}'::" if options.verbose
+        options.in_file = file.strip
+        warn "  ::in-file <- '#{file}'::" if options.verbose
       end
     end
 

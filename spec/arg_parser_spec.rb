@@ -33,7 +33,7 @@ RSpec.describe ArgParser do
       expect(op.font_name).to eq('Helvetica')
       expect(op.font_style).to eq(:normal)
       expect(op.font_size).to eq(12)
-      expect(op.file).to be_nil
+      expect(op.in_file).to be_nil
       expect(op.nlsep).to eq('++')
       expect(op.printer).to eq('dymo')
       expect(op.out_file.class).to eq(String)
@@ -108,7 +108,7 @@ RSpec.describe ArgParser do
       expect(help).to include('--font-name')
       expect(help).to include('--font-style')
       expect(help).to include('--font-size')
-      expect(help).to include('--file')
+      expect(help).to include('--in-file')
       expect(help).to include('--nlsep')
       expect(help).to include('--printer')
       expect(help).to include('--out-file')
@@ -208,13 +208,13 @@ RSpec.describe ArgParser do
     it 'can set an optional input file' do
       ops = ap.parse(['-f junk.lab'])
       expect(ops.msg).to be_nil
-      expect(ops.file).to eq('junk.lab')
-      ops = ap.parse(['--file=junk2.lab'])
+      expect(ops.in_file).to eq('junk.lab')
+      ops = ap.parse(['--in-file=junk2.lab'])
       expect(ops.msg).to be_nil
-      expect(ops.file).to eq('junk2.lab')
-      ops = ap.parse(['--file', '  file with some spaces  	'])
+      expect(ops.in_file).to eq('junk2.lab')
+      ops = ap.parse(['--in-file', '  file with some spaces  	'])
       expect(ops.msg).to be_nil
-      expect(ops.file).to eq('file with some spaces')
+      expect(ops.in_file).to eq('file with some spaces')
     end
 
     it 'can set an optional output PDF file' do
