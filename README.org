@@ -37,25 +37,25 @@ C-l C-v~ to =labrat-view=, and I can type a label in any buffer and get it
 printed with very little ceremony.
 
 ** A Tip on File Folder Labels
-As mentioned, one of my main motivation for writing labrat was the need to
+As mentioned, one of my main motivations for writing labrat was the need to
 easily create file-folder labels.  I got into creating files after reading
-"Getting Things Done" by XXXXX may years ago.  One of his recommendations for
-keeping organized is having a file system so that documents can be easily
-archived and retrieved.
+"Getting Things Done" by David Allen.  One of his recommendations for keeping
+organized is having a file system so that documents can be easily archived and
+retrieved.
 
-For many years I used Dymo's 30327 label, which is just the right size for
-file folders.  But after several years of use, I started to notice something
+I have long used Dymo's 30327 label, which is just the right size for file
+folders.  But after several years of use, I started to notice something
 alarming: I could no longer read the text of the labels, they had nearly faded
 into oblivion.  The problem is that the labels use a thermal printing
-technology that is affected by light, and over a period of years, they get
-lighter and lighter.  You may have seen the same thing on old thermal-printed
-store receipts.
+technology that is affected by light and time, and over a period of years,
+they get lighter and lighter.  You may have seen the same thing on old
+thermal-printed store receipts.
 
 After looking for alternative printers, I found the solution, not in a new
 printer technology, but in a new label technology.  DuraReady makes labels
 that can be printed on a thermal printer like the Dymo LaserWriter, but print
 on a "Gloss white polypropylene BOPP plastic."  I'm not sure what that is, but
-the labels come out with nice black lettering on a white background and they
+the labels come out with nice black lettering on a white background, and they
 don't fade.  Check it out [[https://www.duraready.com/file-folder-labels/1034d-9/16-x-3-7/16-white-bopp-plastic-label/][here]].
 
 Thermal labels may be fine for ephemeral applications like name tags or
@@ -63,7 +63,6 @@ shipping labels, but are terrible for long-term applications like file
 folders.
 
 ** Installation
-
 Since labrat is distributed as a Ruby gem, you have to have a ruby
 installation.  You can then install =labrat= with:
 
@@ -90,12 +89,11 @@ For the benefit of Emacs user, it also installs the =labrat.el= elisp library
 in =~/.config/labrat= as well, though you may want to move it to a different
 location.
 
-You can invoke =labrat-install= multiple times because it will refuse to
-overwrite any existing config or database files that you may have edited.  If
-you want to re-install them you have to move them out of the way.
+If invoke =labrat-install= multiple times, it will refuse to overwrite any
+existing config or database files that you may have edited.  If you want to
+re-install them you have to move them out of the way.
 
 ** Setting options
-
 You can control how =labrat= composes a label completely from the
 command-line, though that would be a very tedious thing to have to do.
 Better, set up your preferred configuration in your user config file, so that
@@ -153,21 +151,81 @@ has a relatively narrow width compared to its tall height.
 With that in mind, specifying the page dimensions is just a matter of getting
 out a ruler and measuring.
 
-- ~-w, --page-width=DIM~ :: Horizontal dimension of a page of labels as it comes out of the printer
-- ~-h, --page-height=DIM~ :: Vertical dimension of a page of labels as it comes out of the printer
-- ~-R, --rows=NUM~ :: Number of rows of labels on a page
-- ~-C, --columns=NUM~ :: Number of columns of labels on a page
-- ~--row-gap=DIM~ :: Vertical space between rows of labels on a page
-- ~--column-gap=DIM~ :: Horizontal space between columns of labels on a page
-- ~--right-page-margin=DIM~ :: Distance from right side of page (in portrait) to print area
-- ~--left-page-margin=DIM~ :: Distance from left side of page (in portrait) to print area
-- ~--top-page-margin=DIM~ :: Distance from top side of page (in portrait) to print area
-- ~--bottom-page-margin=DIM~ :: Distance from bottom side of page (in portrait) to print area
-- ~--h-page-margin=DIM~ :: Distance from left and right sides of page (in portrait) to print area
-- ~--v-page-margin=DIM~ :: Distance from top and bottom sides of page (in portrait) to print area
-- ~--page-margin=DIM~ :: Distance from all sides of page (in portrait) to print area
+- ~-L~, ~--[no-]landscape~ :: Orient the label grid and the printing direction
+  of the text of the label in landscape (default false), i.e., with the label
+  grid rotated 90 degrees clockwise so that the first label is printed down
+  the page starting at the upper right element of the grid.  This setting does
+  not affect what is left, right, top, or bottom for purposes of specifying
+  the page dimensions, but does affect what is considered "horizontal rows"
+  and "vertical columns": those are counted in the rotated direction of
+  printing.
+- ~-P~, ~--[no-]portrait~ :: This is simply a convenience switch meaning
+  ~--no-landscape~ and is the default.
+
+- ~-w~, ~--page-width=DIM~ :: Horizontal dimension of a page of labels as it comes out of the printer
+- ~-h~, ~--page-height=DIM~ :: Vertical dimension of a page of labels as it comes out of the printer
+- ~--top-page-margin=DIM~ :: Distance from top side of page (in portrait) to
+  the print area
+- ~--bottom-page-margin=DIM~ :: Distance from bottom side of page (in
+  portrait) to the print area
+- ~--left-page-margin=DIM~ :: Distance from left side of page (in portrait) to
+  the print area
+- ~--right-page-margin=DIM~ :: Distance from right side of page (in portrait)
+  to the print area
+- ~--v-page-margin=DIM~ :: Distance from top and bottom sides of page (in
+  portrait) to the print area; short for ~--top-page-margin~ and
+  ~--bottom-page-margin~
+- ~--h-page-margin=DIM~ :: Distance from left and right sides of page (in
+  portrait) to the print area; short for ~--left-page-margin~ and
+  ~--right-page-margin~
+- ~--page-margin=DIM~ :: Distance from all sides of page (in portrait) to the
+  print area; short for ~--top-page-margin~, ~--bottom-page-margin~,
+  ~--left-page-margin~ and ~--right-page-margin~
+
+- ~-R~, ~--rows=NUM~ :: The number of horizontal rows of labels on a page, taking
+  into account the direction of printing via the ~--landscape~ switch.
+- ~-C~, ~--columns=NUM~ :: The number of vertical columns of labels on a page,
+  taking into account the direction of printing via the ~--landscape~ switch.
+- ~--row-gap=DIM~ :: The distance between rows of labels on a page
+- ~--column-gap=DIM~ :: The distance between columns of labels on a page
 
 ** Label Setup Options
+These options determine the layout of individual labels within the page rather
+than the page as a whole.  Note that the dimensions of individual labels is
+not specified, but is implicitly determined by (1) the page width and height,
+(2) the page margins, (3) the number of rows and columns per page, and (4) the
+row and column gaps.  The remaining space on the page is divided into a grid
+of identically-sized labels, which determines the size of each label.
+
+- ~--top-pad=DIM~ :: Distance from top side of label to the printed text
+- ~--bottom-pad=DIM~ :: Distance from bottom side of label to the printed text
+- ~--left-pad=DIM~ :: Distance from left side of label to the printed text
+- ~--right-pad=DIM~ :: Distance from right side of label to the printed text
+- ~--v-pad=DIM~ :: Short for ~--top-pad=DIM~ and ~--bottom-pad~
+- ~--h-pad=DIM~ :: Short for ~--left-pad=DIM~ and ~--right-pad~
+- ~--pad=DIM~ :: Short for ~--top-pad=DIM~, ~--bottom-pad~, ~--left-pad=DIM~
+  and ~--right-pad~
+
+- ~--h-align=[left|center|right|justify]~ :: Horizontal alignment of text
+  within the label (default center);
+- ~--v-align=[top|center|bottom]~ :: Vertical alignment of text within the
+  label (default center)
+
+- ~--font-name=NAME~ :: Name of font to use, Times, Courier, or Helvetica
+  (default Helvetica);
+- ~--font-size=NUM~ :: Size of font to use in points (default 12)
+- ~--font-style=[normal|bold|italic|bold-italic]~ :: Style of font to use for
+  text (default normal)
+
+  Despite our best efforts, the vagaries of printer hardware, print drivers,
+  and cosmic rays, sometimes the text of the label is not positioned correctly
+  within the printable area of the label.  These options allow you to nudge
+  the print area left or right, up or down a bit to compensate for any such
+  anomalies.
+- ~-x, --delta-x=DIM~ :: Left-right adjustment (positive moves right, negative
+  left) of label text within the label print area.
+- ~-y, --delta-y=DIM~ :: Up-down adjustment (positive moves up, negative
+  down) of label text within the label print area.
 
 ** Processing Options
 
