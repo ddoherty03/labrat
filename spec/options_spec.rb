@@ -20,6 +20,7 @@ RSpec.describe Options do
       expect(ops.column_gap).to be_within(EPS).of(0 * MM)
       expect(ops.start_label).to eq(1)
       expect(ops.landscape).to eq(false)
+      expect(ops.grid).to eq(false)
       expect(ops.h_align).to eq(:center)
       expect(ops.v_align).to eq(:center)
       expect(ops.left_pad).to be_within(EPS).of(4.5 * MM)
@@ -121,6 +122,7 @@ RSpec.describe Options do
       expect(ops.bottom_pad).to be_within(EPS).of(0 * MM)
       expect(ops.delta_x).to be_within(EPS).of(0 * MM)
       expect(ops.delta_y).to be_within(EPS).of(0 * MM)
+      expect(ops.grid).to be_falsey
       expect(ops.font_name).to eq('Helvetica')
       expect(ops.font_style).to eq(:normal)
     end

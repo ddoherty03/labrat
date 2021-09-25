@@ -80,6 +80,7 @@ module Labrat
       printer_name_option
       command_options
       view_option
+      grid_option
       template_option
       verbose_option
 
@@ -411,6 +412,15 @@ module Labrat
       parser.on("-V", "--[no-]view", "View rather than print") do |v|
         options.view = v
         warn "  ::view <- #{v}::" if options.verbose
+      end
+    end
+
+    # Whether to add label grid outline to output
+    def grid_option
+      # Boolean switch.
+      parser.on("-g", "--[no-]grid", "Add grid lines to output") do |g|
+        options.grid = g
+        warn "  ::grid <- #{g}::" if options.verbose
       end
     end
 

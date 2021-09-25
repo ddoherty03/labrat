@@ -62,6 +62,7 @@ module Labrat
         last_k = texts.size - 1
         texts.each_with_index do |text, k|
           row, col = row_col(k + 1)
+          pdf.grid.show_all if ops.grid
           pdf.grid(row, col).bounding_box do
             bounds = pdf.bounds
             box_wd = (bounds.right - bounds.left) - ops.left_pad - ops.right_pad

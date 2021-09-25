@@ -10,7 +10,7 @@ module Labrat
                   :left_page_margin, :right_page_margin,
                   :top_page_margin, :bottom_page_margin,
                   :rows, :columns, :row_gap, :column_gap, :landscape,
-                  :start_label,
+                  :start_label, :grid,
                   :h_align, :v_align,
                   :left_pad, :right_pad, :top_pad, :bottom_pad,
                   :delta_x, :delta_y,
@@ -57,6 +57,7 @@ module Labrat
       self.view_command = init[:view_command] || 'qpdfview --unique --instance labrat %o'
       self.view = init.fetch(:view, false)
       self.template = init.fetch(:landscape, false)
+      self.grid = init.fetch(:gid, false)
       self.verbose = init.fetch(:verbose, false)
       self.msg = init[:msg] || nil
     end
@@ -131,6 +132,7 @@ module Labrat
         columns: columns,
         row_gap: row_gap,
         column_gap: column_gap,
+        grid: grid,
         start_label: start_label,
         landscape: landscape,
         # Per-label attributes

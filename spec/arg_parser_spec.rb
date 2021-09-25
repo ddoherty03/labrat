@@ -20,6 +20,7 @@ RSpec.describe ArgParser do
       expect(op.columns).to eq(1)
       expect(op.row_gap).to be_within(EPS).of(0 * MM)
       expect(op.column_gap).to be_within(EPS).of(0 * MM)
+      expect(op.grid).to be(false)
       expect(op.start_label).to eq(1)
       expect(op.landscape).to be(false)
       expect(op.h_align).to eq(:center)
@@ -94,6 +95,7 @@ RSpec.describe ArgParser do
       expect(help).to include('--columns')
       expect(help).to include('--row-gap')
       expect(help).to include('--column-gap')
+      expect(help).to include('--[no-]grid')
       expect(help).to include('--[no-]landscape')
       expect(help).to include('--start-label')
       expect(help).to include('--list-labels')
@@ -290,6 +292,24 @@ RSpec.describe ArgParser do
       ops = ap.parse(['--no-portrait'])
       expect(ops.msg).to be_nil
       expect(ops.landscape).to be true
+    end
+
+    it 'can set grid lines' do
+      ops = ap.parse([])
+      expect(ops.msg).to be_nil
+      expect(ops.verbose).to be false
+
+      ops = ap.parse(['-g'])
+      expect(ops.msg).to be_nil
+      expect(ops.grid).to be true
+
+      ops = ap.parse(['--grid'])
+      expect(ops.msg).to be_nil
+      expect(ops.grid).to be true
+
+      ops = ap.parse(['--no-grid'])
+      expect(ops.msg).to be_nil
+      expect(ops.grid).to be false
     end
 
     it 'can set verbose' do
