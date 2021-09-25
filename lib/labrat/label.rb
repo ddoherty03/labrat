@@ -82,11 +82,19 @@ module Labrat
 
     def print
       cmd = ops.print_command.gsub('%p', ops.printer).gsub('%o', ops.out_file)
+      if ops.verbose
+        warn "Printing with:"
+        warn "  #{cmd} &"
+      end
       system("#{cmd} &")
     end
 
     def view
       cmd = ops.view_command.gsub('%o', ops.out_file)
+      if ops.verbose
+        warn "Viewing with:"
+        warn "  #{cmd} &"
+      end
       system("#{cmd} &")
     end
 
