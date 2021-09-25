@@ -66,4 +66,8 @@ rescue Prawn::Errors::CannotFit
   warn "Page and label dimensions leave no room for labels."
   warn "  Try `labrat -T -v -V` to diagnose the problem."
   exit(1)
+rescue Prawn::Errors::UnknownFont => e
+  warn e
+  warn "  Builtin fonts are Times-Roman, Courier, and Helvetica"
+  exit(1)
 end
