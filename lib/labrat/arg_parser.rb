@@ -152,7 +152,7 @@ module Labrat
       parser.on("--column-gap=DIM",
                 "Column gap:",
                 "Horizontal space between columns of labels on a page") do |gap|
-        options.column_gap = parse_dimension(gap, 'row-gap')
+        options.column_gap = parse_dimension(gap, 'column-gap')
       end
     end
 
