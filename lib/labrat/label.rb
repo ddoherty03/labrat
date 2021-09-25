@@ -32,8 +32,8 @@ module Labrat
         tpm = ops.left_page_margin
         bpm = ops.right_page_margin
       end
-
-      Prawn::Document.generate(ops.out_file, page_size: [ops.page_width, ops.page_height],
+      out_file = File.expand_path(ops.out_file)
+      Prawn::Document.generate(out_file, page_size: [ops.page_width, ops.page_height],
                                left_margin: lpm, right_margin: rpm,
                                top_margin: tpm, bottom_margin: bpm,
                                page_layout: layout) do |pdf|
