@@ -232,7 +232,7 @@ module Labrat
 
     # Set the name, size, and style of font.
     def align_options
-      parser.on("--h-align=[left|center|right]", [:left, :center, :right],
+      parser.on("--h-align=[left|center|right|justify]", [:left, :center, :right, :justify],
                 "Horizontal alignment of label text (default center)") do |al|
         options.h_align = al.to_sym
         warn "  ::h-align <- #{al}::" if options.verbose
