@@ -62,4 +62,8 @@ rescue Labrat::LabelNameError => e
 rescue Labrat::DimensionError => e
   warn e
   exit(1)
+rescue Prawn::Errors::CannotFit
+  warn "Page and label dimensions leave no room for labels."
+  warn "  Try `labrat -T -v -V` to diagnose the problem."
+  exit(1)
 end
