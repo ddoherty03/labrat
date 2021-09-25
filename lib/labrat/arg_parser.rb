@@ -118,7 +118,7 @@ module Labrat
           raise Labrat::DimensionError, msg
         end
         points = meas.send(u_meth)
-        warn "  ::#{where} <- #{str} (#{points}pt)::" if options.verbose
+        warn "  ::#{where} <- #{str} (#{points.round(2)}pt)::" if options.verbose
         points
       end
     end

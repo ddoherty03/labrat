@@ -28,7 +28,8 @@ class Hash
       warn "  [[Empty]]"
     else
       each do |k, v|
-        warn "  #{k}: #{v}"
+        val = v.class == Float ? v.round(2).to_s + 'pt' : v
+        warn "  #{k}: #{val}"
       end
     end
     warn ""
