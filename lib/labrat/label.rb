@@ -40,15 +40,15 @@ module Labrat
         # Define a grid with each grid box to be used for a single label.
         pdf.define_grid(rows: ops.rows, columns: ops.columns,
                         row_gutter: ops.row_gap, column_gutter: ops.column_gap)
-        # if ops.verbose
-        #   warn "orientation: #{layout}"
-        #   warn "page_size = [#{ops.page-width}pt,#{ops.page-height}pt]"
-        #   warn "[lpm, rpm] = [#{lpm}pt,#{rpm}pt]"
-        #   warn "[tpm, bpm] = [#{tpm}pt,#{bpm}pt]"
-        #   warn "[delta_x, delta_y] = [#{ops.delta_x}pt,#{ops.delta_y}pt]"
-        #   warn "[box_x, box_y] = [#{box_x}pt,#{box_y}pt]"
-        #   warn "[box_wd, box_ht] = [#{box_wd}pt,#{box_ht}pt]"
-        # end
+        if ops.verbose
+          warn "Page dimensions:"
+          warn "  [pg_wd, pg_ht] = [#{ops.page_width.round(2)}pt,#{ops.page_height.round(2)}pt]"
+          warn "  orientation: #{layout}"
+          warn "  [rows, columns] = [#{ops.rows},#{ops.columns}]"
+          warn "  [lpm, rpm] = [#{lpm.round(2)}pt,#{rpm.round(2)}pt]"
+          warn "  [tpm, bpm] = [#{tpm.round(2)}pt,#{bpm.round(2)}pt]"
+          warn ""
+        end
         if ops.template
           # Replace any texts with the numbers and show the grid.
           self.texts = (1..(ops.rows * ops.columns)).map(&:to_s)
@@ -60,6 +60,7 @@ module Labrat
         raise EmptyLabelError, "Empty label" if waste_of_labels?
 
         last_k = texts.size - 1
+        ld_report = true
         texts.each_with_index do |text, k|
           row, col = row_col(k + 1)
           pdf.grid(row, col).bounding_box do
@@ -73,6 +74,19 @@ module Labrat
             pdf.text_box(text, width: box_wd, height: box_ht,
                          align: ops.h_align, valign: ops.v_align,
                          overflow: :truncate, at: [box_x, box_y])
+            if ops.verbose && ld_report
+              warn "Label text box dimensions:"
+              warn "  [box_wd, box_ht] = [#{box_wd.round(2)}pt,#{box_ht.round(2)}pt]"
+              warn "  [box_x, box_y] = [#{box_x.round(2)}pt,#{box_y.round(2)}pt]"
+              warn "  [delta_x, delta_y] = [#{ops.delta_x.round(2)}pt,#{ops.delta_y.round(2)}pt]"
+              warn ""
+              ld_report = false
+            end
+            if ops.verbose
+              warn "Label text:"
+              warn text
+              warn ""
+            end
             pdf.start_new_page if needs_new_page?(k, last_k)
           end
         end
