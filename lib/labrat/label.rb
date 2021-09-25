@@ -62,14 +62,14 @@ module Labrat
         last_k = texts.size - 1
         texts.each_with_index do |text, k|
           row, col = row_col(k + 1)
-          pdf.grid.show_all if ops.grid
           pdf.grid(row, col).bounding_box do
             bounds = pdf.bounds
+            pdf.stroke_bounds if ops.grid
             box_wd = (bounds.right - bounds.left) - ops.left_pad - ops.right_pad
             box_ht = (bounds.top - bounds.bottom) - ops.top_pad - ops.bottom_pad
             box_x = ops.left_pad + ops.delta_x
             box_y = ops.bottom_pad + box_ht + ops.delta_y
-            pdf.font ops.font_name, style: ops.font_style.to_sym, size: ops.font_size.to_f
+            pdf.font ops.font_name, style: ops.font_style, size: ops.font_size.to_f
             pdf.text_box(text, width: box_wd, height: box_ht,
                          align: ops.h_align, valign: ops.v_align,
                          overflow: :truncate, at: [box_x, box_y])
