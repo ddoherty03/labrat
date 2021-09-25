@@ -295,7 +295,8 @@ module Labrat
       parser.on("--font-style=[normal|bold|italic|bold-italic]",
                 %w[normal bold italic bold-italic],
                 "Style of font to use for text (default normal)") do |sty|
-        options.font_style = sty
+        # Prawn requires :bold_italic, not :"bold-italic"
+        options.font_style = sty.tr('-', '_').to_sym
         warn "  ::font-style <- #{sty}::" if options.verbose
       end
     end
