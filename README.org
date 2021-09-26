@@ -1,6 +1,20 @@
+* Table of Contents                                                     :toc:
+- [[#labrat][Labrat]]
+  - [[#motivation][Motivation]]
+  - [[#a-tip-on-file-folder-labels][A Tip on File Folder Labels]]
+  - [[#installation][Installation]]
+  - [[#setting-options][Setting options]]
+  - [[#dimensions-and-other-values-in-options][Dimensions and other values in options]]
+  - [[#page-setup-options][Page Setup Options]]
+  - [[#label-setup-options][Label Setup Options]]
+  - [[#job-processing-options][Job Processing Options]]
+  - [[#the-label-database-and-the---labelname-option][The Label Database and the --label=<name> Option]]
+- [[#development][Development]]
+- [[#contributing][Contributing]]
+
 * Labrat
 
-A linux command-line command for printing labels.
+A linux command-line program for printing labels.
 
 ** Motivation
 
@@ -28,8 +42,8 @@ by adding the -V flag:
   $ labrat -V 'First Line of Label++And the Second Line'
   #+end_src
 
-Even better, I have included with labrat an elisp file (=labrat.el=) that will
-invoke labrat to form a label with the text of the paragraph at or before
+Even better, I have included with =labrat= an elisp file (=labrat.el=) that will
+invoke =labrat= to form a label with the text of the paragraph at or before
 point.  So within Emacs, you can bind a key to the commands, =labrat-print=
 and =labrat-view= to print the current or prior paragraph as your default
 label.  Thus, in Emacs, I have ~C-z C-l C-l~ bound to =labrat-print= and ~C-z
@@ -37,7 +51,7 @@ C-l C-v~ to =labrat-view=, and I can type a label in any buffer and get it
 printed with very little ceremony.
 
 ** A Tip on File Folder Labels
-As mentioned, one of my main motivations for writing labrat was the need to
+As mentioned, one of my main motivations for writing =labrat= was the need to
 easily create file-folder labels.  I got into creating files after reading
 "Getting Things Done" by David Allen.  One of his recommendations for keeping
 organized is having a file system so that documents can be easily archived and
@@ -63,7 +77,7 @@ shipping labels, but are terrible for long-term applications like file
 folders.
 
 ** Installation
-Since labrat is distributed as a Ruby gem, you have to have a ruby
+Since =labrat= is distributed as a Ruby gem, you have to have a ruby
 installation.  You can then install =labrat= with:
 
 #+begin_SRC sh
@@ -152,7 +166,7 @@ label setup options described in the next section.
   ~--no-landscape~ and is the default.
 
 *** Page Dimensions
-When specifying page dimensions, labrat regards all dimension-related
+When specifying page dimensions, =labrat= regards all dimension-related
 directions, left, right, top, bottom to refer to the page as is comes out of
 the printer, unaffected by whether the labels are printed in landscape or
 portrait.  This hopefully eliminates some confusion in the use of those terms.
@@ -378,7 +392,7 @@ the ~--verbose~ or ~-v~ option.  The information is printed to the standard
 error output stream.
 
 - ~-v~, ~--[no-]verbose~ :: Run verbosely, that is, print out lots of
-  information about what labrat is doing as it processes the job.
+  information about what =labrat= is doing as it processes the job.
 
 ** The Label Database and the --label=<name> Option
 One of the nice things about =labrat= is that it comes with a database of
