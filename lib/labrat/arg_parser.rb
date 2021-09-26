@@ -75,6 +75,7 @@ module Labrat
       parser.separator "Processing options:"
       start_label_option
       nl_sep_option
+      copies_option
       in_file_option
       out_file_option
       printer_name_option
@@ -343,6 +344,14 @@ module Labrat
                 "Specify text to be translated into a line-break (default '++')") do |nl|
         options.nlsep = nl
         warn "  ::nl-sep <- '#{nl}'::" if options.verbose
+      end
+    end
+
+    def copies_option
+      parser.on("-cNUM", "--copies=NUM", Integer,
+                "Number of copies of each label to generate") do |n|
+        options.copies = n.abs
+        warn "  ::copies <- #{options.copies}::" if options.verbose
       end
     end
 

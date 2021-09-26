@@ -36,6 +36,7 @@ RSpec.describe ArgParser do
       expect(op.font_size).to eq(12)
       expect(op.in_file).to be_nil
       expect(op.nlsep).to eq('++')
+      expect(op.copies).to eq(1)
       expect(op.printer).to eq('dymo')
       expect(op.out_file.class).to eq(String)
       expect(op.print_command.class).to eq(String)
@@ -112,6 +113,7 @@ RSpec.describe ArgParser do
       expect(help).to include('--font-size')
       expect(help).to include('--in-file')
       expect(help).to include('--nlsep')
+      expect(help).to include('--copies')
       expect(help).to include('--printer')
       expect(help).to include('--out-file')
       expect(help).to include('--print-command')
@@ -201,6 +203,18 @@ RSpec.describe ArgParser do
       ops = ap.parse(['-n', '&&'])
       expect(ops.msg).to be_nil
       expect(ops.nlsep).to eq('&&')
+    end
+
+    it 'can set the number of copies' do
+      ops = ap.parse(['--copies=5'])
+      expect(ops.msg).to be_nil
+      expect(ops.copies).to eq(5)
+      ops = ap.parse(['-c', '5'])
+      expect(ops.msg).to be_nil
+      expect(ops.copies).to eq(5)
+      ops = ap.parse(['-c5'])
+      expect(ops.msg).to be_nil
+      expect(ops.copies).to eq(5)
     end
 
     it 'can set an optional input file' do

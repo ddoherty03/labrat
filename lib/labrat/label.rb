@@ -7,7 +7,14 @@ module Labrat
 
     def initialize(texts, ops)
       @ops = ops
-      @texts = texts.map { |t| t.gsub(ops.nlsep, "\n") }
+      unless @ops.nlsep.nil? || @ops.nlsep == ''
+        @texts = texts.map { |t| t.gsub(ops.nlsep, "\n") }
+      end
+      if @ops.copies > 1
+        duped_texts = []
+        @texts.each { |t| @ops.copies.times { duped_texts << t } }
+        @texts = duped_texts
+      end
     end
 
     def generate
