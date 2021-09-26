@@ -28,7 +28,7 @@ And you will get a two-line file-folder label printed that looks like this:
 ![Sample Label](doc/sample.jpg?raw=true "Sample Label")
 #+END_COMMENT
 
-[[./doc/sample.png]]
+[[./img/sample.png]]
 
 ** Motivation
 
