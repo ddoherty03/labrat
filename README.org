@@ -139,6 +139,19 @@ options deal with the page-level dimensions of the, potentially, multi-label
 page.  By contrast, the dimensions of individual labels are dealt with by the
 label setup options described in the next section.
 
+*** Orientation
+- ~-L~, ~--[no-]landscape~ :: Orient the label grid and the printing direction
+  of the text of the label in landscape (default false), i.e., with the label
+  grid rotated 90 degrees clockwise so that the first label is printed down
+  the page starting at the upper right element of the grid.  This setting does
+  not affect what is left, right, top, or bottom for purposes of specifying
+  the page dimensions, but does affect what is considered "horizontal rows"
+  and "vertical columns": those are counted in the rotated direction of
+  printing.
+- ~-P~, ~--[no-]portrait~ :: This is simply a convenience switch meaning
+  ~--no-landscape~ and is the default.
+
+*** Page Dimensions
 When specifying page dimensions, labrat regards all dimension-related
 directions, left, right, top, bottom to refer to the page as is comes out of
 the printer, unaffected by whether the labels are printed in landscape or
@@ -150,17 +163,6 @@ has a relatively narrow width compared to its tall height.
 
 With that in mind, specifying the page dimensions is just a matter of getting
 out a ruler and measuring.
-
-- ~-L~, ~--[no-]landscape~ :: Orient the label grid and the printing direction
-  of the text of the label in landscape (default false), i.e., with the label
-  grid rotated 90 degrees clockwise so that the first label is printed down
-  the page starting at the upper right element of the grid.  This setting does
-  not affect what is left, right, top, or bottom for purposes of specifying
-  the page dimensions, but does affect what is considered "horizontal rows"
-  and "vertical columns": those are counted in the rotated direction of
-  printing.
-- ~-P~, ~--[no-]portrait~ :: This is simply a convenience switch meaning
-  ~--no-landscape~ and is the default.
 
 - ~-w~, ~--page-width=DIM~ :: Horizontal dimension of a page of labels as it comes out of the printer
 - ~-h~, ~--page-height=DIM~ :: Vertical dimension of a page of labels as it comes out of the printer
@@ -182,6 +184,15 @@ out a ruler and measuring.
   print area; short for ~--top-page-margin~, ~--bottom-page-margin~,
   ~--left-page-margin~ and ~--right-page-margin~
 
+*** Page Grid
+By default, =labrat= considers a page of labels to contain only one row and
+one column, that is, a single label per page.  To set up a multi-label page,
+you have to describe the number of rows and columns and the amount of the gap
+between them.  The number of "rows" is counted as the number of "horizontal"
+set of labels after taking the page orientation into account.  Likewise, the
+number of columns is counted as the number of "vertical" set of labels after
+taking the page orientation into account
+
 - ~-R~, ~--rows=NUM~ :: The number of horizontal rows of labels on a page, taking
   into account the direction of printing via the ~--landscape~ switch.
 - ~-C~, ~--columns=NUM~ :: The number of vertical columns of labels on a page,
@@ -197,6 +208,10 @@ not specified, but is implicitly determined by (1) the page width and height,
 row and column gaps.  The remaining space on the page is divided into a grid
 of identically-sized labels, which determines the size of each label.
 
+*** Padding
+Within each label, the following options allow you to set the margins on each
+side of the label:
+
 - ~--top-pad=DIM~ :: Distance from top side of label to the printed text
 - ~--bottom-pad=DIM~ :: Distance from bottom side of label to the printed text
 - ~--left-pad=DIM~ :: Distance from left side of label to the printed text
@@ -206,10 +221,19 @@ of identically-sized labels, which determines the size of each label.
 - ~--pad=DIM~ :: Short for ~--top-pad=DIM~, ~--bottom-pad~, ~--left-pad=DIM~
   and ~--right-pad~
 
+*** Alignment
+By default the label text is centered horizontally and vertically within the
+label, but the following options allow you to alter that.
+
 - ~--h-align=[left|center|right|justify]~ :: Horizontal alignment of text
   within the label (default center);
 - ~--v-align=[top|center|bottom]~ :: Vertical alignment of text within the
   label (default center)
+
+*** Fonts and styling
+=labrat= provides a few simple mean for styling the label text.  Note that all
+of these apply to the whole label text: there is no provision yet for doing
+in-line changes of font styles.
 
 - ~--font-name=NAME~ :: Name of font to use, Times, Courier, or Helvetica
   (default Helvetica);
@@ -217,17 +241,140 @@ of identically-sized labels, which determines the size of each label.
 - ~--font-style=[normal|bold|italic|bold-italic]~ :: Style of font to use for
   text (default normal)
 
-  Despite our best efforts, the vagaries of printer hardware, print drivers,
-  and cosmic rays, sometimes the text of the label is not positioned correctly
-  within the printable area of the label.  These options allow you to nudge
-  the print area left or right, up or down a bit to compensate for any such
-  anomalies.
+*** Position Adjustment
+Despite our best efforts, the vagaries of printer hardware, print drivers, and
+cosmic rays, sometimes the text of the label is not positioned correctly
+within the printable area of the label.  These options allow you to nudge the
+print area left or right, up or down a bit to compensate for any such
+anomalies.
+
 - ~-x, --delta-x=DIM~ :: Left-right adjustment (positive moves right, negative
   left) of label text within the label print area.
 - ~-y, --delta-y=DIM~ :: Up-down adjustment (positive moves up, negative
   down) of label text within the label print area.
 
-** Processing Options
+** Job Processing Options
+The following options control the processing of labels by =labrat=.
+
+*** Starting label
+When printing onto a multi-label page, some of the labels may have already
+been used.  In that case, the ~--start-label~ option allows you to tell
+=labrat= to start printing at some later label on the page.  The label
+positions are numbered from 1 up to the number of labels per page (i.e., rows
+times columns) from left to right and down the page.  If you want to print a
+sheet that shows the label numbers, see the ~-T~ template option below.
+
+- ~-S NUM~, ~~--start-label=NUM~ :: Start printing at label number NUM (starting
+  at 1, left-to-right, top-to-bottom) within first page only.  Later pages
+  always start at label 1.
+
+This only affects the placement of the first label on the first page.  Any
+later pages always start on the first label position.
+
+*** New line marker
+You can embed a special text-sequence in the label text to indicate where a
+line-break should occur.  By default it is the sequence '++'.  This means that
+=labrat= will translate all occurrences of '++' in the text into a line-break,
+even consecutive occurrences.  There is no way to escape this in the text, so
+if you want labels for various programming languages, you are going to have
+difficulty printing a label with 'C++' in it.  But you can change the marker
+to something else with ~--nlsep~.  This is especially helpful when you are
+using the command-line to supply the label text since specifying line-breaks
+on a shell command can be difficult.  However note that this substitution
+takes place even when reading label texts from a file or standard input.
+
+- ~-n~, ~--nlsep=SEPARATOR~ :: Specify text to be translated into a line-break
+  (default '++')
+
+*** Number of copies
+This option causes =labrat= to generate multiple copies of each label with all
+the copies printed sequentially on the page.
+
+- ~-c NUM~, ~--copies=NUM~ :: Number of copies of each label to generate.
+
+*** Input and output files
+By default, =labrat= gets the text of the label from the non-option arguments
+on the command-line.  For example,
+
+#+begin_example
+$ labrat -c3 This is a 'single label' '++composed of all this' text
+#+end_example
+prints three copies of a single label with two lines, breaking at the '++'
+marker.
+
+Rather than get the text from the non-option arguments on the command line,
+you can use the ~--in-file~ option to specify that label texts are to be read
+from the given file instead.  Each paragraph in the file constitutes a
+separate label.  Line breaks within the paragraphs are respected, though the
+~--nlsep~ marker is still replaced with additional line breaks.
+
+- ~-f~, ~--in-file=FILENAME~ :: Read labels from given file instead of
+  command-line
+
+By default, =labrat= generates all the labels into a single PDF file called
+'labrat.pdf' in the current directory.  You can specify a different output
+file with the ~--out-file~ option.
+
+- ~-o~, ~--out-file=FILENAME~ :: Put generated label in the given file
+
+*** Printing or viewing
+By default, =labrat= prints the generated output file to the printer named
+with the ~--printer~ option using the shell command specified in the
+~--print-command~ option.  But with the ~--view~ option, it will use the shell
+command from ~--view-command~ to view the generated PDF file instead.
+
+- ~-V~, ~--[no-]view~ :: View rather than print
+
+*** Shell commands
+By default, =labrat= uses the shell command 'lpr -P %p %o' to print, and
+substitutes '%p' with the printer name and '%o' with the output file name.
+But you can specify a different print command with the ~--print-command~
+option.  The printer name used in the substitution is by default taken from
+the environment variable =LABRAT_PRINTER= if it is defined, or from the
+environment variable =PRINTER= if it is defined and =LABRAT_PRINTER= is not
+defined.  If neither is defined, it defaults to the name 'dymo'.  But you can
+set the printer name with the ~--printer~ option in any event.
+
+- ~-p~, ~--printer=NAME~ :: Name of the label printer to print on
+- ~-%~, ~--print-command=PRINTCMD~ :: Command to use for printing with %p for
+  printer name; %o for label file name
+
+Likewise, =labrat= uses the shell command
+#+begin_example
+  qpdfview --unique --instance labrat %o'
+#+end_example
+to launch the previewer when the ~--view~ or ~-V~ options are given.  It also
+'%o' with the output file name, but does not recognize '%p' as special.  It is
+very likely that you will want to configure this with the ~--view-command~
+option to your liking.
+
+- ~-:~, ~--view-command=VIEWCMD~ :: Command to use for viewing with %o for
+  label file name
+
+*** Aids to testing label layouts
+The following options are very useful if your are trying to configure the set
+up for a new label type or otherwise trying to figure out a problem.
+Normally, =labrat= does not print an outline for the labels, but if you are
+testing things out on plain paper, it helps to know where =labrat= thinks the
+boundaries of the labels are.  That is what the ~--grid~ or ~-g~ options
+provide.
+
+- ~-g~, ~--[no-]grid~ :: Add grid lines to output
+
+When trying to define a new label layout, it also helps to just see what a
+single sheet of labels would look like.  That is what the ~--template~ or ~-T~
+option give you: it just prints an outline of where labels would be printed
+but ignores any label text.
+
+- ~-T~, ~--[no-]template~ :: Print a template of a page of labels and ignore
+  any content
+
+Finally, =labrat= will print a lot of information about what it's doing with
+the ~--verbose~ or ~-v~ option.  The information is printed to the standard
+error output stream.
+
+- ~-v~, ~--[no-]verbose~ :: Run verbosely, that is, print out lots of
+  information about what labrat is doing as it processes the job.
 
 ** The Label Database and the --label=<name> Option
 
