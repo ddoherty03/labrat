@@ -8,7 +8,7 @@
   - [[#page-setup-options][Page Setup Options]]
   - [[#label-setup-options][Label Setup Options]]
   - [[#job-processing-options][Job Processing Options]]
-  - [[#the-label-database-and-the---labelname-option][The Label Database and the --label=<name> Option]]
+  - [[#the-label-database-and-the---label-option][The Label Database and the --label option]]
 - [[#development][Development]]
 - [[#contributing][Contributing]]
 
@@ -394,7 +394,7 @@ error output stream.
 - ~-v~, ~--[no-]verbose~ :: Run verbosely, that is, print out lots of
   information about what =labrat= is doing as it processes the job.
 
-** The Label Database and the --label=<name> Option
+** The Label Database and the --label option
 One of the nice things about =labrat= is that it comes with a database of
 pre-defined label configurations for many standard labels, especially Avery
 labels since they are kind enough to publish PDF templates for all their
