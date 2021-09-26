@@ -67,7 +67,7 @@ module Labrat
         raise EmptyLabelError, "Empty label" if waste_of_labels?
 
         last_k = texts.size - 1
-        ld_report = true
+        lab_dims_reported = false
         texts.each_with_index do |text, k|
           row, col = row_col(k + 1)
           pdf.grid(row, col).bounding_box do
@@ -81,18 +81,20 @@ module Labrat
             pdf.text_box(text, width: box_wd, height: box_ht,
                          align: ops.h_align, valign: ops.v_align,
                          overflow: :truncate, at: [box_x, box_y])
-            if ops.verbose && ld_report
+            if ops.verbose && !lab_dims_reported
               warn "Label text box dimensions:"
               warn "  [box_wd, box_ht] = [#{box_wd.round(2)}pt,#{box_ht.round(2)}pt]"
               warn "  [box_x, box_y] = [#{box_x.round(2)}pt,#{box_y.round(2)}pt]"
               warn "  [delta_x, delta_y] = [#{ops.delta_x.round(2)}pt,#{ops.delta_y.round(2)}pt]"
-              warn ""
-              ld_report = false
+              warn ''
+              lab_dims_reported = true
             end
             if ops.verbose
-              warn "Label text:"
+              warn "Label \##{(k % lpp) + 1} on page #{page_num(k)} at row #{row + 1}, column #{col + 1}:"
+              warn '-------------------'
               warn text
-              warn ""
+              warn '-------------------'
+              warn ''
             end
             pdf.start_new_page if needs_new_page?(k, last_k)
           end
@@ -123,10 +125,19 @@ module Labrat
       FileUtils.rm(ops.out_file)
     end
 
+    # Labels per page
+    def lpp
+      ops.rows * ops.columns
+    end
+
+    # Page number of the kth label
+    def page_num(k)
+      k.divmod(lpp)[0] + 1
+    end
+
     # Return the 0-based row and column within a page on which the k-th
     # (1-based) label should be printed.
     def row_col(k)
-      lpp = ops.rows * ops.columns
       k_on_page = (k + ops.start_label - 2) % lpp
       k_on_page.divmod(ops.columns)
     end
