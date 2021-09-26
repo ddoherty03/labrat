@@ -5,4 +5,5 @@ module Labrat
   class DimensionError < StandardError; end
   class LabelNameError < StandardError; end
   class EmptyLabelError < StandardError; end
+  class RecursionError < StandardError; end
 end

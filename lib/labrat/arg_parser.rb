@@ -7,9 +7,10 @@ module Labrat
   # command-line arguments so that config files, converted to a Hash can also
   # be used with an ArgParser.
   class ArgParser
-    attr_reader :parser, :options
+    attr_reader :parser, :options, :label_record
 
     def initialize
+      @label_record = {}
       @options = Labrat::Options.new
       @parser = OptionParser.new
       @parser.summary_width = 30
@@ -199,6 +200,11 @@ module Labrat
       parser.on("-lNAME", "--label=NAME",
                 "Use options for label type NAME from label database") do |name|
         options.label = name.strip
+        label_record[name].nil? ? label_record[name] = 1 : label_record[name] += 1
+        if label_record[name] > 1
+          raise RecursionError, "label option for #{name} has circular reference to itself"
+        end
+
         # Insert at this point the option args found in the Label.db
         lab_hash = LabelDb[name.to_sym]
         lab_hash.report("\nConfig from labeldb entry '#{name}'") if options.verbose
