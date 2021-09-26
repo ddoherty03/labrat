@@ -8,13 +8,23 @@
   - [[#page-setup-options][Page Setup Options]]
   - [[#label-setup-options][Label Setup Options]]
   - [[#job-processing-options][Job Processing Options]]
-  - [[#the-label-database-and-the---label-option][The Label Database and the --label option]]
+  - [[#the-label-database-and-the-label-option][The Label Database and the label option]]
 - [[#development][Development]]
 - [[#contributing][Contributing]]
 
 * Labrat
 
-A linux command-line program for printing labels.
+A linux command-line program for quickly printing labels.  Labrat uses the
+wonderful [[https://github.com/prawnpdf/prawn][Prawn gem]] to generate PDF files with label formatting in mind. With
+=labrat= properly configured, printing a label is as simple as:
+
+#+begin_example
+$ labrat 'Income Taxes 2021++Example Maker, Inc.'
+#+end_example
+
+And you will get a two-line file-folder label printed that looks like this:
+
+[[./doc/sample.jpg]]
 
 ** Motivation
 
@@ -394,7 +404,7 @@ error output stream.
 - ~-v~, ~--[no-]verbose~ :: Run verbosely, that is, print out lots of
   information about what =labrat= is doing as it processes the job.
 
-** The Label Database and the --label option
+** The Label Database and the label option
 One of the nice things about =labrat= is that it comes with a database of
 pre-defined label configurations for many standard labels, especially Avery
 labels since they are kind enough to publish PDF templates for all their
