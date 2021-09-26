@@ -1,4 +1,5 @@
-* Table of Contents                                                     :toc:
+
+* Table of Contents                                                   :toc_3:
 - [[#labrat][Labrat]]
   - [[#motivation][Motivation]]
   - [[#a-tip-on-file-folder-labels][A Tip on File Folder Labels]]
@@ -6,9 +7,29 @@
   - [[#setting-options][Setting options]]
   - [[#dimensions-and-other-values-in-options][Dimensions and other values in options]]
   - [[#page-setup-options][Page Setup Options]]
+    - [[#orientation][Orientation]]
+    - [[#page-dimensions][Page Dimensions]]
+    - [[#page-grid][Page Grid]]
   - [[#label-setup-options][Label Setup Options]]
+    - [[#padding][Padding]]
+    - [[#alignment][Alignment]]
+    - [[#fonts-and-styling][Fonts and styling]]
+    - [[#position-adjustment][Position Adjustment]]
   - [[#job-processing-options][Job Processing Options]]
+    - [[#starting-label][Starting label]]
+    - [[#new-line-marker][New line marker]]
+    - [[#number-of-copies][Number of copies]]
+    - [[#input-and-output-files][Input and output files]]
+    - [[#printing-or-viewing][Printing or viewing]]
+    - [[#shell-commands][Shell commands]]
+    - [[#aids-to-testing-label-layouts][Aids to testing label layouts]]
   - [[#the-label-database-and-the-label-option][The Label Database and the label option]]
+    - [[#listing-labels][Listing labels]]
+    - [[#system-label-database][System label database]]
+    - [[#trying-out-a-label-definition][Trying out a label definition]]
+    - [[#nesting-label-definitions][Nesting label definitions]]
+    - [[#label-database-entries-as-configuration-sets][Label database entries as configuration sets]]
+    - [[#a-caution-about-option-order][A Caution about option order]]
 - [[#development][Development]]
 - [[#contributing][Contributing]]
 
@@ -24,11 +45,10 @@ $ labrat 'Income Taxes 2021++Example Maker, Inc.'
 
 And you will get a two-line file-folder label printed that looks like this:
 
-#+BEGIN_COMMENT
-![Sample Label](doc/sample.jpg?raw=true "Sample Label")
-#+END_COMMENT
-
 [[./img/sample.png]]
+
+Note that an outline was added to make the size of the label apparent and is
+not actually printed with the label by default.
 
 ** Motivation
 
@@ -192,8 +212,10 @@ has a relatively narrow width compared to its tall height.
 With that in mind, specifying the page dimensions is just a matter of getting
 out a ruler and measuring.
 
-- ~-w~, ~--page-width=DIM~ :: Horizontal dimension of a page of labels as it comes out of the printer
-- ~-h~, ~--page-height=DIM~ :: Vertical dimension of a page of labels as it comes out of the printer
+- ~-w~, ~--page-width=DIM~ :: Horizontal dimension of a page of labels as it
+  comes out of the printer
+- ~-h~, ~--page-height=DIM~ :: Vertical dimension of a page of labels as it
+  comes out of the printer
 - ~--top-page-margin=DIM~ :: Distance from top side of page (in portrait) to
   the print area
 - ~--bottom-page-margin=DIM~ :: Distance from bottom side of page (in
@@ -301,8 +323,8 @@ later pages always start on the first label position.
 
 *** New line marker
 You can embed a special text-sequence in the label text to indicate where a
-line-break should occur.  By default it is the sequence '++'.  This means that
-=labrat= will translate all occurrences of '++' in the text into a line-break,
+line-break should occur.  By default it is the sequence =++=.  This means that
+=labrat= will translate all occurrences of =++= in the text into a line-break,
 even consecutive occurrences.  There is no way to escape this in the text, so
 if you want labels for various programming languages, you are going to have
 difficulty printing a label with 'C++' in it.  But you can change the marker
