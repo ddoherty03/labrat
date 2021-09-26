@@ -82,10 +82,10 @@ This will install an annotated system-wide config file in
 =/etc/xdg/labrat/labeldb.yml=.
 
 It will also install an annotated sample user config file in
-=~/.config/labrat/labrat.el= and a sample label database in
+=~/.config/labrat/labrat.el= and a sample user-level label database in
 =~/.config/labrat/labeldb.yml=.
 
-For the benefit of Emacs user, it also installs the =labrat.el= elisp library
+For the benefit of Emacs users, it also installs the =labrat.el= elisp library
 in =~/.config/labrat= as well, though you may want to move it to a different
 location.
 
@@ -377,9 +377,132 @@ error output stream.
   information about what labrat is doing as it processes the job.
 
 ** The Label Database and the --label=<name> Option
+One of the nice things about =labrat= is that it comes with a database of
+pre-defined label configurations for many standard labels, especially Avery
+labels since they are kind enough to publish PDF templates for all their
+products at [[https://www.avery.com/templates]].
+
+*** Listing labels
+You can get =labrat= to list all the labels it knows about with
+#+begin_example
+$ labrat --list-labels
+#+end_example
+
+Any users who create useful label definitions can propose them for inclusion
+with =labrat's= distributed label database by filing a pull request at this
+git repository.
+
+*** System label database
+Here for example is the definition for Avery 8987 labels from the system
+database:
+#+begin_example
+avery8987:
+  page-width: 8.5in
+  page-height: 11in
+  rows: 10
+  columns: 3
+  top-page-margin: 15mm
+  bottom-page-margin: 16mm
+  left-page-margin: 10mm
+  right-page-margin: 10mm
+  row-gap: 6.3mm
+  column-gap: 13mm
+  landscape: false
+#+end_example
+
+Note that it restricts itself to page-level settings.  It would be
+inappropriate to, for example, include something like ~font-style~ in a
+system-wide label definition, though such things can be useful in a user's
+private label configuration.
+
+*** Trying out a label definition
+You can see the result of this definition by using =labrat's= ~--template~ and
+~--view~ options, like this:
+#+begin_example
+$ labrat -T -V --label=avery8987
+#+end_example
+
+And if you want to see it with sample label text filled in, try the following:
+#+begin_example
+$ labrat -V -c30 --label=avery8987 'Four score and seven years ago++Our fathers brought forth'
+#+end_example
+
+*** Nesting label definitions
+As it happens, Avery 8986 is laid out identically to Avery 8987, and the label
+database makes an alias for it like this:
+#+begin_example
+avery8986:
+  label: avery8987
+#+end_example
+In other words, it defines the ~avery8986~ label with a nested ~--label~
+option that simply refers to the ~avery8987~ entry.
+
+*** Label database entries as configuration sets
+This ability to use a label database definition as an alias for a whole set of
+other configuration options allows you to add entries to your user-level label
+database to collect useful sets of configuration settings under a name of your
+choosing.  Here for example, are entries from my user-level database at
+=~/.config/labrat/labeldb.yml= file that define the configuration for file
+folders and badges:
+#+begin_example
+ff:
+  label: duraready1034D
+  font-style: bold
+  font-size: 12pt
+  delta-x: -3mm
+  delta-y: 0.5mm
+
+badge:
+  label: avery18662
+  font-style: bold
+  font-size: 18pt
+#+end_example
+
+With this, I can print a file folder label with:
+#+begin_example
+$ labrat --label=ff 'Four score and seven years ago++Our fathers brought forth'
+#+end_example
+
+And, if I want this to be my default label type, I can add to my user-level
+config file, an entry like this:
+#+begin_example
+label:
+  ff
+#+end_example
+
+Now I can print the label without the ~--label~ option on the command-line:
+#+begin_example
+$ labrat 'Four score and seven years ago++Our fathers brought forth'
+#+end_example
+
+If I want to print badges, I have to specify the ~--label~ option explicitly on
+the command-line:
+#+begin_example
+$ labrat -V -c14 --label=badge 'Daniel E. Doherty++(Amateur Programmer)'
+#+end_example
+
+*** A Caution about option order
+Note that =labrat= processes options from the system config file, the user
+config file, and the command-line strictly in order so that later settings
+override later settings.  For example, given the configuration above, where
+~ff~ is my default label type, the following will not do what you expect:
+
+#+begin_example
+$ labrat --font-style=italic --label=ff 'Four score and seven years ago++Our fathers brought forth'
+#+end_example
+
+You expect the label to be printed in italic, but the ~--label=ff~ option in
+effect inserts all the settings for label type ~ff~ at that point in the
+command-line, and thus overrides the ~--font-style~ setting with its own,
+namely ~--font-style=bold~ from your user-level label database.
+
+To get this to work, you have to put the command-line setting after the
+~--label=ff~ option in order for it to take effect:
+#+begin_example
+$ labrat --label=ff --font-style=italic 'Four score and seven years ago++Our fathers brought forth'
+#+end_example
 
 * Development
-
 After checking out the repo, run `bin/setup` to install dependencies. Then,
 run `rake spec` to run the tests. You can also run `bin/console` for an
 interactive prompt that will allow you to experiment.
