@@ -326,14 +326,18 @@ command from ~--view-command~ to view the generated PDF file instead.
 - ~-V~, ~--[no-]view~ :: View rather than print
 
 *** Shell commands
-By default, =labrat= uses the shell command 'lpr -P %p %o' to print, and
-substitutes '%p' with the printer name and '%o' with the output file name.
-But you can specify a different print command with the ~--print-command~
-option.  The printer name used in the substitution is by default taken from
-the environment variable =LABRAT_PRINTER= if it is defined, or from the
-environment variable =PRINTER= if it is defined and =LABRAT_PRINTER= is not
-defined.  If neither is defined, it defaults to the name 'dymo'.  But you can
-set the printer name with the ~--printer~ option in any event.
+By default, =labrat= uses the shell command:
+#+begin_example
+lpr -P %p %o
+#+end_example
+to print, and substitutes '%p' with the printer name and '%o' with the output
+file name.  But you can specify a different print command with the
+~--print-command~ option.  The printer name used in the substitution is by
+default taken from the environment variable =LABRAT_PRINTER= if it is defined,
+or from the environment variable =PRINTER= if it is defined and
+=LABRAT_PRINTER= is not defined.  If neither is defined, it defaults to the
+name 'dymo'.  But you can set the printer name with the ~--printer~ option in
+any event.
 
 - ~-p~, ~--printer=NAME~ :: Name of the label printer to print on
 - ~-%~, ~--print-command=PRINTCMD~ :: Command to use for printing with %p for
