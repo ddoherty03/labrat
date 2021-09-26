@@ -42,32 +42,33 @@ begin
   end
 
 rescue Labrat::OptionError => e
-  warn "#{e}"
+  warn "Error: #{e}: exiting"
   exit(1)
 rescue Labrat::EmptyLabelError => e
-  warn "#{e}: refusing to print"
+  warn "Error: #{e}: refusing to print"
+  exit(1)
+rescue Labrat::RecursionError => e
+  warn "Error: #{e}: exiting"
   exit(1)
 rescue Labrat::LabelNameError => e
-  warn e
+  warn "Error: #{e}: exiting"
   lab_names = Labrat::LabelDb.known_names
   if lab_names.empty?
-    warn "Have you run labrat-install yet?"
+    warn "  Have you run labrat-install yet?"
   else
-    warn "Known labels:\n"
-    lab_names.groups_of(6).each do |_n, grp|
-      warn "  #{grp.join(', ')}"
-    end
-    exit(1)
+    warn "  Try `labrat --list-labels` to list known labels."
   end
+  exit(1)
 rescue Labrat::DimensionError => e
-  warn e
+  warn "Error: #{e}: exiting"
   exit(1)
 rescue Prawn::Errors::CannotFit
+  warn "Error: #{e}:"
   warn "Page and label dimensions leave no room for labels."
   warn "  Try `labrat -T -v -V` to diagnose the problem."
   exit(1)
 rescue Prawn::Errors::UnknownFont => e
-  warn e
+  warn "Error: #{e}:"
   warn "  Builtin fonts are Times-Roman, Courier, and Helvetica"
   exit(1)
 end
