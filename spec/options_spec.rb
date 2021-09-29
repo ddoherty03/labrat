@@ -34,7 +34,7 @@ RSpec.describe Options do
       expect(ops.in_file).to be_nil
       expect(ops.nlsep).to eq('++')
       expect(ops.copies).to eq(1)
-      expect(ops.printer).to eq('dymo')
+      expect(ops.printer).to eq(ENV['PRINTER'] || 'dymo')
       expect(ops.out_file).to eq('labrat.pdf')
       expect(ops.print_command.class).to eq(String)
       expect(ops.view_command.class).to eq(String)

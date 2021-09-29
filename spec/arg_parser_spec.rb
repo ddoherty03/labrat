@@ -37,7 +37,7 @@ RSpec.describe ArgParser do
       expect(op.in_file).to be_nil
       expect(op.nlsep).to eq('++')
       expect(op.copies).to eq(1)
-      expect(op.printer).to eq('dymo')
+      expect(op.printer).to eq(ENV['PRINTER'] || 'dymo')
       expect(op.out_file.class).to eq(String)
       expect(op.print_command.class).to eq(String)
       expect(op.view_command.class).to eq(String)
@@ -162,6 +162,13 @@ RSpec.describe ArgParser do
       ops = ap.parse(['--label=dymo30327'])
       expect(ops.msg).to be_nil
       expect(ops.label).to eq('dymo30327')
+    end
+
+    it 'raises error on circular label references' do
+      LabelDb['label1'] = { page_width: 18, label: 'label3' }
+      LabelDb['label2'] = { page_width: 36, label: 'label1' }
+      LabelDb['label3'] = { page_width: 45, label: 'label2' }
+      expect {ap.parse(['--label=label3'])}.to raise_error /circular/
     end
 
     it 'can set the offset dimensions' do
