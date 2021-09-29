@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    labrat (0.1.9)
+    labrat (0.1.10)
       activesupport
       fat_core
       prawn (~> 2.0)
