@@ -1,5 +1,6 @@
 language: ruby
-# before_install:
+before_install:
+  gem install bundler
 #   - sudo apt-get -qq update
 #   - sudo apt-get install -y texlive-latex-base texlive-latex-recommended
 #   - gem install pg
