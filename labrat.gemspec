@@ -36,5 +36,7 @@ Gem::Specification.new do |spec|
   spec.add_development_dependency 'pry', '~> 0.13.0'
   spec.add_development_dependency 'pry-byebug', '>= 3.9.0'
   spec.add_development_dependency 'rubocop-performance'
+  spec.add_development_dependency 'rubocop-shopify'
+  spec.add_development_dependency 'rubocop-rspec'
   # spec.add_development_dependency 'debug', '>= 1.0.0.beta'
 end

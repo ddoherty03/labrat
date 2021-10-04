@@ -72,6 +72,11 @@ GEM
     rubocop-performance (1.11.5)
       rubocop (>= 1.7.0, < 2.0)
       rubocop-ast (>= 0.4.0)
+    rubocop-rspec (2.4.0)
+      rubocop (~> 1.0)
+      rubocop-ast (>= 1.1.0)
+    rubocop-shopify (2.2.0)
+      rubocop (~> 1.18)
     ruby-progressbar (1.11.0)
     ttfunk (1.7.0)
     tzinfo (2.0.4)
@@ -90,6 +95,8 @@ DEPENDENCIES
   rspec (~> 3.0)
   rubocop (~> 1.7)
   rubocop-performance
+  rubocop-rspec
+  rubocop-shopify
 
 BUNDLED WITH
    2.2.26
