@@ -35,5 +35,5 @@ Gem::Specification.new do |spec|
   # Note: pry-byebug requires that pry be within the '0.13.0' version box.
   spec.add_development_dependency 'pry', '~> 0.13.0'
   spec.add_development_dependency 'pry-byebug', '>= 3.9.0'
-  spec.add_development_dependency 'debug', '>= 1.0.0.beta'
+  # spec.add_development_dependency 'debug', '>= 1.0.0.beta'
 end
