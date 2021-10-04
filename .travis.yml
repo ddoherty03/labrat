@@ -10,7 +10,6 @@ language: ruby
 #   - "cat ./spec/tmp/latex.err"
 #   - "cat ./spec/tmp/example1.log"
 #   - "cat ./spec/tmp/psql.out"
-bundler_args: --without debug
 # services:
 #   - postgresql
 rvm:
