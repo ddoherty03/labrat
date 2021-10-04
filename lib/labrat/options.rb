@@ -102,13 +102,13 @@ module Labrat
     # to be used, for example, in the OptionParser#parse :into parameter.
     def [](att)
       att = att.to_s.gsub('-', '_')
-      send("#{att}")
+      send(att.to_s)
     end
 
     # For testing, return an Array of the attributes.
     def self.attrs
-      instance_methods(false).grep(/\A[a-z_]+=\Z/).
-        map { |a| a.to_s.sub(/=\z/, '') }
+      instance_methods(false).grep(/\A[a-z_]+=\Z/)
+        .map { |a| a.to_s.sub(/=\z/, '') }
     end
 
     # For testing, return an Array of the flags-form of the attributes, i.e.,

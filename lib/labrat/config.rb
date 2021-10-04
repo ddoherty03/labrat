@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Labrat
   # This class is responsible for finding a config files, reading them, and
   # returning a Hash to reflect the configuration.  We use YAML as the
@@ -67,11 +69,11 @@ module Labrat
     def self.merge_configs_from(files = [], verbose: false)
       hash = {}
       files.each do |f|
-        if File.readable?(f)
-          yml_hash = YAML.load(File.read(f))&.methodize || {}
-          yml_hash.report("Merging from file '#{f}") if verbose
-          hash.deep_merge!(yml_hash)
-        end
+        next unless File.readable?(f)
+
+        yml_hash = YAML.load(File.read(f))&.methodize || {}
+        yml_hash.report("Merging from file '#{f}") if verbose
+        hash.deep_merge!(yml_hash)
       end
       hash
     end
@@ -98,7 +100,7 @@ module Labrat
         dir = File.expand_path(File.join(dir, app_name))
         dir = File.join(dir_prefix, dir) unless dir_prefix.nil? || dir_prefix.strip.empty?
         base = app_name if base.nil? || base.strip.empty?
-        base_candidates = ["#{base}", "#{base}.yml", "#{base}.yaml",
+        base_candidates = [base.to_s, "#{base}.yml", "#{base}.yaml",
                            "#{base}.cfg", "#{base}.config"]
         config_fname = base_candidates.find { |b| File.readable?(File.join(dir, b)) }
         configs << File.join(dir, config_fname) if config_fname
@@ -121,7 +123,7 @@ module Labrat
       dir = File.join(dir_prefix, dir) unless dir_prefix.strip.empty?
       return nil unless Dir.exist?(dir)
 
-      base_candidates = ["#{base}", "#{base}.yml", "#{base}.yaml",
+      base_candidates = [base.to_s, "#{base}.yml", "#{base}.yaml",
                          "#{base}.cfg", "#{base}.config"]
       config_fname = base_candidates.find { |b| File.readable?(File.join(dir, b)) }
       if config_fname
