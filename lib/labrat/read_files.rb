@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Labrat
   def self.read_label_texts(fname, nlsep)
     file =
@@ -27,7 +29,7 @@ module Labrat
       else
         # Append a non-blank line to the current label, creating it if
         # necessary.
-        label ||= ''
+        label ||= +''
         label << line.chomp + nlsep
       end
     end
