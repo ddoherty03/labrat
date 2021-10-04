@@ -1,0 +1,22 @@
+language: ruby
+# before_install:
+#   - sudo apt-get -qq update
+#   - sudo apt-get install -y texlive-latex-base texlive-latex-recommended
+#   - gem install pg
+# before_script:
+#   - createdb -U travis travis
+# after_failure:
+#   - "pwd"
+#   - "cat ./spec/tmp/latex.err"
+#   - "cat ./spec/tmp/example1.log"
+#   - "cat ./spec/tmp/psql.out"
+bundler_args: --without debug
+# services:
+#   - postgresql
+rvm:
+  - 2.4
+  - 2.5
+  - 2.6
+  - 2.7
+  - 3.0
+  - truffleruby

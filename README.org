@@ -1,8 +1,19 @@
 
+#+BEGIN_COMMENT
+This is for markdown output:
+
+[![Build Status](https://travis-ci.org/ddoherty03/labrat.svg?branch=master)](https://travis-ci.org/ddoherty03/labrat)
+
+The following is for org.
+#+END_COMMENT
+
+[[https://travis-ci.org/ddoherty03/labrat.svg?branch=master]]
+
+
 * Table of Contents                                                   :toc_3:
 - [[#labrat][Labrat]]
   - [[#motivation][Motivation]]
-  - [[#a-tip-on-file-folder-labels][A Tip on File Folder Labels]]
+  - [[#a-tip-on-buying-file-folder-labels][A Tip on Buying File Folder Labels]]
   - [[#installation][Installation]]
   - [[#setting-options][Setting options]]
   - [[#dimensions-and-other-values-in-options][Dimensions and other values in options]]
