@@ -33,6 +33,8 @@ Gem::Specification.new do |spec|
   spec.add_dependency "fat_core"
 
   # Note: pry-byebug requires that pry be within the '0.13.0' version box.
+  spec.add_development_dependency 'rake'
+  spec.add_development_dependency 'rspec'
   spec.add_development_dependency 'pry', '~> 0.13.0'
   spec.add_development_dependency 'pry-byebug', '>= 3.9.0'
   spec.add_development_dependency 'rubocop-performance'
