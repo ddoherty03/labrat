@@ -1,18 +1,11 @@
 language: ruby
 before_install:
   gem install bundler
-#   - sudo apt-get -qq update
-#   - sudo apt-get install -y texlive-latex-base texlive-latex-recommended
-#   - gem install pg
-# before_script:
-#   - createdb -U travis travis
-# after_failure:
-#   - "pwd"
-#   - "cat ./spec/tmp/latex.err"
-#   - "cat ./spec/tmp/example1.log"
-#   - "cat ./spec/tmp/psql.out"
-# services:
-#   - postgresql
+script:
+  rake spec
+dist:
+  - linux
+  - osx
 rvm:
   - 2.4
   - 2.5
