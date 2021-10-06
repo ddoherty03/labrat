@@ -2,7 +2,7 @@ language: ruby
 before_install:
   gem install bundler
 script:
-  rake spec
+  bundle exec rake spec
 dist:
   - linux
   - osx
