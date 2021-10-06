@@ -94,7 +94,7 @@ paragraph as your default label.  Thus, in Emacs, I have ~C-z C-l C-l~ bound
 to =labrat-print= and ~C-z C-l C-v~ to =labrat-view=, and I can type a label
 in any buffer and get it generated with very little ceremony.
 
-** A Tip on File Folder Labels
+** A Tip on Buying File Folder Labels
 As mentioned, one of my main motivations for writing =labrat= was the need to
 easily create file-folder labels.  I got into creating files after reading
 /Getting Things Done/ by David Allen.  One of his recommendations for keeping
