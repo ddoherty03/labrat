@@ -1,8 +1,5 @@
 # frozen_string_literal: true
 
-lib = File.expand_path('../lib', __FILE__)
-$LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
-
 require_relative "lib/labrat/version"
 
 Gem::Specification.new do |spec|
@@ -11,7 +8,7 @@ Gem::Specification.new do |spec|
   spec.authors       = ["Daniel E. Doherty"]
   spec.email         = ["ded-labrat@ddoherty.net"]
 
-  spec.summary       = "Simple command-line based label printer."
+  spec.summary       = "Simple command-line label printer."
   spec.homepage      = "http://github.com/ddoherty03/labrat"
   spec.required_ruby_version = Gem::Requirement.new(">= 2.4.0")
 
@@ -27,7 +24,7 @@ Gem::Specification.new do |spec|
   spec.bindir        = 'bin'
   spec.executables   = spec.files.grep(%r{\Abin/labrat}) { |f| File.basename(f) }
   spec.require_paths = ["lib"]
-  spec.post_install_message = 'To install config and label database files, run [sudo] labrat-install g.'
+  spec.post_install_message = 'To install config and label database files, run [sudo] labrat-install.'
   spec.add_dependency "prawn", "~> 2.0"
   spec.add_dependency "activesupport"
   spec.add_dependency "fat_core"
@@ -40,5 +37,4 @@ Gem::Specification.new do |spec|
   spec.add_development_dependency 'rubocop-performance'
   spec.add_development_dependency 'rubocop-shopify'
   spec.add_development_dependency 'rubocop-rspec'
-  # spec.add_development_dependency 'debug', '>= 1.0.0.beta'
 end
