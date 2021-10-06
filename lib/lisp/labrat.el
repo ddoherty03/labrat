@@ -28,12 +28,19 @@ labrat configuration at ~/.config/labrat/config.yml."
 (defun labrat/par-at-point ()
   "Return the paragraph at or before point.
 
-Similar to plain thing-at-point for paragraph, but look for preceding paragraph
-even if there are several blank lines before point, trim whitespace and properties
-from the result."
+Similar to plain thing-at-point for paragraph, but look for
+preceding paragraph even if there are several blank lines before
+point, trim whitespace, comments, and properties from the
+result."
   (save-excursion
     (re-search-backward "^.+$" nil 'to-bob)
-    (s-replace "\n" labrat-nlsep (s-trim (thing-at-point 'paragraph t)))))
+    (s-replace "\n" labrat-nlsep
+               (labrat/remove-comments
+                          (s-trim (thing-at-point 'paragraph t))))))
+
+(defun labrat/remove-comments (str)
+  "Remove any lines that start with the comment character #"
+  (s-join "\n" (--remove (string-match "\\`#.*\\'"it) (s-split "\n" str))))
 
 (defun labrat-view ()
   "View the paragraph at or before point as a label with labrat.
