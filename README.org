@@ -326,7 +326,7 @@ positions are numbered from 1 up to the number of labels per page (i.e., rows
 times columns) from left to right and down the page.  If you want to print a
 sheet that shows the label numbers, see the ~-T~ template option below.
 
-- ~-S NUM~, ~~--start-label=NUM~ :: Start printing at label number NUM (starting
+- ~-S NUM~, ~--start-label=NUM~ :: Start printing at label number NUM (starting
   at 1, left-to-right, top-to-bottom) within first page only.  Later pages
   always start at label 1.
 
@@ -355,29 +355,56 @@ the copies printed sequentially on the page.
 - ~-c NUM~, ~--copies=NUM~ :: Number of copies of each label to generate.
 
 *** Input and output files
-By default, =labrat= gets the text of the label from the non-option arguments
-on the command-line.  For example,
-
-#+begin_example
-$ labrat -c3 This is a 'single label' '++composed of all this' text
-#+end_example
-prints three copies of a single label with two lines, breaking at the '++'
-marker.
-
-Rather than get the text from the non-option arguments on the command line,
-you can use the ~--in-file~ option to specify that label texts are to be read
-from the given file instead.  Each paragraph in the file constitutes a
-separate label.  Line breaks within the paragraphs are respected, though the
-~--nlsep~ marker is still replaced with additional line breaks.
-
-- ~-f~, ~--in-file=FILENAME~ :: Read labels from given file instead of
-  command-line
-
+**** Output file
 By default, =labrat= generates all the labels into a single PDF file called
 'labrat.pdf' in the current directory.  You can specify a different output
 file with the ~--out-file~ option.
 
 - ~-o~, ~--out-file=FILENAME~ :: Put generated label in the given file
+
+**** Command-line arguments
+By default, =labrat= gets the text of the label from the non-option arguments
+on the command-line.  It combines all the non-option arguments and joins them
+with a space between each argument.  For example,
+
+#+begin_example
+$ labrat -c3 This is a 'single label' '++composed of all this' text --font-style=italic
+#+end_example
+prints three copies of a single label in italics with two lines, breaking at
+the '++' marker, resulting in something like this:
+
+#+begin_example
+This is a single label
+composed of all this text
+#+end_example
+
+Note that when the label text is specified on the command-line, ~labrat~
+always prints a single label.  The only way to get multiple labels is by using
+the ~-c~ (~--copies~) argument to get multiple copies of the label text.
+
+**** Specified input file
+Rather than get the text from the non-option arguments on the command line,
+you can use the ~--in-file~ option to specify that label texts are to be read
+from the given file instead.
+
+Each paragraph in the file constitutes a separate label.  Line breaks within
+the paragraphs are respected, though the ~--nlsep~ marker is still replaced
+with additional line breaks.  Any line starting with a ~#~ character is
+considered a comment and is not included in the text of any label.
+
+- ~-f~, ~--in-file=FILENAME~ :: Read labels from given file instead of
+  command-line
+
+**** Standard input
+Only if there are no non-option arguments and no ~in-file~ specified, =labrat=
+acts as a filter and reads the label texts from standard input in same manner
+as for a specified ~in-file~, treating each paragraph as a label text and
+disregarding comments.
+
+**** Template exception
+Notwithstanding all of the above, if the ~-T~ (~--template~) option is given,
+all label texts from the command-line, an ~in-file~, or standard input are
+ignored and a template is generated.
 
 *** Printing or viewing
 By default, =labrat= prints the generated output file to the printer named
@@ -524,24 +551,24 @@ badge:
   font-size: 18pt
 #+end_example
 
-With this, I can print a file folder label with:
+With this, you can print a file folder label with:
 #+begin_example
 $ labrat --label=ff 'Four score and seven years ago++Our fathers brought forth'
 #+end_example
 
-And, if I want this to be my default label type, I can add to my user-level
+And, if you want this to be your default label type, you can add to your user-level
 config file, an entry like this:
 #+begin_example
 label:
   ff
 #+end_example
 
-Now I can print the label without the ~--label~ option on the command-line:
+Now you can print the label without the ~--label~ option on the command-line:
 #+begin_example
 $ labrat 'Four score and seven years ago++Our fathers brought forth'
 #+end_example
 
-If I want to print badges, I have to specify the ~--label~ option explicitly on
+If you want to print badges, you have to specify the ~--label~ option explicitly on
 the command-line:
 #+begin_example
 $ labrat -V -c14 --label=badge 'Daniel E. Doherty++(Amateur Programmer)'
@@ -550,8 +577,8 @@ $ labrat -V -c14 --label=badge 'Daniel E. Doherty++(Amateur Programmer)'
 *** A Caution about option order
 Note that =labrat= processes options from the system config file, the user
 config file, and the command-line strictly in order so that later settings
-override later settings.  For example, given the configuration above, where
-~ff~ is my default label type, the following will not do what you expect:
+override earlier settings.  For example, given the configuration above, where
+~ff~ is your default label type, the following will not do what you expect:
 
 #+begin_example
 $ labrat --font-style=italic --label=ff 'Four score and seven years ago++Our fathers brought forth'
@@ -560,7 +587,7 @@ $ labrat --font-style=italic --label=ff 'Four score and seven years ago++Our fat
 You expect the label to be printed in italic, but the ~--label=ff~ option in
 effect inserts all the settings for label type ~ff~ at that point in the
 command-line, and thus overrides the ~--font-style~ setting with its own,
-namely ~--font-style=bold~ from your user-level label database.
+namely ~--font-style=bold~ from the user-level label database.
 
 To get this to work, you have to put the command-line setting after the
 ~--label=ff~ option in order for it to take effect:
@@ -574,10 +601,7 @@ run `rake spec` to run the tests. You can also run `bin/console` for an
 interactive prompt that will allow you to experiment.
 
 To install this gem onto your local machine, run `bundle exec rake
-install`. To release a new version, update the version number in `version.rb`,
-and then run `bundle exec rake release`, which will create a git tag for the
-version, push git commits and the created tag, and push the `.gem` file to
-[rubygems.org](https://rubygems.org).
+install`.
 
 * Contributing
 Bug reports and pull requests are welcome on GitHub at
