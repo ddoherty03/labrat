@@ -36,7 +36,7 @@ RSpec.describe ArgParser do
       expect(op.font_style).to eq(:normal)
       expect(op.font_size).to eq(12)
       expect(op.in_file).to be_nil
-      expect(op.nlsep).to eq('++')
+      expect(op.nl_sep).to eq('++')
       expect(op.copies).to eq(1)
       expect(op.printer).to eq(ENV['PRINTER'] || 'dymo')
       expect(op.out_file.class).to eq(String)
@@ -54,15 +54,15 @@ RSpec.describe ArgParser do
         page_height: 75 * MM,
         v_align: :top,
         printer: 'seiko',
-        nlsep: '__',
+        nl_sep: '__',
       }
-      op = ap.parse(['-h 88mm', '--nlsep=##'], prior: start_hash)
+      op = ap.parse(['-h 88mm', '--nl-sep=##'], prior: start_hash)
       expect(op.page_width).to be_within(EPS).of(30 * MM)
       expect(op.right_page_margin).to be_within(EPS).of(5 * MM)
       expect(op.v_align).to eq(:top)
       expect(op.printer).to eq('seiko')
       expect(op.page_height).to be_within(EPS).of(88 * MM)
-      expect(op.nlsep).to eq('##')
+      expect(op.nl_sep).to eq('##')
     end
 
     it 'can take an in initial Options instance to merge into' do
@@ -71,15 +71,15 @@ RSpec.describe ArgParser do
         page_height: 75 * MM,
         v_align: :top,
         printer: 'seiko',
-        nlsep: '__',
+        nl_sep: '__',
       )
-      op = ap.parse(['-h 88mm', '--nlsep=##'], prior: start_op)
+      op = ap.parse(['-h 88mm', '--nl-sep=##'], prior: start_op)
       expect(op.page_width).to be_within(EPS).of(30 * MM)
       expect(op.right_pad).to be_within(EPS).of(4.5 * MM)
       expect(op.v_align).to eq(:top)
       expect(op.printer).to eq('seiko')
       expect(op.page_height).to be_within(EPS).of(88 * MM)
-      expect(op.nlsep).to eq('##')
+      expect(op.nl_sep).to eq('##')
     end
   end
 
@@ -113,7 +113,7 @@ RSpec.describe ArgParser do
       expect(help).to include('--font-style')
       expect(help).to include('--font-size')
       expect(help).to include('--in-file')
-      expect(help).to include('--nlsep')
+      expect(help).to include('--nl-sep')
       expect(help).to include('--copies')
       expect(help).to include('--printer')
       expect(help).to include('--out-file')
@@ -205,12 +205,12 @@ RSpec.describe ArgParser do
     end
 
     it 'can set the new-line marker' do
-      ops = ap.parse(['--nlsep=&&'])
+      ops = ap.parse(['--nl-sep=&&'])
       expect(ops.msg).to be_nil
-      expect(ops.nlsep).to eq('&&')
+      expect(ops.nl_sep).to eq('&&')
       ops = ap.parse(['-n', '&&'])
       expect(ops.msg).to be_nil
-      expect(ops.nlsep).to eq('&&')
+      expect(ops.nl_sep).to eq('&&')
     end
 
     it 'can set the number of copies' do

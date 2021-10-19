@@ -32,7 +32,7 @@ RSpec.describe Options do
       expect(ops.font_name).to eq('Helvetica')
       expect(ops.font_style).to eq(:normal)
       expect(ops.in_file).to be_nil
-      expect(ops.nlsep).to eq('++')
+      expect(ops.nl_sep).to eq('++')
       expect(ops.copies).to eq(1)
       expect(ops.printer).to eq(ENV['PRINTER'] || 'dymo')
       expect(ops.out_file).to eq('labrat.pdf')
