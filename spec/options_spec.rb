@@ -94,6 +94,10 @@ RSpec.describe Options do
       expect(hsh.class).to eq(Hash)
       # NB: Options#to_hash excludes :msg key
       expect(hsh.keys.size).to be >= Options.attrs.size - 1
+      # Set difference is empty
+      kset = Set.new(hsh.keys)
+      aset = Set.new(Options.attrs)
+      expect(kset - aset).to be_empty
     end
 
     let(:hash) do

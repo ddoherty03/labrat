@@ -106,10 +106,10 @@ module Labrat
       send(att.to_s)
     end
 
-    # For testing, return an Array of the attributes.
+    # For testing, return an Array of the attributes as symbols.
     def self.attrs
       instance_methods(false).grep(/\A[a-z_]+=\Z/)
-        .map { |a| a.to_s.sub(/=\z/, '') }
+        .map { |a| a.to_s.sub(/=\z/, '').to_sym }
     end
 
     # For testing, return an Array of the flags-form of the attributes, i.e.,
