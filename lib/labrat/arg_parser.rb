@@ -76,6 +76,7 @@ module Labrat
       parser.separator "Processing options:"
       start_label_option
       nl_sep_option
+      label_sep_option
       copies_option
       in_file_option
       out_file_option
@@ -362,9 +363,9 @@ module Labrat
     # On a command-line, specifying where a new label should be started.  This
     # allows the user to use some distinctive marker ('][' by default) to
     # designate where a new label shoul be started.
-    def lbl_sep_option
+    def label_sep_option
       parser.on("--label-sep=SEPARATOR",
-                "Specify text that indicates the start of a new label (default '][')") do |ls|
+                "Specify text that indicates the start of a new label (default ']*[')") do |ls|
         options.label-sep = ls
         warn "  ::label-sep <- '#{ls}'::" if options.verbose
       end

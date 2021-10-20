@@ -22,7 +22,7 @@ begin
   # arguments and no --in-file argument.
 
   non_ops = ARGV.grep_v(/\A--?/)
-  texts = non_ops.empty? ? [] : [non_ops.join(' ')]
+  texts = non_ops.empty? ? [] : non_ops.join(' ').split(ops.label_sep)
   texts +=
     if ops.template
       []

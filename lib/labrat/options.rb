@@ -15,7 +15,7 @@ module Labrat
                   :left_pad, :right_pad, :top_pad, :bottom_pad,
                   :delta_x, :delta_y,
                   :font_name, :font_style, :font_size,
-                  :in_file, :nl_sep, :copies,
+                  :in_file, :nl_sep, :label_sep, :copies,
                   :printer, :out_file, :print_command, :view_command, :view,
                   :template, :verbose, :msg
 
@@ -50,6 +50,7 @@ module Labrat
       # Input attributes
       self.in_file = init[:in_file] || nil
       self.nl_sep = init[:nl_sep] || '++'
+      self.label_sep = init[:label_sep] || ']*['
       self.copies = init[:copies] || 1
       # Output attributes
       self.printer = init[:printer] || ENV['LABRAT_PRINTER'] || ENV['PRINTER'] || 'dymo'
@@ -151,6 +152,7 @@ module Labrat
         # Input attributes
         in_file: in_file,
         nl_sep: nl_sep,
+        label_sep: label_sep,
         copies: copies,
         # Output attributes
         printer: printer,
