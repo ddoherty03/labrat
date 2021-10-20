@@ -76,6 +76,7 @@ module Labrat
       parser.separator "Processing options:"
       start_label_option
       nl_sep_option
+      label_sep_option
       copies_option
       in_file_option
       out_file_option
@@ -352,10 +353,21 @@ module Labrat
     # account.  This allows the user to use some distinctive marker ('++' by
     # default) to designate where a line break should occur.
     def nl_sep_option
-      parser.on("-nSEP", "--nlsep=SEPARATOR",
+      parser.on("-nSEP", "--nl-sep=SEPARATOR",
                 "Specify text to be translated into a line-break (default '++')") do |nl|
-        options.nlsep = nl
+        options.nl_sep = nl
         warn "  ::nl-sep <- '#{nl}'::" if options.verbose
+      end
+    end
+
+    # On a command-line, specifying where a new label should be started.  This
+    # allows the user to use some distinctive marker ('][' by default) to
+    # designate where a new label shoul be started.
+    def label_sep_option
+      parser.on("--label-sep=SEPARATOR",
+                "Specify text that indicates the start of a new label (default ']*[')") do |ls|
+        options.label-sep = ls
+        warn "  ::label-sep <- '#{ls}'::" if options.verbose
       end
     end
 

@@ -22,13 +22,43 @@ e.g. ~/.rbenv/shims/labrat, for an rbenv ruby installation."
   :type 'string
   :group 'labrat)
 
-(defcustom labrat-nlsep "++"
+(defcustom labrat-nl-sep "++"
   "String to mark newlines in label text.
 
 If you change this, you need to make a corresponding change in your
 labrat configuration at ~/.config/labrat/config.yml."
   :type 'string
   :group 'labrat)
+
+(defcustom labrat-label-sep "]*["
+  "String to mark the separation between labels on the labrat command-line.
+
+If you change this, you need to make a corresponding change in your
+labrat configuration at ~/.config/labrat/config.yml."
+  :type 'string
+  :group 'labrat)
+
+(defun labrat/pars-in-region ()
+  "Return a string of paragraphs in region, separated by `labrat-label-sep'.
+
+If the region is not active, just return the paragraph at or before point as
+is done by `labrat-par-at-point'.  In either case strip comment lines."
+  (if (region-active-p)
+      (progn
+        (let ((beg (region-beginning))
+              (end (save-excursion
+                     (progn (goto-char (region-end))
+                            (forward-paragraph)
+                            (point))))
+              (pars ""))
+          (progn
+            (save-excursion
+              (goto-char beg)
+              (while (< (point) end)
+                (forward-paragraph)
+                (setq pars (s-concat pars (labrat/par-at-point) labrat-label-sep))))
+            (s-chop-prefix labrat-label-sep (s-chop-suffix labrat-label-sep pars)))))
+    (labrat/par-at-point)))
 
 (defun labrat/par-at-point ()
   "Return the paragraph at or before point.
@@ -38,8 +68,9 @@ for preceding paragraph even if there are several blank lines
 before point, trim white space, comments, and properties from the
 result."
   (save-excursion
-    (re-search-backward "^.+$" nil 'to-bob)
-    (s-replace "\n" labrat-nlsep
+    (unless (looking-at ".+")
+      (re-search-backward "^.+$" nil 'to-bob))
+    (s-replace "\n" labrat-nl-sep
                (labrat/remove-comments
                           (s-trim (thing-at-point 'paragraph t))))))
 
@@ -49,7 +80,7 @@ result."
 If STR consists of multiple new-line separated lines, the lines
 that start with '#' are removed, and the remaining lines
 returned"
-  (s-join "\n" (--remove (string-match "\\`#.*\\'"it) (s-split "\n" str))))
+  (s-join "\n" (--remove (string-match "^#" it) (s-split "\n" str))))
 
 (defun labrat-view ()
   "View the paragraph at or before point as a label with labrat.
@@ -57,10 +88,10 @@ returned"
 This invokes the \"labrat -V\ <label>\" command with the
 paragraph at or before point inserted in the <label> position,
 but with each new-line replaced with the value of the variable
-labrat-nlsep, '++' by default."
+labrat-nl-sep, '++' by default."
   (interactive)
   (call-process labrat-executable nil nil nil
-                "-V" (labrat/par-at-point)))
+                "-V" (labrat/pars-in-region)))
 
 (defun labrat-print ()
   "Print the paragraph at or before point as a label with labrat.
@@ -68,10 +99,10 @@ labrat-nlsep, '++' by default."
 This invokes the \"labrat -P <label>\" command with the paragraph
 at or before point inserted in the <label> position, but with
 each new-line replaced with the value of the variable
-labrat-nlsep, '++' by default."
+labrat-nl-sep, '++' by default."
   (interactive)
   (call-process labrat-executable nil nil nil
-                (labrat/par-at-point)))
+                (labrat/pars-in-region)))
 
 (provide 'labrat)
 ;;; labrat.el ends here

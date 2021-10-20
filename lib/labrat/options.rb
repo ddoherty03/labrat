@@ -15,7 +15,7 @@ module Labrat
                   :left_pad, :right_pad, :top_pad, :bottom_pad,
                   :delta_x, :delta_y,
                   :font_name, :font_style, :font_size,
-                  :in_file, :nlsep, :copies,
+                  :in_file, :nl_sep, :label_sep, :copies,
                   :printer, :out_file, :print_command, :view_command, :view,
                   :template, :verbose, :msg
 
@@ -49,7 +49,8 @@ module Labrat
       self.font_size = init[:font_size] || 12
       # Input attributes
       self.in_file = init[:in_file] || nil
-      self.nlsep = init[:nlsep] || '++'
+      self.nl_sep = init[:nl_sep] || '++'
+      self.label_sep = init[:label_sep] || ']*['
       self.copies = init[:copies] || 1
       # Output attributes
       self.printer = init[:printer] || ENV['LABRAT_PRINTER'] || ENV['PRINTER'] || 'dymo'
@@ -105,10 +106,10 @@ module Labrat
       send(att.to_s)
     end
 
-    # For testing, return an Array of the attributes.
+    # For testing, return an Array of the attributes as symbols.
     def self.attrs
       instance_methods(false).grep(/\A[a-z_]+=\Z/)
-        .map { |a| a.to_s.sub(/=\z/, '') }
+        .map { |a| a.to_s.sub(/=\z/, '').to_sym }
     end
 
     # For testing, return an Array of the flags-form of the attributes, i.e.,
@@ -150,7 +151,8 @@ module Labrat
         font_size: font_size,
         # Input attributes
         in_file: in_file,
-        nlsep: nlsep,
+        nl_sep: nl_sep,
+        label_sep: label_sep,
         copies: copies,
         # Output attributes
         printer: printer,

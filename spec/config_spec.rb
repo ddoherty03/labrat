@@ -55,7 +55,7 @@ RSpec.describe Config do
         page-height: 101mm
         delta-x: -4mm
         delta-y: 1cm
-        nlsep: '%%'
+        nl-sep: '%%'
         printer: seiko3
       YAML
       setup_test_file('/etc/xdg/labrat/config.yml', config_yml)
@@ -65,7 +65,7 @@ RSpec.describe Config do
       expect(op.page_height).to be_within(EPS).of(101 * MM)
       expect(op.delta_x).to be_within(EPS).of(-4 * MM)
       expect(op.delta_y).to be_within(EPS).of(1 * CM)
-      expect(op.nlsep).to eq('%%')
+      expect(op.nl_sep).to eq('%%')
       expect(op.printer).to eq('seiko3')
     end
 
@@ -75,7 +75,7 @@ RSpec.describe Config do
         page-height: 101mm
         delta-x: -4mm
         delta-y: 1cm
-        nlsep: '%%'
+        nl_sep: '%%'
       YAML
       setup_test_file('/lib/junk/labrat/config.yml', config_yml)
       config2_yml = <<~YAML
@@ -96,7 +96,7 @@ RSpec.describe Config do
       expect(op.page_height).to be_within(EPS).of(101 * MM)
       expect(op.delta_x).to be_within(EPS).of(-4 * MM)
       expect(op.delta_y).to be_within(EPS).of(1 * CM)
-      expect(op.nlsep).to eq('%%')
+      expect(op.nl_sep).to eq('%%')
       # Since these were not specified in the high-priority config, but were in
       # the low-priority config, they get set.
       expect(op.printer).to eq('dymo4')
@@ -110,7 +110,7 @@ RSpec.describe Config do
         page-height: 101mm
         delta-x: -4mm
         delta-y: 1cm
-        nlsep: '%%'
+        nl-sep: '%%'
         printer: seiko3
       YAML
       ENV['LABRAT_SYS_CONFIG'] = '/etc/labrat.yml'
@@ -121,7 +121,7 @@ RSpec.describe Config do
       expect(op.page_height).to be_within(EPS).of(101 * MM)
       expect(op.delta_x).to be_within(EPS).of(-4 * MM)
       expect(op.delta_y).to be_within(EPS).of(1 * CM)
-      expect(op.nlsep).to eq('%%')
+      expect(op.nl_sep).to eq('%%')
       expect(op.printer).to eq('seiko3')
     end
 
@@ -131,7 +131,7 @@ RSpec.describe Config do
         page-height: 101mm
         delta-x: -4mm
         delta-y: 1cm
-        nlsep: '%%'
+        nl-sep: '%%'
         printer: seiko3
       YAML
       setup_test_file("/home/#{ENV['USER']}/.config/labrat/config.yml", config_yml)
@@ -141,7 +141,7 @@ RSpec.describe Config do
       expect(op.page_height).to be_within(EPS).of(101 * MM)
       expect(op.delta_x).to be_within(EPS).of(-4 * MM)
       expect(op.delta_y).to be_within(EPS).of(1 * CM)
-      expect(op.nlsep).to eq('%%')
+      expect(op.nl_sep).to eq('%%')
       expect(op.printer).to eq('seiko3')
     end
 
@@ -151,7 +151,7 @@ RSpec.describe Config do
         page-height: 101mm
         delta-x: -4mm
         delta-y: 1cm
-        nlsep: '%%'
+        nl-sep: '%%'
         printer: seiko3
       YAML
       ENV['LABRAT_CONFIG'] = "/home/#{ENV['USER']}/.labrc"
@@ -162,7 +162,7 @@ RSpec.describe Config do
       expect(op.page_height).to be_within(EPS).of(101 * MM)
       expect(op.delta_x).to be_within(EPS).of(-4 * MM)
       expect(op.delta_y).to be_within(EPS).of(1 * CM)
-      expect(op.nlsep).to eq('%%')
+      expect(op.nl_sep).to eq('%%')
       expect(op.printer).to eq('seiko3')
     end
 
@@ -172,7 +172,7 @@ RSpec.describe Config do
         page-height: 101mm
         delta-x: -4mm
         delta-y: 1cm
-        nlsep: '%%'
+        nl-sep: '%%'
         printer: seiko3
       YAML
       setup_test_file('/etc/xdg/labrat/config.yml', sys_config_yml)
@@ -187,7 +187,7 @@ RSpec.describe Config do
       expect(op.page_height).to be_within(EPS).of(102 * MM)
       expect(op.delta_x).to be_within(EPS).of(-3 * MM)
       expect(op.delta_y).to be_within(EPS).of(1 * CM)
-      expect(op.nlsep).to eq('%%')
+      expect(op.nl_sep).to eq('%%')
       expect(op.printer).to eq('seiko3')
     end
 
@@ -197,7 +197,7 @@ RSpec.describe Config do
         page-height: 101mm
         delta-x: -4mm
         delta-y: 1cm
-        nlsep: '%%'
+        nl-sep: '%%'
       YAML
       setup_test_file('~/.foncig/labrat/config.yml', config_yml)
 
@@ -209,7 +209,7 @@ RSpec.describe Config do
       expect(op.page_height).to be_within(EPS).of(101 * MM)
       expect(op.delta_x).to be_within(EPS).of(-4 * MM)
       expect(op.delta_y).to be_within(EPS).of(1 * CM)
-      expect(op.nlsep).to eq('%%')
+      expect(op.nl_sep).to eq('%%')
     end
   end
 
@@ -220,7 +220,7 @@ RSpec.describe Config do
         page-height: 101mm
         delta-x: -4mm
         delta-y: 1cm
-        nlsep: '%%'
+        nl-sep: '%%'
         printer: seiko3
       YAML
       ENV['LABRAT_SYS_CONFIG'] = '/etc/labrat/config.yaml'
@@ -231,7 +231,7 @@ RSpec.describe Config do
       expect(op.page_height).to be_within(EPS).of(101 * MM)
       expect(op.delta_x).to be_within(EPS).of(-4 * MM)
       expect(op.delta_y).to be_within(EPS).of(1 * CM)
-      expect(op.nlsep).to eq('%%')
+      expect(op.nl_sep).to eq('%%')
       expect(op.printer).to eq('seiko3')
     end
 
@@ -241,7 +241,7 @@ RSpec.describe Config do
         page-height: 101mm
         delta-x: -4mm
         delta-y: 1cm
-        nlsep: '%%'
+        nl-sep: '%%'
         printer: seiko3
       YAML
       ENV['LABRAT_CONFIG'] = '~/junk/random/lr.y'
@@ -252,7 +252,7 @@ RSpec.describe Config do
       expect(op.page_height).to be_within(EPS).of(101 * MM)
       expect(op.delta_x).to be_within(EPS).of(-4 * MM)
       expect(op.delta_y).to be_within(EPS).of(1 * CM)
-      expect(op.nlsep).to eq('%%')
+      expect(op.nl_sep).to eq('%%')
       expect(op.printer).to eq('seiko3')
     end
 
@@ -262,7 +262,7 @@ RSpec.describe Config do
         page-height: 101mm
         delta-x: -4mm
         delta-y: 1cm
-        nlsep: '%%'
+        nl-sep: '%%'
         printer: seiko3
       YAML
       setup_test_file('~/.labratrc', config_yml)
@@ -272,7 +272,7 @@ RSpec.describe Config do
       expect(op.page_height).to be_within(EPS).of(101 * MM)
       expect(op.delta_x).to be_within(EPS).of(-4 * MM)
       expect(op.delta_y).to be_within(EPS).of(1 * CM)
-      expect(op.nlsep).to eq('%%')
+      expect(op.nl_sep).to eq('%%')
       expect(op.printer).to eq('seiko3')
     end
 
@@ -282,7 +282,7 @@ RSpec.describe Config do
         page-height: 101mm
         delta-x: -4mm
         delta-y: 1cm
-        nlsep: '%%'
+        nl-sep: '%%'
         printer: seiko3
       YAML
       setup_test_file('~/.labrat/config', config_yml)
@@ -292,7 +292,7 @@ RSpec.describe Config do
       expect(op.page_height).to be_within(EPS).of(101 * MM)
       expect(op.delta_x).to be_within(EPS).of(-4 * MM)
       expect(op.delta_y).to be_within(EPS).of(1 * CM)
-      expect(op.nlsep).to eq('%%')
+      expect(op.nl_sep).to eq('%%')
       expect(op.printer).to eq('seiko3')
     end
 
@@ -302,7 +302,7 @@ RSpec.describe Config do
         page-height: 101mm
         delta-x: -4mm
         delta-y: 1cm
-        nlsep: '%%'
+        nl-sep: '%%'
         printer: seiko3
       YAML
       ENV['LABRAT_SYS_CONFIG'] = '/etc/labrat/config.yaml'
@@ -312,7 +312,7 @@ RSpec.describe Config do
         page-height: 102mm
         delta-x: -7mm
         delta-y: +30mm
-        nlsep: '++'
+        nl-sep: '++'
       YAML
       setup_test_file('~/.labrat/config.yml', usr_config_yml)
       hsh = Config.read('labrat', xdg: false, dir_prefix: SANDBOX_DIR)
@@ -321,7 +321,7 @@ RSpec.describe Config do
       expect(op.page_height).to be_within(EPS).of(102 * MM)
       expect(op.delta_x).to be_within(EPS).of(-7 * MM)
       expect(op.delta_y).to be_within(EPS).of(3 * CM)
-      expect(op.nlsep).to eq('++')
+      expect(op.nl_sep).to eq('++')
       expect(op.printer).to eq('seiko3')
     end
   end

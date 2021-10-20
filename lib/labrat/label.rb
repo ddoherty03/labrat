@@ -7,8 +7,8 @@ module Labrat
 
     def initialize(texts, ops)
       @ops = ops
-      unless @ops.nlsep.nil? || @ops.nlsep == ''
-        @texts = texts.map { |t| t.gsub(ops.nlsep, "\n") }
+      unless @ops.nl_sep.nil? || @ops.nl_sep == ''
+        @texts = texts.map { |t| t.gsub(ops.nl_sep, "\n") }
       end
       if @ops.copies > 1
         duped_texts = []
