@@ -29,6 +29,7 @@ The following is for org.
   - [[#job-processing-options][Job Processing Options]]
     - [[#starting-label][Starting label]]
     - [[#new-line-marker][New line marker]]
+    - [[#label-separator][Label separator]]
     - [[#number-of-copies][Number of copies]]
     - [[#input-and-output-files][Input and output files]]
     - [[#printing-or-viewing][Printing or viewing]]
@@ -348,6 +349,15 @@ takes place even when reading label texts from a file or standard input.
 - ~-n~, ~--nlsep=SEPARATOR~ :: Specify text to be translated into a line-break
   (default '++')
 
+*** Label separator
+The only way to print more than one label from the command-line is to indicate
+where one label ends and the next begins with a special marker in the
+command-line arguments, by default the string ']*['.  The text used for this
+can be customized with this option.
+
+- ~--label-sep=SEPARATOR~ :: Specify text that indicates the start of a new
+  label (default ']*[')
+
 *** Number of copies
 This option causes =labrat= to generate multiple copies of each label with all
 the copies printed sequentially on the page.
@@ -370,6 +380,7 @@ with a space between each argument.  For example,
 #+begin_example
 $ labrat -c3 This is a 'single label' '++composed of all this' text --font-style=italic
 #+end_example
+
 prints three copies of a single label in italics with two lines, breaking at
 the '++' marker, resulting in something like this:
 
@@ -378,9 +389,34 @@ This is a single label
 composed of all this text
 #+end_example
 
-Note that when the label text is specified on the command-line, ~labrat~
-always prints a single label.  The only way to get multiple labels is by using
-the ~-c~ (~--copies~) argument to get multiple copies of the label text.
+Note that when the label text is specified on the command-line, ~labrat~ just
+prints a single label.  The only ways to get multiple labels is by (1) marking
+a separation between labels with the ~--label-sep~ marker (']*[' by default)
+or (2) using the ~-c~ (~--copies~) argument to get multiple copies of the
+label text.  These options can be combined as well.  For example,
+
+#+begin_example
+$ labrat -c3 This is the 'first label' ']*[' 'And the rest ++ is the second' text --font-style=italic
+#+end_example
+
+will produce three copies of two separate labels:
+
+#+begin_example
+This is a the first label
+
+This is a the first label
+
+This is a the first label
+
+And the rest
+is the second
+
+And the rest
+is the second
+
+And the rest
+is the second
+#+end_example
 
 **** Specified input file
 Rather than get the text from the non-option arguments on the command line,
