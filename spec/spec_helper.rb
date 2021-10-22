@@ -4,7 +4,7 @@ require "labrat"
 
 require 'pry'
 require 'pry-byebug'
-require 'debug'
+# require 'debug'
 
 RSpec.configure do |config|
   # Enable flags like --only-failures and --next-failure
