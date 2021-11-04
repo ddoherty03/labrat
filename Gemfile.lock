@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    labrat (0.1.12)
+    labrat (0.1.13)
       activesupport
       fat_core
       prawn (~> 2.0)
@@ -24,7 +24,7 @@ GEM
     fat_core (4.9.2)
       activesupport
       damerau-levenshtein
-    i18n (1.8.10)
+    i18n (1.8.11)
       concurrent-ruby (~> 1.0)
     method_source (1.0.0)
     minitest (5.14.4)
@@ -82,7 +82,7 @@ GEM
     tzinfo (2.0.4)
       concurrent-ruby (~> 1.0)
     unicode-display_width (2.0.0)
-    zeitwerk (2.5.0)
+    zeitwerk (2.5.1)
 
 PLATFORMS
   x86_64-linux
