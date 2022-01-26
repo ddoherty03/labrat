@@ -252,8 +252,8 @@ By default, =labrat= considers a page of labels to contain only one row and
 one column, that is, a single label per page.  To set up a multi-label page,
 you have to describe the number of rows and columns and the amount of the gap
 between them.  The number of "rows" is counted as the number of "horizontal"
-set of labels after taking the page orientation into account.  Likewise, the
-number of columns is counted as the number of "vertical" set of labels after
+sets of labels after taking the page orientation into account.  Likewise, the
+number of columns is counted as the number of "vertical" sets of labels after
 taking the page orientation into account
 
 - ~-R~, ~--rows=NUM~ :: The number of horizontal rows of labels on a page, taking
@@ -308,7 +308,7 @@ in-line changes of font styles.
 Despite our best efforts, the vagaries of printer hardware, print drivers, and
 cosmic rays, sometimes the text of the label is not positioned correctly
 within the printable area of the label.  These options allow you to nudge the
-print area left or right, up or down a bit to compensate for any such
+print area a bit, left or right, up or down, to compensate for any such
 anomalies.
 
 - ~-x, --delta-x=DIM~ :: Left-right adjustment (positive moves right, negative
@@ -322,10 +322,11 @@ The following options control the processing of labels by =labrat=.
 *** Starting label
 When printing onto a multi-label page, some of the labels may have already
 been used.  In that case, the ~--start-label~ option allows you to tell
-=labrat= to start printing at some later label on the page.  The label
-positions are numbered from 1 up to the number of labels per page (i.e., rows
-times columns) from left to right and down the page.  If you want to print a
-sheet that shows the label numbers, see the ~-T~ template option below.
+=labrat= to start printing at some later label on the first page.  This option
+has no impact on pages after the first.  The label positions are numbered from
+1 up to the number of labels per page (i.e., rows times columns) from left to
+right and down the page.  If you want to print a sheet that shows the label
+numbers, see the ~-T~ template option below.
 
 - ~-S NUM~, ~--start-label=NUM~ :: Start printing at label number NUM (starting
   at 1, left-to-right, top-to-bottom) within first page only.  Later pages
