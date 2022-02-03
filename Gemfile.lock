@@ -4,6 +4,8 @@ PATH
     labrat (0.1.13)
       activesupport
       fat_core
+      matrix
+      methodize
       prawn (~> 2.0)
 
 GEM
@@ -16,17 +18,24 @@ GEM
       tzinfo (~> 2.0)
       zeitwerk (~> 2.3)
     ast (2.4.2)
-    byebug (11.1.3)
     coderay (1.1.3)
     concurrent-ruby (1.1.9)
     damerau-levenshtein (1.3.3)
+    debug (1.4.0)
+      irb (>= 1.3.6)
+      reline (>= 0.2.7)
     diff-lcs (1.4.4)
     fat_core (4.9.2)
       activesupport
       damerau-levenshtein
     i18n (1.8.11)
       concurrent-ruby (~> 1.0)
+    io-console (0.5.11)
+    irb (1.4.1)
+      reline (>= 0.3.0)
+    matrix (0.4.2)
     method_source (1.0.0)
+    methodize (0.3.1)
     minitest (5.14.4)
     parallel (1.20.1)
     parser (3.0.2.0)
@@ -38,12 +47,11 @@ GEM
     pry (0.13.1)
       coderay (~> 1.1)
       method_source (~> 1.0)
-    pry-byebug (3.9.0)
-      byebug (~> 11.0)
-      pry (~> 0.13.0)
     rainbow (3.0.0)
     rake (13.0.6)
     regexp_parser (2.1.1)
+    reline (0.3.1)
+      io-console (~> 0.5)
     rexml (3.2.5)
     rspec (3.10.0)
       rspec-core (~> 3.10.0)
@@ -88,9 +96,9 @@ PLATFORMS
   x86_64-linux
 
 DEPENDENCIES
+  debug (>= 1.0.0)
   labrat!
   pry (~> 0.13.0)
-  pry-byebug (>= 3.9.0)
   rake (~> 13.0)
   rspec (~> 3.0)
   rubocop (~> 1.7)
@@ -99,4 +107,4 @@ DEPENDENCIES
   rubocop-shopify
 
 BUNDLED WITH
-   2.2.26
+   2.3.4

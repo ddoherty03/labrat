@@ -42,15 +42,17 @@ DESC
   spec.executables   = spec.files.grep(%r{\Abin/labrat}) { |f| File.basename(f) }
   spec.require_paths = ["lib"]
   spec.post_install_message = 'To install config and label database files, run [sudo] labrat-install.'
+  spec.add_dependency "matrix"
   spec.add_dependency "prawn", "~> 2.0"
   spec.add_dependency "activesupport"
+  spec.add_dependency "methodize"
   spec.add_dependency "fat_core"
 
   # Note: pry-byebug requires that pry be within the '0.13.0' version box.
   spec.add_development_dependency 'rake'
   spec.add_development_dependency 'rspec'
   spec.add_development_dependency 'pry', '~> 0.13.0'
-  spec.add_development_dependency 'pry-byebug', '>= 3.9.0'
+  spec.add_development_dependency 'debug', '>= 1.0.0'
   spec.add_development_dependency 'rubocop-performance'
   spec.add_development_dependency 'rubocop-shopify'
   spec.add_development_dependency 'rubocop-rspec'
