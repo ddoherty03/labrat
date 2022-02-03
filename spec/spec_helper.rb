@@ -3,7 +3,7 @@
 require "labrat"
 
 require 'pry'
-require 'pry-byebug'
+require 'debug'
 # require 'debug'
 
 RSpec.configure do |config|
