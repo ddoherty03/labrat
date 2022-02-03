@@ -4,7 +4,7 @@
 # apply to all users of a particular label type.
 
 dymo30327:
-  page-width: 24mm
+  page-width: 25mm
   page-height: 87mm
   rows: 1
   columns: 1
@@ -12,10 +12,10 @@ dymo30327:
   bottom-page-margin: 0mm
   left-page-margin: 5mm
   right-page-margin: 5mm
-  top-pad: 0mm
-  bottom-pad: 0mm
-  left-pad: 2mm
-  right-pad: 2mm
+  top-pad: 1mm
+  bottom-pad: 1mm
+  left-pad: 1mm
+  right-pad: 1mm
   landscape: true
 
 duraready1034D:
