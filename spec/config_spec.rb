@@ -211,10 +211,59 @@ RSpec.describe Config do
       expect(op.delta_y).to be_within(EPS).of(1 * CM)
       expect(op.nl_sep).to eq('%%')
     end
+
+    it 'reads an empty XDG_CONFIG_HOME xdg user directory config file' do
+      config_yml = <<~YAML
+        # page-width: 33mm
+        # page-height: 101mm
+        # delta-x: -4mm
+        # delta-y: 1cm
+        # nl-sep: '%%'
+      YAML
+      setup_test_file('~/.foncig/labrat/config.yml', config_yml)
+
+      # The first directory in the ENV variable list should take precedence.
+      ENV['XDG_CONFIG_HOME'] = "~/.foncig"
+      hsh = Config.read('labrat', xdg: true, dir_prefix: SANDBOX_DIR)
+      expect(hsh).to be_a Hash
+      expect(hsh).to be_empty
+    end
   end
 
   describe 'Reading classic config files' do
-    it 'can read from an classic system config file' do
+    it 'read an empty classic system config file' do
+      config_yml = <<~YAML
+
+      YAML
+      ENV['LABRAT_SYS_CONFIG'] = '/etc/labrat/config.yaml'
+      setup_test_file(ENV['LABRAT_SYS_CONFIG'], config_yml)
+      hsh = Config.read('labrat', xdg: false, dir_prefix: SANDBOX_DIR)
+      expect(hsh).to be_a Hash
+      expect(hsh).to be_empty
+    end
+
+    it 'reads a classic system config file' do
+      config_yml = <<~YAML
+        page-width: 33mm
+        page-height: 101mm
+        delta-x: -4mm
+        delta-y: 1cm
+        nl-sep: '%%'
+        printer: seiko3
+      YAML
+      ENV['LABRAT_SYS_CONFIG'] = '/etc/labrat/config.yaml'
+      setup_test_file(ENV['LABRAT_SYS_CONFIG'], config_yml)
+      hsh = Config.read('labrat', xdg: false, dir_prefix: SANDBOX_DIR)
+      op = ArgParser.new.parse(hsh)
+      expect(op.page_width).to be_within(EPS).of(33 * MM)
+      expect(op.page_height).to be_within(EPS).of(101 * MM)
+      expect(op.delta_x).to be_within(EPS).of(-4 * MM)
+      expect(op.delta_y).to be_within(EPS).of(1 * CM)
+      expect(op.nl_sep).to eq('%%')
+      expect(op.printer).to eq('seiko3')
+    end
+
+    it 'reads a classic system config file' do
       config_yml = <<~YAML
         page-width: 33mm
         page-height: 101mm

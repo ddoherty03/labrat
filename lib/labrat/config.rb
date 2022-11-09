@@ -71,8 +71,15 @@ module Labrat
       files.each do |f|
         next unless File.readable?(f)
 
-        yml_hash = YAML.load(File.read(f))&.methodize || {}
-        yml_hash.report("Merging from file '#{f}") if verbose
+        yml_hash = YAML.load(File.read(f))
+        next unless yml_hash
+
+        if yml_hash.is_a?(Hash)
+          yml_hash = yml_hash.methodize
+        else
+          raise "Error loading file #{f}:\n#{File.read(f)[0..500]}"
+        end
+        yml_hash.report("Merging config from file '#{f}") if verbose
         hash.deep_merge!(yml_hash)
       end
       hash
