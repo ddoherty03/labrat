@@ -1,18 +1,2 @@
-inherit_gem:
-    rubocop-shopify: rubocop.yml
-
-# require:
-#   - rubocop-rspec
-#   - rubocop-performance
-
-AllCops:
-  TargetRubyVersion: 2.7
-
-Style/StringLiteralsInInterpolation:
-  Enabled: true
-
-Layout/LineLength:
-  Max: 120
-
-Style/MethodCallWithArgsParentheses:
-  Enabled: false
+inherit_from:
+  - ~/.rubocop.yml
