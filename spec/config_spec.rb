@@ -49,7 +49,7 @@ RSpec.describe Config do
   end
 
   describe 'Reading XDG config files' do
-    it 'can read from an xdg system config file' do
+    it 'reads an xdg system config file' do
       config_yml = <<~YAML
         page-width: 33mm
         page-height: 101mm
@@ -69,7 +69,7 @@ RSpec.describe Config do
       expect(op.printer).to eq('seiko3')
     end
 
-    it 'can read from an XDG_CONFIG_DIRS xdg system directory config file' do
+    it 'reads an XDG_CONFIG_DIRS xdg system directory config file' do
       config_yml = <<~YAML
         page-width: 33mm
         page-height: 101mm
@@ -104,7 +104,7 @@ RSpec.describe Config do
       expect(op.columns).to eq(3)
     end
 
-    it 'can read from an xdg system ENV-specified config file' do
+    it 'reads an xdg system ENV-specified config file' do
       config_yml = <<~YAML
         page-width: 33mm
         page-height: 101mm
@@ -125,7 +125,7 @@ RSpec.describe Config do
       expect(op.printer).to eq('seiko3')
     end
 
-    it 'can read from an xdg user config file' do
+    it 'reads an xdg user config file' do
       config_yml = <<~YAML
         page-width: 33mm
         page-height: 101mm
@@ -145,7 +145,7 @@ RSpec.describe Config do
       expect(op.printer).to eq('seiko3')
     end
 
-    it 'can read from an xdg ENV-specified user config file' do
+    it 'reads an xdg ENV-specified user config file' do
       config_yml = <<~YAML
         page-width: 33mm
         page-height: 101mm
@@ -166,7 +166,7 @@ RSpec.describe Config do
       expect(op.printer).to eq('seiko3')
     end
 
-    it 'can merge an xdg user config into an xdg system config file' do
+    it 'merges an xdg user config into an xdg system config file' do
       sys_config_yml = <<~YAML
         page-width: 33mm
         page-height: 101mm
@@ -191,7 +191,7 @@ RSpec.describe Config do
       expect(op.printer).to eq('seiko3')
     end
 
-    it 'can read from an XDG_CONFIG_HOME xdg user directory config file' do
+    it 'reads an XDG_CONFIG_HOME xdg user directory config file' do
       config_yml = <<~YAML
         page-width: 33mm
         page-height: 101mm
@@ -284,7 +284,7 @@ RSpec.describe Config do
       expect(op.printer).to eq('seiko3')
     end
 
-    it "can read from an classic user config file in ENV['LABRAT_CONFIG']" do
+    it 'reads a classic user config file in ENV[\'LABRAT_CONFIG\']' do
       config_yml = <<~YAML
         page-width: 33mm
         page-height: 101mm
@@ -305,7 +305,7 @@ RSpec.describe Config do
       expect(op.printer).to eq('seiko3')
     end
 
-    it 'can read from an classic user rc-style config file in HOME' do
+    it "reads a classic user rc-style config file in HOME" do
       config_yml = <<~YAML
         page-width: 33mm
         page-height: 101mm
@@ -325,7 +325,7 @@ RSpec.describe Config do
       expect(op.printer).to eq('seiko3')
     end
 
-    it 'can read from an classic ~/.labrat config dir in HOME' do
+    it 'reads a classic ~/.labrat config dir in HOME' do
       config_yml = <<~YAML
         page-width: 33mm
         page-height: 101mm
@@ -345,7 +345,7 @@ RSpec.describe Config do
       expect(op.printer).to eq('seiko3')
     end
 
-    it 'can read from classic system and user config files' do
+    it 'reads a classic system and user config files' do
       sys_config_yml = <<~YAML
         page-width: 33mm
         page-height: 101mm
