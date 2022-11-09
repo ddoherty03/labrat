@@ -1,0 +1,17 @@
+* Lprint
+
+See [[https://www.msweet.org/lprint/lprint.html][the documentation here]].
+
+#+begin_src shell
+  sudo snap install lprint
+  sudo apt install gtk3-nocsd
+  set -gx LD_PRELOAD '/usr/lib/x86_64-linux-gnu/libgtk3-nocsd.so.0'
+  sudo lprint devices
+  snap list
+  snap get lprint
+  snap info --verbose lprint
+  lsusb
+  snap connections lprint
+  sudo snap connect lprint:raw-usb
+  lprint devices
+#+end_src
