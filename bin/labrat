@@ -27,9 +27,9 @@ begin
     if ops.template
       []
     elsif !ops.in_file.blank?
-      Labrat.read_label_texts(ops.in_file, ops.nlsep)
+      Labrat.read_label_texts(ops.in_file, ops.nl_sep)
     elsif non_ops.empty?
-      Labrat.read_label_texts(nil, ops.nlsep)
+      Labrat.read_label_texts(nil, ops.nl_sep)
     else
       []
     end
