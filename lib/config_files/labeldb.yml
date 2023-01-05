@@ -3,6 +3,7 @@
 # out-file, etc., only things such as page and label dimensions that would
 # apply to all users of a particular label type.
 
+# 19.9x87.29mm
 dymo30327:
   page-width: 25mm
   page-height: 87mm
