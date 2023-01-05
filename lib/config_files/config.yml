@@ -93,7 +93,12 @@
 # A string sequence that is interpreted as a line-break can be defined.  Such
 # a sequence is particularly helpful when you provide the label text on the
 # command-line, though it will be applied to file-read label texts as well.
-# nlsep: '++'
+# nlsep: '-->'
+
+# A string sequence that indicates the start of a new label.  Such a sequence
+# is particularly helpful when you provide the label text on the command-line,
+# though it will be applied to file-read label texts as well.
+# label-sep: '==>'
 
 # The name of the printer to use in substituting for the %p placeholder in the
 # print-command setting below.

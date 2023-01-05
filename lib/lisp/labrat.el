@@ -22,26 +22,21 @@ e.g. ~/.rbenv/shims/labrat, for an rbenv ruby installation."
   :type 'string
   :group 'labrat)
 
-(defcustom labrat-nl-sep "++"
+(defcustom labrat-nl-sep "-->"
   "String to mark newlines in label text.
 
-You should change this to whatever is configured as nl-sep in your
-labrat configuration files."
-  :type 'string
-  :group 'labrat)
-
-(defcustom labrat-label-sep "]*["
-  "String to mark the separation between labels on the labrat command-line.
-
-You should change this to whatever is configured as label-sep in your
-labrat configuration files."
 If you change this, you need to make a corresponding change in your
 labrat configuration at ~/.config/labrat/config.yml."
   :type 'string
   :group 'labrat)
 
-(defvar labrat-buf (get-buffer-create "*labrat*" t)
-  "Labrat message buffer")
+(defcustom labrat-label-sep "==>"
+  "String to mark the separation between labels on the labrat command-line.
+
+If you change this, you need to make a corresponding change in your
+labrat configuration at ~/.config/labrat/config.yml."
+  :type 'string
+  :group 'labrat)
 
 (defun labrat/pars-in-region ()
   "Return a string of paragraphs in region, separated by `labrat-label-sep'.
@@ -78,6 +73,7 @@ result."
     (s-replace "\n" labrat-nl-sep
                (labrat/remove-comments
                           (s-trim (thing-at-point 'paragraph t))))))
+
 (defun labrat/remove-comments (str)
   "Remove any lines from STR that start with the comment character '#'.
 
@@ -92,10 +88,10 @@ returned"
 This invokes the \"labrat -V\ <label>\" command with the
 paragraph at or before point inserted in the <label> position,
 but with each new-line replaced with the value of the variable
-labrat-nl-sep, '++' by default."
+labrat-nl-sep, '-->' by default."
   (interactive)
-  (call-process labrat-executable nil ((labrat-buf) t) nil
-                "-V" (labrat/pars-in-region)))
+  (call-process labrat-executable nil (get-buffer-create "*labrat*") nil
+                "-V --out-file=~/labrat.pdf" (labrat/pars-in-region)))
 
 (defun labrat-print ()
   "Print the paragraph at or before point as a label with labrat.
@@ -103,10 +99,10 @@ labrat-nl-sep, '++' by default."
 This invokes the \"labrat -P <label>\" command with the paragraph
 at or before point inserted in the <label> position, but with
 each new-line replaced with the value of the variable
-labrat-nl-sep, '++' by default."
+labrat-nl-sep, '-->' by default."
   (interactive)
-  (call-process labrat-executable nil labrat-buf nil
-                (labrat/pars-in-region)))
+  (call-process labrat-executable nil (buffer-name (get-buffer-create "*labrat*")) nil
+                "-o ~/labrat.pdf" (labrat/pars-in-region)))
 
 (provide 'labrat)
 ;;; labrat.el ends here

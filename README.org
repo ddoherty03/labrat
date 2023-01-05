@@ -59,7 +59,7 @@ wonderful [[https://github.com/prawnpdf/prawn][Prawn gem]] to generate PDF files
 =labrat= properly configured, printing a label is as simple as:
 
 #+begin_example
-$ labrat 'Income Taxes 2021++Example Maker, Inc.'
+$ labrat 'Income Taxes 2021-->Example Maker, Inc.'
 #+end_example
 
 And you will get a two-line file-folder label printed that looks like this:
@@ -85,14 +85,14 @@ without success, I decided to write my own.  Hence labrat.  With it---after
 due configuration---printing a file folder label is as simple as:
 
 #+begin_src sh
-  $ labrat 'First Line of Label++And the Second Line'
+  $ labrat 'First Line of Label-->And the Second Line'
   #+end_src
 
 Or, you can preview the label in your previewer of choice (mine is qpdfview)
 by adding the -V flag:
 
 #+begin_src sh
-  $ labrat -V 'First Line of Label++And the Second Line'
+  $ labrat -V 'First Line of Label-->And the Second Line'
   #+end_src
 
 Even better, I have included with =labrat= an elisp file (=labrat.el=) that
@@ -346,27 +346,27 @@ later pages always start on the first label position.
 
 *** New line marker
 You can embed a special text-sequence in the label text to indicate where a
-line-break should occur.  By default it is the sequence =++=.  This means that
-=labrat= will translate all occurrences of =++= in the text into a line-break,
-even consecutive occurrences.  There is no way to escape this in the text, so
-if you want labels for various programming languages, you are going to have
-difficulty printing a label with 'C++' in it.  But you can change the marker
+line-break should occur.  By default it is the sequence =-->=.  This means
+that =labrat= will translate all occurrences of =-->= in the text into a
+line-break, even consecutive occurrences.  There is no way to escape this in
+the text, so if you want labels for that use '-->' as part of the text, you
+are going to have difficulty printing a labels.  But you can change the marker
 to something else with ~--nlsep~.  This is especially helpful when you are
 using the command-line to supply the label text since specifying line-breaks
 on a shell command can be difficult.  However note that this substitution
 takes place even when reading label texts from a file or standard input.
 
 - ~-n~, ~--nlsep=SEPARATOR~ :: Specify text to be translated into a line-break
-  (default '++')
+  (default '-->')
 
 *** Label separator
 The only way to print more than one label from the command-line is to indicate
 where one label ends and the next begins with a special marker in the
-command-line arguments, by default the string ']*['.  The text used for this
+command-line arguments, by default the string '==>'.  The text used for this
 can be customized with this option.
 
 - ~--label-sep=SEPARATOR~ :: Specify text that indicates the start of a new
-  label (default ']*[')
+  label (default '==>')
 
 *** Number of copies
 This option causes =labrat= to generate multiple copies of each label with all
@@ -388,11 +388,11 @@ on the command-line.  It combines all the non-option arguments and joins them
 with a space between each argument.  For example,
 
 #+begin_example
-$ labrat -c3 This is a 'single label' '++composed of all this' text --font-style=italic
+$ labrat -c3 This is a 'single label' '-->composed of all this' text --font-style=italic
 #+end_example
 
 prints three copies of a single label in italics with two lines, breaking at
-the '++' marker, resulting in something like this:
+the '-->' marker, resulting in something like this:
 
 #+begin_example
 This is a single label
@@ -401,12 +401,12 @@ composed of all this text
 
 Note that when the label text is specified on the command-line, ~labrat~ just
 prints a single label.  The only ways to get multiple labels is by (1) marking
-a separation between labels with the ~--label-sep~ marker (']*[' by default)
+a separation between labels with the ~--label-sep~ marker ('==>' by default)
 or (2) using the ~-c~ (~--copies~) argument to get multiple copies of the
 label text.  These options can be combined as well.  For example,
 
 #+begin_example
-$ labrat -c3 This is the 'first label' ']*[' 'And the rest ++ is the second' text --font-style=italic
+$ labrat -c3 This is the 'first label' ==> 'And the rest --> is the second' text --font-style=italic
 #+end_example
 
 will produce three copies of two separate labels:
@@ -572,7 +572,7 @@ $ labrat -T -V --label=avery8987
 
 And if you want to see it with sample label text filled in, try the following:
 #+begin_example
-$ labrat -V -c30 --label=avery8987 'Four score and seven years ago++Our fathers brought forth'
+$ labrat -V -c30 --label=avery8987 'Four score and seven years ago-->Our fathers brought forth'
 #+end_example
 
 *** Nesting label definitions
@@ -608,7 +608,7 @@ badge:
 
 With this, you can print a file folder label with:
 #+begin_example
-$ labrat --label=ff 'Four score and seven years ago++Our fathers brought forth'
+$ labrat --label=ff 'Four score and seven years ago-->Our fathers brought forth'
 #+end_example
 
 And, if you want this to be your default label type, you can add to your user-level
@@ -620,13 +620,13 @@ label:
 
 Now you can print the label without the ~--label~ option on the command-line:
 #+begin_example
-$ labrat 'Four score and seven years ago++Our fathers brought forth'
+$ labrat 'Four score and seven years ago-->Our fathers brought forth'
 #+end_example
 
 If you want to print badges, you have to specify the ~--label~ option explicitly on
 the command-line:
 #+begin_example
-$ labrat -V -c14 --label=badge 'Daniel E. Doherty++(Amateur Programmer)'
+$ labrat -V -c14 --label=badge 'Daniel E. Doherty-->(Amateur Programmer)'
 #+end_example
 
 *** A Caution about option order
@@ -636,7 +636,7 @@ override earlier settings.  For example, given the configuration above, where
 ~ff~ is your default label type, the following will not do what you expect:
 
 #+begin_example
-$ labrat --font-style=italic --label=ff 'Four score and seven years ago++Our fathers brought forth'
+$ labrat --font-style=italic --label=ff 'Four score and seven years ago-->Our fathers brought forth'
 #+end_example
 
 You expect the label to be printed in italic, but the ~--label=ff~ option in
@@ -647,7 +647,7 @@ namely ~--font-style=bold~ from the user-level label database.
 To get this to work, you have to put the command-line setting after the
 ~--label=ff~ option in order for it to take effect:
 #+begin_example
-$ labrat --label=ff --font-style=italic 'Four score and seven years ago++Our fathers brought forth'
+$ labrat --label=ff --font-style=italic 'Four score and seven years ago-->Our fathers brought forth'
 #+end_example
 
 * Development

@@ -15,7 +15,7 @@ Gem::Specification.new do |spec|
     the wonderful Prawn gem to generate PDF files with label formatting in mind. With
     labrat properly configured, printing a label is as simple as:
 
-    $ labrat 'Income Taxes 2021++Example Maker, Inc.'
+    $ labrat 'Income Taxes 2021-->Example Maker, Inc.'
 
     And you will get a two-line file-folder label with the text centered. It can
     print on dymo label printer rolls or Avery sheet labels.  It knows the layout of
