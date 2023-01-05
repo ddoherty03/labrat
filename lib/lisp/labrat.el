@@ -91,7 +91,7 @@ but with each new-line replaced with the value of the variable
 labrat-nl-sep, '-->' by default."
   (interactive)
   (call-process labrat-executable nil (get-buffer-create "*labrat*") nil
-                "-V --out-file=~/labrat.pdf" (labrat/pars-in-region)))
+                "-V" "-o ~/labrat.pdf""-V --out-file=~/labrat.pdf" (labrat/pars-in-region)))
 
 (defun labrat-print ()
   "Print the paragraph at or before point as a label with labrat.
