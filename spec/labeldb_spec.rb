@@ -60,6 +60,19 @@ RSpec.describe LabelDb do
   end
 
   it 'can process a --label argument' do
+    # NOTE: from the system db
+    # avery5160:
+    #   page-width: 8.5in
+    #   page-height: 11in
+    #   rows: 10
+    #   columns: 3
+    #   top-page-margin: 13mm
+    #   bottom-page-margin: 12mm
+    #   left-page-margin: 5mm
+    #   right-page-margin: 5mm
+    #   row-gap: 0mm
+    #   column-gap: 3mm
+    #   landscape: false
     usrdb_yml = <<~YAML
       avery5160:
         page-width: 65mm
@@ -69,8 +82,9 @@ RSpec.describe LabelDb do
     setup_test_file("/home/#{ENV['USER']}/.config/labrat/labeldb.yml", usrdb_yml)
     args = ['--rows=5', '--label=avery5160', '--page-width=60mm']
     ops = ArgParser.new.parse(args)
+    # Note that --label overrides --row as it appears later.
     expect(ops.rows).to eq(10)
-    expect(ops.page_height).to be_within(EPS).of(24 * MM)
+    expect(ops.page_height).to be_within(EPS).of(11 * IN)
     expect(ops.page_width).to be_within(EPS).of(60 * MM)
   end
 end
