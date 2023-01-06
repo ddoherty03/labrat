@@ -8,6 +8,7 @@ require 'prawn/measurement_extensions'
 require 'optparse'
 require 'yaml'
 require 'pp'
+require 'debug'
 
 require_relative "labrat/version"
 require_relative "labrat/errors"
