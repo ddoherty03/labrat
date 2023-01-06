@@ -209,7 +209,7 @@ avery5163:
   column-gap: 5mm
   landscape: false
 
-avery15513::
+avery15513:
   label: avery5163
 
   label: avery5163
