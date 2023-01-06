@@ -238,8 +238,17 @@ module Labrat
             warn "#{p}\n"
           end
           warn "\nKnown labels:\n"
-          lab_names.groups_of(6).each do |_n, grp|
-            warn "  #{grp.join(', ')}"
+          max_width = lab_names.max_by(&:length).length
+          ngrps = (78 / (max_width + 1)).floor
+
+          lab_names.sort_by do |nm|
+            nm.match(/\A([a-zA-z]+)([0-9]+)?/)
+            [$1, $2.to_i || 0]
+          end
+            .groups_of(ngrps).each do |_n, grp|
+            fmt = "%-#{max_width+1}s"
+            grp = grp.map{|nm| sprintf(fmt, nm) }
+            warn "  #{grp.join(' ')}"
           end
         end
         exit(0)
