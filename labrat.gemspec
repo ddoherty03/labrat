@@ -47,10 +47,9 @@ DESC
   spec.add_dependency "activesupport"
   spec.add_dependency "fat_core"
 
-  # Note: pry-byebug requires that pry be within the '0.13.0' version box.
   spec.add_development_dependency 'rake'
   spec.add_development_dependency 'rspec'
-  spec.add_development_dependency 'pry', '~> 0.13.0'
+  spec.add_development_dependency 'pry'
   spec.add_development_dependency 'debug', '>= 1.0.0'
   spec.add_development_dependency 'rubocop-performance'
   spec.add_development_dependency 'rubocop-shopify'
