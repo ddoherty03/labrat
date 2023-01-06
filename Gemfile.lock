@@ -24,6 +24,7 @@ GEM
       irb (>= 1.5.0)
       reline (>= 0.3.1)
     diff-lcs (1.5.0)
+    docile (1.4.0)
     fat_core (4.13.0)
       activesupport (~> 6.0)
       damerau-levenshtein
@@ -85,6 +86,12 @@ GEM
     rubocop-shopify (2.11.1)
       rubocop (~> 1.42)
     ruby-progressbar (1.11.0)
+    simplecov (0.22.0)
+      docile (~> 1.1)
+      simplecov-html (~> 0.11)
+      simplecov_json_formatter (~> 0.1)
+    simplecov-html (0.12.3)
+    simplecov_json_formatter (0.1.4)
     ttfunk (1.7.0)
     tzinfo (2.0.5)
       concurrent-ruby (~> 1.0)
@@ -104,6 +111,7 @@ DEPENDENCIES
   rubocop-performance
   rubocop-rspec
   rubocop-shopify
+  simplecov
 
 BUNDLED WITH
    2.3.4

@@ -50,6 +50,7 @@ DESC
   spec.add_development_dependency 'rake'
   spec.add_development_dependency 'rspec'
   spec.add_development_dependency 'pry'
+  spec.add_development_dependency 'simplecov'
   spec.add_development_dependency 'debug', '>= 1.0.0'
   spec.add_development_dependency 'rubocop-performance'
   spec.add_development_dependency 'rubocop-shopify'
