@@ -20,7 +20,7 @@ module Labrat
     # Parse and set the options object to reflect the values of the given
     # args, after merging in any prior settings into options.  Return the
     # resulting options instance.  The args argument can be either a Hash or,
-    # as usual, an Array of Strings from the command-line.x  Throw an exception
+    # as usual, an Array of Strings from the command-line.  Throw an exception
     # for errors encountered parsing the args.
     def parse(args, prior: {}, verbose: false)
       options.msg = nil
@@ -198,8 +198,10 @@ module Labrat
     # of common labels with their dimensions, so that --width and --height
     # need not be specified.
     def label_name_option
+      # options.raw_label = nil
       parser.on("-lNAME", "--label=NAME",
                 "Use options for label type NAME from label database") do |name|
+        options.raw_label ||= name
         if labels_seen.include?(name)
           msg = "label option '#{name}' has circular reference"
           labels_seen.each do |nm|

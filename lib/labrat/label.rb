@@ -57,11 +57,15 @@ module Labrat
           warn ""
         end
         if ops.template
-          # Replace any texts with the numbers and show the grid.
-          self.texts = (1..(ops.rows * ops.columns)).map(&:to_s)
+          # Replace any texts with the numbers, the name of the label (and alias) and show the grid.
+          lab_text = ops.raw_label || ops.label
+          if ops.label != ops.raw_label
+            lab_text += "\n(#{ops.label})"
+          end
+          self.texts = (1..(ops.rows * ops.columns)).map {|n| "#{n}\n#{lab_text}"}
           ops.font_name = 'Helvetica'
           ops.font_style = 'bold'
-          ops.font_size = 16
+          ops.font_size = 11
           pdf.grid.show_all
         end
         raise EmptyLabelError, "Empty label" if waste_of_labels?

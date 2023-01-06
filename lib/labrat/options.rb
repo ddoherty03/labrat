@@ -6,7 +6,7 @@ module Labrat
   # and perhaps environment.  An Options instance can be handed off to the
   # label-printing objects to inform its formatting, printing, etc.
   class Options
-    attr_accessor :label, :page_width, :page_height,
+    attr_accessor :label, :raw_label, :page_width, :page_height,
                   :left_page_margin, :right_page_margin,
                   :top_page_margin, :bottom_page_margin,
                   :rows, :columns, :row_gap, :column_gap, :landscape,
@@ -22,6 +22,7 @@ module Labrat
     # Initialize with an optional hash of default values for the attributes.
     def initialize(**init)
       self.label = init[:label] || nil
+      self.raw_label = nil
       # Per-page attributes
       self.page_width = init[:page_width] || 24.mm
       self.page_height = init[:page_height] || 87.mm
@@ -84,6 +85,8 @@ module Labrat
         end
         warn ""
       end
+      # We want raw_label to reflect what the user typed on the command-line
+      file_options.raw_label = nil
       Labrat::ArgParser.new.parse(args, prior: file_options, verbose: verbose)
     end
 
@@ -124,6 +127,7 @@ module Labrat
     def to_hash
       {
         label: label,
+        raw_label: raw_label,
         page_width: page_width,
         page_height: page_height,
         left_page_margin: left_page_margin,
