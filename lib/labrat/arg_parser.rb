@@ -48,7 +48,7 @@ module Labrat
       parser.separator ""
       parser.separator "Print or view (with -V) a label with the given <label-text>."
       parser.separator "All non-option arguments are used for the label text with a special"
-      parser.separator "marker ('-->' by default, see --nlsep) indicating a line-break."
+      parser.separator "marker ('~~' by default, see --nlsep) indicating a line-break."
       parser.separator ""
       parser.separator "Below, NUM indicates an integer, DIM, indicates a linear dimension,"
       parser.separator "valid DIM units are: pt, mm, cm, dm, m, in, ft, yd."
@@ -361,11 +361,11 @@ module Labrat
 
     # On a command-line, specifying where a line-break should occur is not
     # convenient when shell interpretation and quoting rules are taken into
-    # account.  This allows the user to use some distinctive marker ('-->' by
+    # account.  This allows the user to use some distinctive marker ('~~' by
     # default) to designate where a line break should occur.
     def nl_sep_option
       parser.on("-nSEP", "--nl-sep=SEPARATOR",
-                "Specify text to be translated into a line-break (default '-->')") do |nl|
+                "Specify text to be translated into a line-break (default '~~')") do |nl|
         options.nl_sep = nl
         warn "  ::nl-sep <- '#{nl}'::" if options.verbose
       end

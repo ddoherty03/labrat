@@ -36,7 +36,7 @@ RSpec.describe ArgParser do
       expect(op.font_style).to eq(:normal)
       expect(op.font_size).to eq(12)
       expect(op.in_file).to be_nil
-      expect(op.nl_sep).to eq('-->')
+      expect(op.nl_sep).to eq('~~')
       expect(op.copies).to eq(1)
       expect(op.printer).to eq(ENV['PRINTER'] || 'dymo')
       expect(op.out_file.class).to eq(String)

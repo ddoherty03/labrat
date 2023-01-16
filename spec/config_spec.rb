@@ -361,7 +361,7 @@ RSpec.describe Config do
         page-height: 102mm
         delta-x: -7mm
         delta-y: +30mm
-        nl-sep: '-->'
+        nl-sep: '~~'
       YAML
       setup_test_file('~/.labrat/config.yml', usr_config_yml)
       hsh = Config.read('labrat', xdg: false, dir_prefix: SANDBOX_DIR)
@@ -370,7 +370,7 @@ RSpec.describe Config do
       expect(op.page_height).to be_within(EPS).of(102 * MM)
       expect(op.delta_x).to be_within(EPS).of(-7 * MM)
       expect(op.delta_y).to be_within(EPS).of(3 * CM)
-      expect(op.nl_sep).to eq('-->')
+      expect(op.nl_sep).to eq('~~')
       expect(op.printer).to eq('seiko3')
     end
   end

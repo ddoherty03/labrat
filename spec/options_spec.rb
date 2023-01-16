@@ -32,8 +32,8 @@ RSpec.describe Options do
       expect(ops.font_name).to eq('Helvetica')
       expect(ops.font_style).to eq(:normal)
       expect(ops.in_file).to be_nil
-      expect(ops.nl_sep).to eq('-->')
-      expect(ops.label_sep).to eq('==>')
+      expect(ops.nl_sep).to eq('~~')
+      expect(ops.label_sep).to eq('@@')
       expect(ops.copies).to eq(1)
       expect(ops.printer).to eq(ENV['PRINTER'] || 'dymo')
       expect(ops.out_file).to eq('labrat.pdf')
@@ -67,7 +67,7 @@ RSpec.describe Options do
       expect(ops.page_height).to be_within(EPS).of(77 * MM)
       expect(ops.top_page_margin).to be_within(EPS).of(10 * MM)
       expect(ops.label).to be nil
-      expect(ops.label_sep).to eq('==>')
+      expect(ops.label_sep).to eq('@@')
       expect(ops.h_align).to eq(:center)
       expect(ops.v_align).to eq(:center)
       expect(ops.landscape).to be_falsey

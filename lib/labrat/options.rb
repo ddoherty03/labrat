@@ -50,8 +50,8 @@ module Labrat
       self.font_size = init[:font_size] || 12
       # Input attributes
       self.in_file = init[:in_file] || nil
-      self.nl_sep = init[:nl_sep] || '-->'
-      self.label_sep = init[:label_sep] || '==>'
+      self.nl_sep = init[:nl_sep] || '~~'
+      self.label_sep = init[:label_sep] || '@@'
       self.copies = init[:copies] || 1
       # Output attributes
       self.printer = init[:printer] || ENV['LABRAT_PRINTER'] || ENV['PRINTER'] || 'dymo'

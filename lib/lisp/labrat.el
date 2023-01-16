@@ -22,7 +22,7 @@ e.g. ~/.rbenv/shims/labrat, for an rbenv ruby installation."
   :type 'string
   :group 'labrat)
 
-(defcustom labrat-nl-sep "-->"
+(defcustom labrat-nl-sep "~~"
   "String to mark newlines in label text.
 
 If you change this, you need to make a corresponding change in your
@@ -30,7 +30,7 @@ labrat configuration at ~/.config/labrat/config.yml."
   :type 'string
   :group 'labrat)
 
-(defcustom labrat-label-sep "==>"
+(defcustom labrat-label-sep "@@"
   "String to mark the separation between labels on the labrat command-line.
 
 If you change this, you need to make a corresponding change in your
@@ -88,7 +88,7 @@ returned"
 This invokes the \"labrat -V\ <label>\" command with the
 paragraph at or before point inserted in the <label> position,
 but with each new-line replaced with the value of the variable
-labrat-nl-sep, '-->' by default."
+labrat-nl-sep, '~~' by default."
   (interactive)
   (call-process labrat-executable nil (get-buffer-create "*labrat*") nil
                 "-V" "-o ~/labrat.pdf""-V --out-file=~/labrat.pdf" (labrat/pars-in-region)))
@@ -99,7 +99,7 @@ labrat-nl-sep, '-->' by default."
 This invokes the \"labrat -P <label>\" command with the paragraph
 at or before point inserted in the <label> position, but with
 each new-line replaced with the value of the variable
-labrat-nl-sep, '-->' by default."
+labrat-nl-sep, '~~' by default."
   (interactive)
   (call-process labrat-executable nil (buffer-name (get-buffer-create "*labrat*")) nil
                 "-o ~/labrat.pdf" (labrat/pars-in-region)))
