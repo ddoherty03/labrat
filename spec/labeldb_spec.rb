@@ -81,10 +81,11 @@ RSpec.describe LabelDb do
     setup_test_file('/etc/xdg/labrat/labeldb.yml', @sys_db)
     setup_test_file("/home/#{ENV['USER']}/.config/labrat/labeldb.yml", usrdb_yml)
     args = ['--rows=5', '--label=avery5160', '--page-width=60mm']
-    ops = ArgParser.new.parse(args)
+    prior = LabelDb.read(dir_prefix: SANDBOX_DIR)
+    ops = ArgParser.new.parse(args, prior:)
     # Note that --label overrides --row as it appears later.
     expect(ops.rows).to eq(10)
-    expect(ops.page_height).to be_within(EPS).of(11 * IN)
+    expect(ops.page_height).to be_within(EPS).of(24 * MM)
     expect(ops.page_width).to be_within(EPS).of(60 * MM)
   end
 end
