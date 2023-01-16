@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    labrat (1.0.0)
+    labrat (1.2.0)
       activesupport
       fat_core
       matrix
