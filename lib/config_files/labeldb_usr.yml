@@ -3,7 +3,7 @@
 # add user-specific settings, such as the destination printer for that
 # particular label type.
 dymo30327:
-  printer-name: dymo
+  printer: dymo
 
 # Or you might want a full definition of a label type not defined in the
 # system-level database.  Here is a commented-out definition of a common avery
