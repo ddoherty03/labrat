@@ -41,7 +41,7 @@ DESC
   spec.bindir        = 'bin'
   spec.executables   = spec.files.grep(%r{\Abin/labrat}) { |f| File.basename(f) }
   spec.require_paths = ["lib"]
-  spec.post_install_message = 'To install config and label database files, run [sudo] labrat-install.'
+  spec.post_install_message = 'To install config and label database files, run labrat-install.'
   spec.add_dependency "matrix"
   spec.add_dependency "prawn", "~> 2.0"
   spec.add_dependency "activesupport"
