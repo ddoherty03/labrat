@@ -38,7 +38,7 @@ The following is for org.
       - [[#standard-input][Standard input]]
       - [[#template-exception][Template exception]]
     - [[#printing-or-viewing][Printing or viewing]]
-    - [[#shell-commands][Shell commands]]
+    - [[#printing-and-viewing-shell-commands][Printing and viewing shell commands]]
     - [[#aids-to-testing-label-layouts][Aids to testing label layouts]]
       - [[#page-grid-1][Page Grid]]
       - [[#page-template][Page Template]]
@@ -139,28 +139,30 @@ install =labrat= with:
   $ gem install labrat
 #+end_SRC
 
-After installation, you should install the user and system configuration files
+After installation, you should install the user and system (if you have sudo
+privileges) configuration files
 with:
 
 #+begin_SRC sh
   $ labrat-install
 #+end_SRC
 
-This will install an annotated system-wide config file in
-=/etc/xdg/labrat/config.yml= and a system-wide label database in
-=/etc/xdg/labrat/labeldb.yml=.
+This will, assuming you have sudo privileges, install an annotated system-wide
+config file in =/etc/xdg/labrat/config.yml= and a system-wide label database
+in =/etc/xdg/labrat/labeldb.yml=.
 
 It will also install an annotated sample user config file in
 =~/.config/labrat/labrat.el= and a sample user-level label database in
 =~/.config/labrat/labeldb.yml=.
 
 For the benefit of Emacs users, it also installs the =labrat.el= elisp library
-in =~/.config/labrat= as well, though you may want to move it to a different
-location.
+in =~/.config/labrat= as well.  You may want to add this directory to your
+~load-path~ or copy, move, or link it to a directory already in your
+~load-path~.
 
 If you invoke =labrat-install= multiple times, it will refuse to overwrite any
 existing config or database files that you may have already installed.  If you
-want to re-install them you have to move the existing files out of the way.
+want to re-install them you have to remove or move the existing files out of the way.
 
 ** Setting options
 You can control how =labrat= composes a label completely from the
@@ -272,12 +274,17 @@ taking the page orientation into account
 - ~--column-gap=DIM~ :: The distance between columns of labels on a page
 
 ** Label Setup Options
-These options determine the layout of individual labels within the page rather
-than the page as a whole.  Note that the dimensions of a single whole label is
-not specified, but is implicitly determined by (1) the page width and height,
-(2) the page margins, (3) the number of rows and columns per page, and (4) the
-row and column gaps.  The remaining space on the page is divided into a grid
-of identically-sized labels, which determines the size of each label.
+These options determine the layout of individual labels within the page grid
+rather than the page grid as a whole.  Note that the dimensions of a single
+whole label is not specified, but is implicitly determined by:
+
+1. the page width and height,
+2. the page margins
+3. the number of rows and columns per page, and
+4. the row and column gaps.
+
+The remaining space on the page is divided into a grid of identically-sized
+labels, which determines the size of each label.
 
 *** Padding
 Within each label, the following options allow you to set the margins on each
@@ -461,7 +468,7 @@ command from ~--view-command~ to view the generated PDF file instead.
 
 - ~-V~, ~--[no-]view~ :: View rather than print
 
-*** Shell commands
+*** Printing and viewing shell commands
 By default, =labrat= uses the shell command:
 #+begin_example
 lpr -P %p %o
@@ -511,7 +518,7 @@ provide.
 When trying to define a new label layout, it also helps to just see what a
 single sheet of labels would look like.  That is what the ~--template~ (or
 ~-T~) option gives you: it just prints an outline of where labels would be
-printed but ignores any label text.
+printed and numbers the labels, but it ignores any label text.
 
 - ~-T~, ~--[no-]template~ :: Print a template of a page of labels and ignore
   any content
@@ -519,7 +526,8 @@ printed but ignores any label text.
 **** Verbose Reporting
 Finally, =labrat= will print a lot of information about what it's doing with
 the ~--verbose~ or ~-v~ option.  The information is printed to the standard
-error output stream.
+error output stream.  This is particularly helpful in determining how the
+final configuration was constructed from the various config files.
 
 - ~-v~, ~--[no-]verbose~ :: Run verbosely, that is, print out lots of
   information about what =labrat= is doing as it processes the job.
@@ -527,7 +535,7 @@ error output stream.
 ** The Label Database and the label option
 One of the nice things about =labrat= is that it comes with a database of
 pre-defined label configurations for many standard labels, especially Avery
-labels since they are kind enough to publish PDF templates for all their
+labels since they were good enough to publish PDF templates for all their
 products at [[https://www.avery.com/templates]].
 
 *** Listing labels
@@ -583,7 +591,7 @@ avery8986:
   label: avery8987
 #+end_example
 In other words, it defines the ~avery8986~ label with a nested ~--label~
-option that simply refers to the ~avery8987~ entry.
+option that simply incorporates the ~avery8987~ entry settings.
 
 *** Label database entries as configuration sets
 This ability to use a label database definition as an alias for a whole set of
