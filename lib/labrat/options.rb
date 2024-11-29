@@ -73,8 +73,8 @@ module Labrat
       default_config.report("Default settings") if verbose
 
       # Config files
-      file_config = Labrat::Config.read('labrat', verbose: verbose)
-      file_config.report("Settings from merged config files") if verbose
+      config_reader = FatConfig::Reader.new('labrat', xdg: true)
+      file_config = config_reader.read('labrat', verbose: verbose)
       file_options = Labrat::ArgParser.new.parse(file_config, prior: default_config, verbose: verbose)
 
       # Command-line

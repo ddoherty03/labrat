@@ -10,8 +10,8 @@ module Labrat
     # Read in the Labrat database of label settings, merging system and user
     # databases.
     def self.read(dir_prefix: '')
-      self.db = Config.read('labrat', base: 'labeldb', dir_prefix: dir_prefix)
-        .transform_keys(&:to_sym)
+      reader = FatConfig::Reader.new('labrat', root_prefix: dir_prefix)
+      self.db = reader.read('labeldb')
     end
 
     # Return a hash of config settings for the label named by labname.

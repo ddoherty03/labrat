@@ -3,7 +3,7 @@ PATH
   specs:
     labrat (1.2.1)
       activesupport
-      fat_config (>= 0.2.0)
+      fat_config (>= 0.3.0)
       fat_core
       matrix
       prawn (~> 2.0)
@@ -38,7 +38,7 @@ GEM
     diff-lcs (1.5.1)
     docile (1.4.1)
     drb (2.2.1)
-    fat_config (0.2.0)
+    fat_config (0.3.0)
       activesupport
       inifile
       tomlib
