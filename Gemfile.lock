@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    labrat (1.2.1)
+    labrat (1.2.2)
       activesupport
       fat_config (>= 0.3.0)
       fat_core
