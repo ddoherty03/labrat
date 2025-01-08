@@ -152,7 +152,7 @@ config file in =/etc/xdg/labrat/config.yml= and a system-wide label database
 in =/etc/xdg/labrat/labeldb.yml=.
 
 It will also install an annotated sample user config file in
-=~/.config/labrat/labrat.el= and a sample user-level label database in
+=~/.config/labrat/labrat.yml= and a sample user-level label database in
 =~/.config/labrat/labeldb.yml=.
 
 For the benefit of Emacs users, it also installs the =labrat.el= elisp library
@@ -309,7 +309,7 @@ label, but the following options allow you to alter that.
   label (default center)
 
 *** Fonts and styling
-=labrat= provides a few simple mean for styling the label text.  Note that all
+=labrat= provides a few simple means for styling the label text.  Note that all
 of these apply to the whole label text: there is no provision yet for doing
 in-line changes of font styles.
 
@@ -353,7 +353,7 @@ later pages always start on the first label position.
 
 *** New line marker
 You can embed a special text-sequence in the label text to indicate where a
-line-break should occur.  By default it is the sequence = ~~ =.  This means
+line-break should occur.  By default it is the sequence =~~=.  This means
 that =labrat= will translate all occurrences of = ~~ = in the text into a
 line-break, even consecutive occurrences.  There is no way to escape this in
 the text, so if you want labels for that use ' ~~ ' as part of the text, you
