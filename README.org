@@ -353,18 +353,18 @@ later pages always start on the first label position.
 
 *** New line marker
 You can embed a special text-sequence in the label text to indicate where a
-line-break should occur.  By default it is the sequence =~~=.  This means
-that =labrat= will translate all occurrences of = ~~ = in the text into a
-line-break, even consecutive occurrences.  There is no way to escape this in
-the text, so if you want labels for that use ' ~~ ' as part of the text, you
-are going to have difficulty printing a labels.  But you can change the marker
-to something else with ~--nlsep~.  This is especially helpful when you are
-using the command-line to supply the label text since specifying line-breaks
-on a shell command can be difficult.  However note that this substitution
-takes place even when reading label texts from a file or standard input.
+line-break should occur.  By default it is the sequence =∼∼=.  This means that
+=labrat= will translate all occurrences of =∼∼= in the text into a line-break,
+even consecutive occurrences.  There is no way to escape this in the text, so
+if you want labels that use =∼∼= as part of the text, you are going to have
+difficulty printing.  But you can change the marker to something else with
+~--nlsep~.  This is especially helpful when you are using the command-line to
+supply the label text since specifying line-breaks on a shell command can be
+difficult.  However note that this substitution takes place even when reading
+label texts from a file or standard input.
 
 - ~-n~, ~--nlsep=SEPARATOR~ :: Specify text to be translated into a line-break
-  (default ' ~~ ')
+  (default ' =∼∼= ')
 
 *** Label separator
 The only way to print more than one label from the command-line is to indicate
