@@ -5,6 +5,12 @@ This is for markdown output:
 [![Build Status](https://travis-ci.org/ddoherty03/labrat.svg?branch=master)](https://travis-ci.org/ddoherty03/labrat)
 
 The following is for org.
+
+NOTE: in order to get the README to render the tilde character properly as
+"code" in org syntax, I used a unicode character, ˜ called TILDE OPERATOR,
+inside regular tildes, like this ~∼∼~.  Though it looks like four tildes in a
+row, its actually tilde - TILDE OPERATOR - TILDE OPERATOR - tilde, which
+renders nicely on Github.
 #+END_COMMENT
 
 [[https://travis-ci.org/ddoherty03/labrat.svg?branch=master]]
@@ -107,8 +113,8 @@ in any buffer and get it generated with very little ceremony.
 As mentioned, one of my main motivations for writing =labrat= was the need to
 easily create file-folder labels.  I got into creating files after reading
 /Getting Things Done/ by David Allen.  One of his recommendations for keeping
-organized is having a file system so that documents can be easily archived and
-retrieved.
+organized is having a filing system so that documents can be easily archived
+and retrieved.
 
 I have long used Dymo's 30327 label, which is just the right size for file
 folders.  But after several years of use, I started to notice something
@@ -162,7 +168,8 @@ in =~/.config/labrat= as well.  You may want to add this directory to your
 
 If you invoke =labrat-install= multiple times, it will refuse to overwrite any
 existing config or database files that you may have already installed.  If you
-want to re-install them you have to remove or move the existing files out of the way.
+want to re-install them you have to remove the existing files or move them out
+of the way.
 
 ** Setting options
 You can control how =labrat= composes a label completely from the
@@ -208,7 +215,7 @@ configuration files, string values need not be quoted.
 Labrat can handle multi-label pages such as Avery-style label sheets.  These
 options deal with the page-level dimensions of the, potentially, multi-label
 page.  By contrast, the dimensions of individual labels are dealt with by the
-label setup options described in the next section.
+label setup options described in the [[* Label Setup Options][next]] section.
 
 *** Orientation
 - ~-L~, ~--[no-]landscape~ :: Orient the label grid and the printing direction
@@ -456,7 +463,7 @@ disregarding comments.
 
 **** Template exception
 Notwithstanding all of the above, if the ~-T~ (~--template~) option is given
-(see below at [[*Aids to testing label layouts][Aids to testing label layouts]]), all label texts from the
+(see below at [[* Aids to testing label layouts]]), all label texts from the
 command-line, an ~in-file~, or standard input are ignored and a template is
 generated.
 
@@ -509,8 +516,7 @@ setting the ~--delta-x~ or ~--delta-y~ values for your setup.
 
 Normally, =labrat= does not print an outline for the labels, but if you are
 testing things out on plain paper, it helps to know where =labrat= thinks the
-boundaries of the labels are.  That is what the ~--grid~ or ~-g~ options
-provide.
+boundaries of the labels are.  The ~--grid~ or ~-g~ options provide this.
 
 - ~-g~, ~--[no-]grid~ :: Add grid lines to output
 
