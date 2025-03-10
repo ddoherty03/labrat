@@ -1009,3 +1009,20 @@ avery88662:
 
 avery95662:
   label: avery18662
+
+# Divider Tabs
+# 07708, 07712, 07714, 07720, 11110, 11113, 11121, 11122, 11160, 11178, 11185,
+# 11220, 11221, 11227, 11273, 11835, 11900, 11902, 11906, 11908, 11956, 11982,
+# 11988, 23280, 23281, 71109, 71900, 71906, 81310
+avery11109:
+  page-width: 8.5in
+  page-height: 11in
+  rows: 20
+  columns: 2
+  top-page-margin: 13mm
+  bottom-page-margin: 13mm
+  left-page-margin: 70mm
+  right-page-margin: 70mm
+  row-gap: 0mm
+  column-gap: 0mm
+  landscape: false
