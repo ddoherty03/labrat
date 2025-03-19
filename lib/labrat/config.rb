@@ -75,7 +75,7 @@ module Labrat
         next unless yml_hash
 
         if yml_hash.is_a?(Hash)
-          yml_hash = yml_hash.methodize
+          yml_hash = yml_hash
         else
           raise "Error loading file #{f}:\n#{File.read(f)[0..500]}"
         end
