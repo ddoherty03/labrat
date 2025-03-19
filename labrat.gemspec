@@ -46,7 +46,7 @@ DESC
   spec.add_dependency "prawn", "~> 2.0"
   spec.add_dependency "activesupport"
   spec.add_dependency "fat_core"
-  spec.add_dependency "fat_config", '>=0.3.0'
+  spec.add_dependency "fat_config", '>=0.4.2'
 
   spec.add_development_dependency 'rake'
   spec.add_development_dependency 'rspec'
