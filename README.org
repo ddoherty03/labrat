@@ -13,7 +13,7 @@ row, its actually tilde - TILDE OPERATOR - TILDE OPERATOR - tilde, which
 renders nicely on Github.
 #+END_COMMENT
 
-https://github.com/ddoherty03/labrat/actions/workflows/main.yml/badge.svg
+[[https://github.com/ddoherty03/labrat/actions/workflows/main.yml/badge.svg]]
 
 * Table of Contents                                                   :toc_4:
 - [[#labrat][Labrat]]
