@@ -71,7 +71,7 @@ module Labrat
       files.each do |f|
         next unless File.readable?(f)
 
-        yml_hash = YAML.load(File.read(f))
+        yml_hash = YAML.load_file(f)
         next unless yml_hash
 
         if yml_hash.is_a?(Hash)
