@@ -24,9 +24,9 @@ Gem::Specification.new do |spec|
     For Emacs users, labrat includes elisp code for invoking labrat from within a
     buffer, providing a quick way to print labels.
 
-DESC
+  DESC
 
-  spec.homepage      = "http://github.com/ddoherty03/labrat"
+  spec.homepage = "http://github.com/ddoherty03/labrat"
   spec.required_ruby_version = Gem::Requirement.new(">= 2.4.0")
 
   spec.metadata["homepage_uri"] = spec.homepage
@@ -42,18 +42,9 @@ DESC
   spec.executables   = spec.files.grep(%r{\Abin/labrat}) { |f| File.basename(f) }
   spec.require_paths = ["lib"]
   spec.post_install_message = 'To install config and label database files, run labrat-install.'
+  spec.add_dependency "activesupport"
+  spec.add_dependency "fat_config", '>=0.4.2'
+  spec.add_dependency "fat_core"
   spec.add_dependency "matrix"
   spec.add_dependency "prawn", "~> 2.0"
-  spec.add_dependency "activesupport"
-  spec.add_dependency "fat_core"
-  spec.add_dependency "fat_config", '>=0.4.2'
-
-  spec.add_development_dependency 'rake'
-  spec.add_development_dependency 'rspec'
-  spec.add_development_dependency 'pry'
-  spec.add_development_dependency 'simplecov'
-  spec.add_development_dependency 'debug', '>= 1.0.0'
-  spec.add_development_dependency 'rubocop-performance'
-  spec.add_development_dependency 'rubocop-shopify'
-  spec.add_development_dependency 'rubocop-rspec'
 end
