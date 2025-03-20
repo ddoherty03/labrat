@@ -40,7 +40,6 @@ begin
   else
     lab.print
   end
-
 rescue Labrat::OptionError => e
   warn "Error: #{e}: exiting"
   exit(1)

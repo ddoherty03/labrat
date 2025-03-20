@@ -1,16 +1,13 @@
 # frozen_string_literal: true
 
 RSpec.describe Config do
-  before :each do
-    # Save these, since they're not specific to this app.
-    @xdg_config_dirs = ENV['XDG_CONFIG_DIRS']
-    @xdg_config_home = ENV['XDG_CONFIG_HOME']
-  end
+  let!(:save_xdg_dirs) { ENV['XDG_CONFIG_DIRS'] }
+  let!(:save_xdg_home) { ENV['XDG_CONFIG_HOME'] }
 
-  after :each do
+  after do
     # Restore
-    ENV['XDG_CONFIG_DIRS'] = @xdg_config_dirs
-    ENV['XDG_CONFIG_HOME'] = @xdg_config_home
+    ENV['XDG_CONFIG_DIRS'] = save_xdg_dirs
+    ENV['XDG_CONFIG_HOME'] = save_xdg_home
     # Remove anything set in examples
     ENV['LABRAT_SYS_CONFIG'] = nil
     ENV['LABRAT_CONFIG'] = nil
@@ -240,27 +237,6 @@ RSpec.describe Config do
       hsh = Config.read('labrat', xdg: false, dir_prefix: SANDBOX_DIR)
       expect(hsh).to be_a Hash
       expect(hsh).to be_empty
-    end
-
-    it 'reads a classic system config file' do
-      config_yml = <<~YAML
-        page-width: 33mm
-        page-height: 101mm
-        delta-x: -4mm
-        delta-y: 1cm
-        nl-sep: '%%'
-        printer: seiko3
-      YAML
-      ENV['LABRAT_SYS_CONFIG'] = '/etc/labrat/config.yaml'
-      setup_test_file(ENV['LABRAT_SYS_CONFIG'], config_yml)
-      hsh = Config.read('labrat', xdg: false, dir_prefix: SANDBOX_DIR)
-      op = ArgParser.new.parse(hsh)
-      expect(op.page_width).to be_within(EPS).of(33 * MM)
-      expect(op.page_height).to be_within(EPS).of(101 * MM)
-      expect(op.delta_x).to be_within(EPS).of(-4 * MM)
-      expect(op.delta_y).to be_within(EPS).of(1 * CM)
-      expect(op.nl_sep).to eq('%%')
-      expect(op.printer).to eq('seiko3')
     end
 
     it 'reads a classic system config file' do

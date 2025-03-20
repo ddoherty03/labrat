@@ -6,18 +6,44 @@ module Labrat
   # and perhaps environment.  An Options instance can be handed off to the
   # label-printing objects to inform its formatting, printing, etc.
   class Options
-    attr_accessor :label, :raw_label, :page_width, :page_height,
-                  :left_page_margin, :right_page_margin,
-                  :top_page_margin, :bottom_page_margin,
-                  :rows, :columns, :row_gap, :column_gap, :landscape,
-                  :start_label, :grid,
-                  :h_align, :v_align,
-                  :left_pad, :right_pad, :top_pad, :bottom_pad,
-                  :delta_x, :delta_y,
-                  :font_name, :font_style, :font_size,
-                  :in_file, :nl_sep, :label_sep, :copies,
-                  :printer, :out_file, :print_command, :view_command, :view,
-                  :template, :verbose, :msg
+    attr_accessor :label,
+                  :raw_label,
+                  :page_width,
+                  :page_height,
+                  :left_page_margin,
+                  :right_page_margin,
+                  :top_page_margin,
+                  :bottom_page_margin,
+                  :rows,
+                  :columns,
+                  :row_gap,
+                  :column_gap,
+                  :landscape,
+                  :start_label,
+                  :grid,
+                  :h_align,
+                  :v_align,
+                  :left_pad,
+                  :right_pad,
+                  :top_pad,
+                  :bottom_pad,
+                  :delta_x,
+                  :delta_y,
+                  :font_name,
+                  :font_style,
+                  :font_size,
+                  :in_file,
+                  :nl_sep,
+                  :label_sep,
+                  :copies,
+                  :printer,
+                  :out_file,
+                  :print_command,
+                  :view_command,
+                  :view,
+                  :template,
+                  :verbose,
+                  :msg
 
     # Initialize with an optional hash of default values for the attributes.
     def initialize(**init)
@@ -81,7 +107,7 @@ module Labrat
       if verbose
         warn "\nCommand-line:"
         args.each do |arg|
-          warn arg.to_s
+          warn arg
         end
         warn ""
       end
@@ -98,27 +124,27 @@ module Labrat
     # Allow hash-like assignment to attributes.  This allows an Options object
     # to be used, for example, in the OptionParser#parse :into parameter.
     def []=(att, val)
-      att = att.to_s.gsub('-', '_')
-      send("#{att}=", val)
+      att = att.to_s.tr('-', '_')
+      send(:"#{att}=", val)
     end
 
     # Allow hash-like access to attributes.  This allows an Options object
     # to be used, for example, in the OptionParser#parse :into parameter.
     def [](att)
-      att = att.to_s.gsub('-', '_')
+      att = att.to_s.tr('-', '_')
       send(att.to_s)
     end
 
     # For testing, return an Array of the attributes as symbols.
     def self.attrs
       instance_methods(false).grep(/\A[a-z_]+=\Z/)
-        .map { |a| a.to_s.sub(/=\z/, '').to_sym }
+        .map { |a| a.to_s.delete_suffix('=').to_sym }
     end
 
     # For testing, return an Array of the flags-form of the attributes, i.e.,
     # with the underscores, _, replaced with hyphens.
     def self.flags
-      attrs.map { |a| a.gsub('_', '-') }
+      attrs.map { |a| a.tr('_', '-') }
     end
 
     # Return a hash of the values in this Options object.  This is the
@@ -174,7 +200,7 @@ module Labrat
     # an Options object.
     def merge!(hsh)
       # Convert any separator hyphens in the hash keys to underscores
-      hsh = hsh.to_hash.transform_keys { |key| key.to_s.gsub('-', '_').to_sym }
+      hsh = hsh.to_hash.transform_keys { |key| key.to_s.tr('-', '_').to_sym }
       new_hash = to_hash.merge(hsh)
       new_hash.each_pair do |k, val|
         setter = "#{k}=".to_sym

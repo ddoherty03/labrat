@@ -2,7 +2,7 @@
 
 RSpec.describe Labrat do
   it "has a version number" do
-    expect(Labrat::VERSION).not_to be nil
+    expect(Labrat::VERSION).not_to be_nil
   end
 
   describe 'file reading' do

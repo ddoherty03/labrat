@@ -190,7 +190,7 @@ RSpec.describe ArgParser do
       units.each do |unit|
         ops = ap.parse(["--delta_x=5#{unit}"])
         expect(ops.msg).to be_nil
-        expect(ops.delta_x).to be_kind_of(Numeric)
+        expect(ops.delta_x).to be_a(Numeric)
       end
       units = %i[mi furlongs]
       units.each do |unit|

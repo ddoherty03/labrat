@@ -107,8 +107,13 @@ module Labrat
         dir = File.expand_path(File.join(dir, app_name))
         dir = File.join(dir_prefix, dir) unless dir_prefix.nil? || dir_prefix.strip.empty?
         base = app_name if base.nil? || base.strip.empty?
-        base_candidates = [base.to_s, "#{base}.yml", "#{base}.yaml",
-                           "#{base}.cfg", "#{base}.config"]
+        base_candidates = [
+          base.to_s,
+          "#{base}.yml",
+          "#{base}.yaml",
+          "#{base}.cfg",
+          "#{base}.config"
+        ]
         config_fname = base_candidates.find { |b| File.readable?(File.join(dir, b)) }
         configs << File.join(dir, config_fname) if config_fname
       end
@@ -124,14 +129,19 @@ module Labrat
     # with dir_prefix if given.
     def self.find_xdg_user_config_file(app_name, base, dir_prefix)
       dir_prefix ||= ''
-      base ||= (base&.strip || app_name)
+      base ||= base&.strip || app_name
       xdg_search_dir = ENV['XDG_CONFIG_HOME'] || ['~/.config']
       dir = File.expand_path(File.join(xdg_search_dir, app_name))
       dir = File.join(dir_prefix, dir) unless dir_prefix.strip.empty?
-      return nil unless Dir.exist?(dir)
+      return unless Dir.exist?(dir)
 
-      base_candidates = [base.to_s, "#{base}.yml", "#{base}.yaml",
-                         "#{base}.cfg", "#{base}.config"]
+      base_candidates = [
+        base.to_s,
+        "#{base}.yml",
+        "#{base}.yaml",
+        "#{base}.cfg",
+        "#{base}.config"
+      ]
       config_fname = base_candidates.find { |b| File.readable?(File.join(dir, b)) }
       if config_fname
         File.join(dir, config_fname)
@@ -160,8 +170,12 @@ module Labrat
         dir = File.join(dir_prefix, "/etc/#{app_name}")
         if Dir.exist?(dir)
           base = app_name if base.nil? || base.strip.empty?
-          base_candidates = ["#{base}" "#{base}.yml", "#{base}.yaml",
-                             "#{base}.cfg", "#{base}.config"]
+          base_candidates = [
+            base.to_s + "#{base}.yml",
+            "#{base}.yaml",
+            "#{base}.cfg",
+            "#{base}.config"
+          ]
           config = base_candidates.find { |b| File.readable?(File.join(dir, b)) }
           configs = [File.join(dir, config)] if config
         end
@@ -184,8 +198,14 @@ module Labrat
         base_fname = base_candidates.find { |b| File.readable?(File.join(config_dir, b)) }
         config_fname = File.join(config_dir, base_fname)
       elsif Dir.exist?(config_dir = File.join(dir_prefix, File.expand_path('~/')))
-        base_candidates = [".#{app_name}", ".#{app_name}rc", ".#{app_name}.yml", ".#{app_name}.yaml",
-                           ".#{app_name}.cfg", ".#{app_name}.config"]
+        base_candidates = [
+          ".#{app_name}",
+          ".#{app_name}rc",
+          ".#{app_name}.yml",
+          ".#{app_name}.yaml",
+          ".#{app_name}.cfg",
+          ".#{app_name}.config"
+        ]
         base_fname = base_candidates.find { |b| File.readable?(File.join(config_dir, b)) }
         config_fname = File.join(config_dir, base_fname)
       end

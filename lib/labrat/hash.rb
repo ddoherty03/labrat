@@ -1,11 +1,12 @@
 # frozen_string_literal: true
+
 class Hash
   # Convert the given Hash into a Array of Strings that represent an
   # equivalent set of command-line args and pass them into the #parse method.
   def optionize
     options = []
     each_pair do |k, v|
-      key = k.to_s.gsub('_', '-')
+      key = k.to_s.tr('_', '-')
       options <<
         if [TrueClass, FalseClass].include?(v.class)
           v ? "--#{key}" : "--no-#{key}"

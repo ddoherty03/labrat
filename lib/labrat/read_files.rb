@@ -9,6 +9,7 @@ module Labrat
         unless File.readable?(fname)
           raise "Cannot open label file '#{ofname}' for reading"
         end
+
         File.open(fname)
       else
         $stdin
@@ -17,9 +18,9 @@ module Labrat
     texts = []
     label = nil
     file.each do |line|
-      next if line =~ /\A#/
+      next if /\A\s*#/.match?(line)
 
-      if line =~ /\A\s*\z/
+      if /\A\s*\z/.match?(line)
         # At blank line record any accumulated label into texts, but remove
         # the nlsep from the end.
         if label

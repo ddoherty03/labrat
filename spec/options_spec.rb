@@ -7,7 +7,7 @@ RSpec.describe Options do
     it 'has hard-coded default values for file folder label' do
       expect(ops.page_width).to be_within(EPS).of(24 * MM)
       expect(ops.page_height).to be_within(EPS).of(87 * MM)
-      expect(ops.label).to be nil
+      expect(ops.label).to be_nil
       expect(ops.h_align).to eq(:center)
       expect(ops.v_align).to eq(:center)
       expect(ops.left_page_margin).to be_within(EPS).of(5 * MM)
@@ -19,8 +19,8 @@ RSpec.describe Options do
       expect(ops.row_gap).to be_within(EPS).of(0 * MM)
       expect(ops.column_gap).to be_within(EPS).of(0 * MM)
       expect(ops.start_label).to eq(1)
-      expect(ops.landscape).to eq(false)
-      expect(ops.grid).to eq(false)
+      expect(ops.landscape).to be false
+      expect(ops.grid).to be false
       expect(ops.h_align).to eq(:center)
       expect(ops.v_align).to eq(:center)
       expect(ops.left_pad).to be_within(EPS).of(4.5 * MM)
@@ -39,9 +39,9 @@ RSpec.describe Options do
       expect(ops.out_file).to eq('labrat.pdf')
       expect(ops.print_command.class).to eq(String)
       expect(ops.view_command.class).to eq(String)
-      expect(ops.view).to eq(false)
-      expect(ops.template).to eq(false)
-      expect(ops.verbose).to eq(false)
+      expect(ops.view).to be false
+      expect(ops.template).to be false
+      expect(ops.verbose).to be false
       expect(ops.msg).to be_nil
       expect(ops.font_size).to eq(12)
       expect(ops.label).to be_nil
@@ -66,7 +66,7 @@ RSpec.describe Options do
       expect(ops.page_width).to be_within(EPS).of(33 * MM)
       expect(ops.page_height).to be_within(EPS).of(77 * MM)
       expect(ops.top_page_margin).to be_within(EPS).of(10 * MM)
-      expect(ops.label).to be nil
+      expect(ops.label).to be_nil
       expect(ops.label_sep).to eq('@@')
       expect(ops.h_align).to eq(:center)
       expect(ops.v_align).to eq(:center)
@@ -77,6 +77,17 @@ RSpec.describe Options do
 
   describe 'Setting and reading attributes' do
     let(:ops) { Options.new }
+
+    let(:hash) do
+      {
+        page_width: 33 * MM,
+        page_height: 77 * MM,
+        top_page_margin: 1 * CM,
+        junk: 'willy',
+        verbose: true,
+        template: true,
+      }
+    end
 
     it 'can set an attribute with []= bracket syntax' do
       expect(ops.left_page_margin).to be_within(EPS).of(5 * MM)
@@ -98,17 +109,6 @@ RSpec.describe Options do
       kset = Set.new(hsh.keys)
       aset = Set.new(Options.attrs)
       expect(kset - aset).to be_empty
-    end
-
-    let(:hash) do
-      {
-        page_width: 33 * MM,
-        page_height: 77 * MM,
-        top_page_margin: 1 * CM,
-        junk: 'willy',
-        verbose: true,
-        template: true,
-      }
     end
 
     it 'can merge a hash into itself' do

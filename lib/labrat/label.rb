@@ -40,13 +40,22 @@ module Labrat
         bpm = ops.right_page_margin
       end
       out_file = File.expand_path(ops.out_file)
-      Prawn::Document.generate(out_file, page_size: [ops.page_width, ops.page_height],
-                               left_margin: lpm, right_margin: rpm,
-                               top_margin: tpm, bottom_margin: bpm,
-                               page_layout: layout) do |pdf|
+      Prawn::Document.generate(
+        out_file,
+        page_size: [ops.page_width, ops.page_height],
+                                       left_margin: lpm,
+        right_margin: rpm,
+                                       top_margin: tpm,
+        bottom_margin: bpm,
+                                       page_layout: layout,
+      ) do |pdf|
         # Define a grid with each grid box to be used for a single label.
-        pdf.define_grid(rows: ops.rows, columns: ops.columns,
-                        row_gutter: ops.row_gap, column_gutter: ops.column_gap)
+        pdf.define_grid(
+          rows: ops.rows,
+          columns: ops.columns,
+          row_gutter: ops.row_gap,
+          column_gutter: ops.column_gap,
+        )
         if ops.verbose
           warn "Page dimensions:"
           warn "  [pg_wd, pg_ht] = [#{ops.page_width.round(2)}pt,#{ops.page_height.round(2)}pt]"
@@ -62,7 +71,7 @@ module Labrat
           if ops.label != ops.raw_label
             lab_text += "\n(#{ops.label})"
           end
-          self.texts = (1..(ops.rows * ops.columns)).map {|n| "#{n}\n#{lab_text}"}
+          self.texts = (1..(ops.rows * ops.columns)).map { |n| "#{n}\n#{lab_text}" }
           ops.font_name = 'Helvetica'
           ops.font_style = 'bold'
           ops.font_size = 11
@@ -82,9 +91,15 @@ module Labrat
             box_x = ops.left_pad + ops.delta_x
             box_y = ops.bottom_pad + box_ht + ops.delta_y
             pdf.font ops.font_name, style: ops.font_style, size: ops.font_size.to_f
-            pdf.text_box(text, width: box_wd, height: box_ht,
-                         align: ops.h_align, valign: ops.v_align,
-                         overflow: :truncate, at: [box_x, box_y])
+            pdf.text_box(
+              text,
+              width: box_wd,
+              height: box_ht,
+                                       align: ops.h_align,
+              valign: ops.v_align,
+                                       overflow: :truncate,
+              at: [box_x, box_y],
+            )
             if ops.verbose && !lab_dims_reported
               warn "Label text box dimensions:"
               warn "  [box_wd, box_ht] = [#{box_wd.round(2)}pt,#{box_ht.round(2)}pt]"
@@ -94,7 +109,7 @@ module Labrat
               lab_dims_reported = true
             end
             if ops.verbose
-              warn "Label \##{(k % lpp) + 1} on page #{page_num(k)} at row #{row + 1}, column #{col + 1}:"
+              warn "Label ##{(k % lpp) + 1} on page #{page_num(k)} at row #{row + 1}, column #{col + 1}:"
               warn '-------------------'
               warn text
               warn '-------------------'
@@ -149,8 +164,9 @@ module Labrat
     # Should we emit a new page at this point?
     def needs_new_page?(k, last_k)
       return false if k == last_k
+
       r, c = row_col(k + 1)
-      (r + 1 == ops.rows && c + 1 == ops.columns)
+      r + 1 == ops.rows && c + 1 == ops.columns
     end
 
     # Would we just be printing blank labels?

@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-RSpec.describe Config do
+RSpec.describe Label do
   describe '#row_col' do
     describe 'Assume 1 row, 1 column' do
       it '#row_col: compute row and column of kth label with start 1' do

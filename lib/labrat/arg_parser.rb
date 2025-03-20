@@ -116,8 +116,8 @@ module Labrat
         meas = match[:measure].to_f
         u_meth = match[:unit].to_sym
         unless meas.respond_to?(u_meth)
-          msg = "Error: unknown #{where} unit: '#{match[:unit]}'\n"\
-          "  valid units are: pt, mm, cm, dm, m, in, ft, yd"
+          msg = "Error: unknown #{where} unit: '#{match[:unit]}'\n  " \
+            "valid units are: pt, mm, cm, dm, m, in, ft, yd"
           raise Labrat::DimensionError, msg
         end
         points = meas.send(u_meth)
@@ -130,31 +130,49 @@ module Labrat
     # printed on.
     def page_dimension_options
       # Specifies an optional option argument
-      parser.on("-wDIM", "--page-width=DIM",
-                "Horizontal dimension of a page of labels as it comes out of the printer") do |wd|
+      parser.on(
+        "-wDIM",
+        "--page-width=DIM",
+        "Horizontal dimension of a page of labels as it comes out of the printer",
+      ) do |wd|
         options.page_width = parse_dimension(wd, 'page-width')
       end
-      parser.on("-hDIM", "--page-height=DIM",
-                "Vertical dimension of a page of labels as it comes out of the printer") do |ht|
+      parser.on(
+        "-hDIM",
+        "--page-height=DIM",
+        "Vertical dimension of a page of labels as it comes out of the printer",
+      ) do |ht|
         options.page_height = parse_dimension(ht, 'page-height')
       end
-      parser.on("-RNUM", "--rows=NUM", Integer,
-                "Number of rows of labels on a page") do |n|
+      parser.on(
+        "-RNUM",
+        "--rows=NUM",
+        Integer,
+        "Number of rows of labels on a page",
+      ) do |n|
         options.rows = n
         warn "  ::rows <- #{n}::" if options.verbose
       end
-      parser.on("-CNUM", "--columns=NUM", Integer,
-                "Number of columns of labels on a page") do |n|
+      parser.on(
+        "-CNUM",
+        "--columns=NUM",
+        Integer,
+        "Number of columns of labels on a page",
+      ) do |n|
         options.columns = n
         warn "  ::columns <- #{n}::" if options.verbose
       end
-      parser.on("--row-gap=DIM",
-                "Vertical space between rows of labels on a page") do |gap|
+      parser.on(
+        "--row-gap=DIM",
+        "Vertical space between rows of labels on a page",
+      ) do |gap|
         options.row_gap = parse_dimension(gap, 'row-gap')
       end
-      parser.on("--column-gap=DIM",
-                "Column gap:",
-                "Horizontal space between columns of labels on a page") do |gap|
+      parser.on(
+        "--column-gap=DIM",
+        "Column gap:",
+        "Horizontal space between columns of labels on a page",
+      ) do |gap|
         options.column_gap = parse_dimension(gap, 'column-gap')
       end
     end
@@ -163,32 +181,46 @@ module Labrat
     # top, and bottom are named assuming a portrait orientation, that is the
     # orientation of the page as it comes out of the printer.
     def page_margin_options
-      parser.on("--right-page-margin=DIM",
-                "Distance from right side of page (in portrait) to print area") do |x|
+      parser.on(
+        "--right-page-margin=DIM",
+        "Distance from right side of page (in portrait) to print area",
+      ) do |x|
         options.right_page_margin = parse_dimension(x, 'right-page-margin')
       end
-      parser.on("--left-page-margin=DIM",
-                "Distance from left side of page (in portrait) to print area") do |x|
+      parser.on(
+        "--left-page-margin=DIM",
+        "Distance from left side of page (in portrait) to print area",
+      ) do |x|
         options.left_page_margin = parse_dimension(x, 'left-page-margin')
       end
-      parser.on("--top-page-margin=DIM",
-                "Distance from top side of page (in portrait) to print area") do |x|
+      parser.on(
+        "--top-page-margin=DIM",
+        "Distance from top side of page (in portrait) to print area",
+      ) do |x|
         options.top_page_margin = parse_dimension(x, 'top-page-margin')
       end
-      parser.on("--bottom-page-margin=DIM",
-                "Distance from bottom side of page (in portrait) to print area") do |x|
+      parser.on(
+        "--bottom-page-margin=DIM",
+        "Distance from bottom side of page (in portrait) to print area",
+      ) do |x|
         options.bottom_page_margin = parse_dimension(x, 'bottom-page-margin')
       end
-      parser.on("--h-page-margin=DIM",
-                "Distance from left and right sides of page (in portrait) to print area") do |x|
+      parser.on(
+        "--h-page-margin=DIM",
+        "Distance from left and right sides of page (in portrait) to print area",
+      ) do |x|
         options.left_page_margin = options.right_page_margin = parse_dimension(x, 'h-page-margin')
       end
-      parser.on("--v-page-margin=DIM",
-                "Distance from top and bottom sides of page (in portrait) to print area") do |x|
+      parser.on(
+        "--v-page-margin=DIM",
+        "Distance from top and bottom sides of page (in portrait) to print area",
+      ) do |x|
         options.top_page_margin = options.bottom_page_margin = parse_dimension(x, 'v-page-margin')
       end
-      parser.on("--page-margin=DIM",
-                "Distance from all sides of page (in portrait) to print area") do |x|
+      parser.on(
+        "--page-margin=DIM",
+        "Distance from all sides of page (in portrait) to print area",
+      ) do |x|
         options.left_page_margin = options.right_page_margin =
           options.top_page_margin = options.bottom_page_margin = parse_dimension(x, 'margin')
       end
@@ -199,8 +231,11 @@ module Labrat
     # need not be specified.
     def label_name_option
       # options.raw_label = nil
-      parser.on("-lNAME", "--label=NAME",
-                "Use options for label type NAME from label database") do |name|
+      parser.on(
+        "-lNAME",
+        "--label=NAME",
+        "Use options for label type NAME from label database",
+      ) do |name|
         options.raw_label ||= name
         if labels_seen.include?(name)
           msg = "label option '#{name}' has circular reference"
@@ -226,8 +261,10 @@ module Labrat
     end
 
     def list_labels_option
-      parser.on("--list-labels",
-                "List known label types from label database and exit") do
+      parser.on(
+        "--list-labels",
+        "List known label types from label database and exit",
+      ) do
         db_paths = Labrat::LabelDb.db_paths
         lab_names = Labrat::LabelDb.known_names
         if db_paths.empty?
@@ -241,13 +278,13 @@ module Labrat
           max_width = lab_names.max_by(&:length).length
           ngrps = (78 / (max_width + 1)).floor
 
-          lab_names.sort_by do |nm|
-            nm.match(/\A([a-zA-z]+)([0-9]+)?/)
+          lab_names.sort_by { |nm|
+            nm =~ /\A([a-zA-Z]+)([0-9]+)?/
             [$1, $2.to_i || 0]
-          end
+          }
             .groups_of(ngrps).each do |_n, grp|
-            fmt = "%-#{max_width+1}s"
-            grp = grp.map{|nm| sprintf(fmt, nm) }
+            fmt = "%-#{max_width + 1}s"
+            grp = grp.map { |nm| sprintf(fmt, nm) }
             warn "  #{grp.join(' ')}"
           end
         end
@@ -257,13 +294,19 @@ module Labrat
 
     # Set the name, size, and style of font.
     def align_options
-      parser.on("--h-align=[left|center|right|justify]", [:left, :center, :right, :justify],
-                "Horizontal alignment of label text (default center)") do |al|
+      parser.on(
+        "--h-align=[left|center|right|justify]",
+        [:left, :center, :right, :justify],
+        "Horizontal alignment of label text (default center)",
+      ) do |al|
         options.h_align = al.to_sym
         warn "  ::h-align <- #{al}::" if options.verbose
       end
-      parser.on("--v-align=[top|center|bottom]", [:top, :center, :bottom],
-                "Vertical alignment of label text (default center)") do |al|
+      parser.on(
+        "--v-align=[top|center|bottom]",
+        [:top, :center, :bottom],
+        "Vertical alignment of label text (default center)",
+      ) do |al|
         options.v_align = al.to_sym
         warn "  ::v-align <- #{al}::" if options.verbose
       end
@@ -274,32 +317,46 @@ module Labrat
     # assuming a portrait orientation, that is the orientation the label has
     # as it comes out of the printer.
     def padding_options
-      parser.on("--right-pad=DIM",
-                "Distance from right side of label (in portrait) to print area") do |x|
+      parser.on(
+        "--right-pad=DIM",
+        "Distance from right side of label (in portrait) to print area",
+      ) do |x|
         options.right_pad = parse_dimension(x, 'right-pad')
       end
-      parser.on("--left-pad=DIM",
-                "Distance from left side of label (in portrait) to print area") do |x|
+      parser.on(
+        "--left-pad=DIM",
+        "Distance from left side of label (in portrait) to print area",
+      ) do |x|
         options.left_pad = parse_dimension(x, 'left-pad')
       end
-      parser.on("--top-pad=DIM",
-                "Distance from top side of label (in portrait) to print area") do |x|
+      parser.on(
+        "--top-pad=DIM",
+        "Distance from top side of label (in portrait) to print area",
+      ) do |x|
         options.top_pad = parse_dimension(x, 'top-pad')
       end
-      parser.on("--bottom-pad=DIM",
-                "Distance from bottom side of label (in portrait) to print area") do |x|
+      parser.on(
+        "--bottom-pad=DIM",
+        "Distance from bottom side of label (in portrait) to print area",
+      ) do |x|
         options.bottom_pad = parse_dimension(x, 'bottom-pad')
       end
-      parser.on("--h-pad=DIM",
-                "Distance from left and right sides of label (in portrait) to print area") do |x|
+      parser.on(
+        "--h-pad=DIM",
+        "Distance from left and right sides of label (in portrait) to print area",
+      ) do |x|
         options.left_pad = options.right_pad = parse_dimension(x, 'h-pad')
       end
-      parser.on("--v-pad=DIM",
-                "Distance from top and bottom sides of label (in portrait) to print area") do |x|
+      parser.on(
+        "--v-pad=DIM",
+        "Distance from top and bottom sides of label (in portrait) to print area",
+      ) do |x|
         options.top_pad = options.bottom_pad = parse_dimension(x, 'v-pad')
       end
-      parser.on("--pad=DIM",
-                "Distance from all sides of label (in portrait) to print area") do |x|
+      parser.on(
+        "--pad=DIM",
+        "Distance from all sides of label (in portrait) to print area",
+      ) do |x|
         options.left_pad = options.right_pad =
           options.top_pad = options.bottom_pad = parse_dimension(x, 'pad')
       end
@@ -307,19 +364,25 @@ module Labrat
 
     # Set the name, size, and style of font.
     def font_options
-      parser.on("--font-name=NAME",
-                "Name of font to use (default Helvetica)") do |nm|
+      parser.on(
+        "--font-name=NAME",
+        "Name of font to use (default Helvetica)",
+      ) do |nm|
         options.font_name = nm
         warn "  ::font-name <- '#{nm}'::" if options.verbose
       end
-      parser.on("--font-size=NUM",
-                "Size of font to use in points (default 12)") do |pt|
+      parser.on(
+        "--font-size=NUM",
+        "Size of font to use in points (default 12)",
+      ) do |pt|
         options.font_size = pt
         warn "  ::font-size <- #{pt}::" if options.verbose
       end
-      parser.on("--font-style=[normal|bold|italic|bold-italic]",
-                %w[normal bold italic bold-italic],
-                "Style of font to use for text (default normal)") do |sty|
+      parser.on(
+        "--font-style=[normal|bold|italic|bold-italic]",
+        %w[normal bold italic bold-italic],
+        "Style of font to use for text (default normal)",
+      ) do |sty|
         # Prawn requires :bold_italic, not :"bold-italic"
         options.font_style = sty.tr('-', '_').to_sym
         warn "  ::font-style <- #{sty}::" if options.verbose
@@ -331,29 +394,42 @@ module Labrat
     # sitting precisely where the user intends on the printed label.  These
     # options tweak the PDF settings to compensate for any such anomalies.
     def delta_options
-      parser.on('-xDIM', "--delta-x=DIM",
-                "Left-right adjustment as label text is oriented") do |x|
+      parser.on(
+        '-xDIM',
+        "--delta-x=DIM",
+        "Left-right adjustment as label text is oriented",
+      ) do |x|
         options.delta_x = parse_dimension(x, 'delta-x')
       end
-      parser.on('-yDIM', "--delta-y=DIM",
-                "Up-down adjustment as label text is oriented") do |y|
+      parser.on(
+        '-yDIM',
+        "--delta-y=DIM",
+        "Up-down adjustment as label text is oriented",
+      ) do |y|
         options.delta_y = parse_dimension(y, 'delta-y')
       end
     end
 
     # The name of the printer to send the job to.
     def printer_name_option
-      parser.on("-pNAME", "--printer=NAME",
-                "Name of the label printer to print on") do |name|
+      parser.on(
+        "-pNAME",
+        "--printer=NAME",
+        "Name of the label printer to print on",
+      ) do |name|
         options.printer = name
         warn "  ::printer <- '#{name}'::" if options.verbose
       end
     end
 
     def start_label_option
-      parser.on("-SNUM", "--start-label=NUM", Integer,
-                "Start printing at label number NUM (starting at 1, left-to-right, top-to-bottom)",
-                "  within first page only.  Later pages always start at label 1.") do |n|
+      parser.on(
+        "-SNUM",
+        "--start-label=NUM",
+        Integer,
+        "Start printing at label number NUM (starting at 1, left-to-right, top-to-bottom)",
+        "  within first page only.  Later pages always start at label 1.",
+      ) do |n|
         options.start_label = n
         warn "  ::start-label <- #{n}::" if options.verbose
       end
@@ -364,8 +440,11 @@ module Labrat
     # account.  This allows the user to use some distinctive marker ('~~' by
     # default) to designate where a line break should occur.
     def nl_sep_option
-      parser.on("-nSEP", "--nl-sep=SEPARATOR",
-                "Specify text to be translated into a line-break (default '~~')") do |nl|
+      parser.on(
+        "-nSEP",
+        "--nl-sep=SEPARATOR",
+        "Specify text to be translated into a line-break (default '~~')",
+      ) do |nl|
         options.nl_sep = nl
         warn "  ::nl-sep <- '#{nl}'::" if options.verbose
       end
@@ -375,16 +454,22 @@ module Labrat
     # allows the user to use some distinctive marker ('][' by default) to
     # designate where a new label shoul be started.
     def label_sep_option
-      parser.on("--label-sep=SEPARATOR",
-                "Specify text that indicates the start of a new label (default '==>')") do |ls|
-        options.label-sep = ls
+      parser.on(
+        "--label-sep=SEPARATOR",
+        "Specify text that indicates the start of a new label (default '==>')",
+      ) do |ls|
+        options.label
         warn "  ::label-sep <- '#{ls}'::" if options.verbose
       end
     end
 
     def copies_option
-      parser.on("-cNUM", "--copies=NUM", Integer,
-                "Number of copies of each label to generate") do |n|
+      parser.on(
+        "-cNUM",
+        "--copies=NUM",
+        Integer,
+        "Number of copies of each label to generate",
+      ) do |n|
         options.copies = n.abs
         warn "  ::copies <- #{options.copies}::" if options.verbose
       end
@@ -393,8 +478,11 @@ module Labrat
     # For batch printing of labels, the user might want to just feed a file of
     # labels to be printed.  This option allows a file name to be give.
     def in_file_option
-      parser.on("-fFILENAME", "--in-file=FILENAME",
-                "Read labels from given file instead of command-line") do |file|
+      parser.on(
+        "-fFILENAME",
+        "--in-file=FILENAME",
+        "Read labels from given file instead of command-line",
+      ) do |file|
         options.in_file = file.strip
         warn "  ::in-file <- '#{file}'::" if options.verbose
       end
@@ -403,10 +491,13 @@ module Labrat
     # For batch printing of labels, the user might want to just feed a file of
     # labels to be printed.  This option allows a file name to be give.
     def out_file_option
-      parser.on("-oFILENAME", "--out-file=FILENAME",
-                "Put generated label in the given file") do |file|
+      parser.on(
+        "-oFILENAME",
+        "--out-file=FILENAME",
+        "Put generated label in the given file",
+      ) do |file|
         file = file.strip
-        unless file =~ /\.pdf\z/i
+        unless /\.pdf\z/i.match?(file)
           file = "#{file}.pdf"
         end
         options.out_file = file
@@ -416,14 +507,20 @@ module Labrat
 
     def command_options
       # NB: the % is supposed to remind me of the rollers on a printer
-      parser.on("-%PRINTCMD", "--print-command=PRINTCMD",
-                "Command to use for printing with %p for printer name; %o for label file name") do |cmd|
+      parser.on(
+        "-%PRINTCMD",
+        "--print-command=PRINTCMD",
+        "Command to use for printing with %p for printer name; %o for label file name",
+      ) do |cmd|
         options.print_command = cmd.strip
         warn "  ::print-command <- '#{cmd}'::" if options.verbose
       end
       # NB: the : is supposed to remind me of two eyeballs viewing the PDF
-      parser.on("-:VIEWCMD", "--view-command=VIEWCMD",
-                "Command to use for viewing with %o for label file name") do |cmd|
+      parser.on(
+        "-:VIEWCMD",
+        "--view-command=VIEWCMD",
+        "Command to use for viewing with %o for label file name",
+      ) do |cmd|
         options.view_command = cmd.strip
         warn "  ::view-command <- '#{cmd}'::" if options.verbose
       end
@@ -433,9 +530,12 @@ module Labrat
     # the text turned 90 degrees clockwise from the orientation the label has
     # coming out of the printer.
     def landscape_option
-      parser.on("-L", "--[no-]landscape",
-                "Orient label in landscape (default false), i.e., with the left of",
-                "the label text starting at the top as the label as printed") do |l|
+      parser.on(
+        "-L",
+        "--[no-]landscape",
+        "Orient label in landscape (default false), i.e., with the left of",
+        "the label text starting at the top as the label as printed",
+      ) do |l|
         options.landscape = l
         warn "  ::landscape <- #{l}::" if options.verbose
       end
@@ -443,9 +543,12 @@ module Labrat
 
     # The inverse of landscape, i.e., no rotation is done.
     def portrait_option
-      parser.on("-P", "--[no-]portrait",
-                "Orient label in portrait (default true), i.e., left-to-right",
-                "top-to-bottom as the label as printed. Negated landscape") do |p|
+      parser.on(
+        "-P",
+        "--[no-]portrait",
+        "Orient label in portrait (default true), i.e., left-to-right",
+        "top-to-bottom as the label as printed. Negated landscape",
+      ) do |p|
         options.landscape = !p
         warn "  portrait option executed as ::landscape <- #{!p}::" if options.verbose
       end
@@ -473,8 +576,11 @@ module Labrat
     # produce a template showing the boundaries of each label on a page of
     # labels.
     def template_option
-      parser.on("-T", "--[no-]template",
-                "Print a template of a page of labels and ignore any content.") do |t|
+      parser.on(
+        "-T",
+        "--[no-]template",
+        "Print a template of a page of labels and ignore any content.",
+      ) do |t|
         options.template = t
         warn "  ::template <- #{t}::" if options.verbose
       end
