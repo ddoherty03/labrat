@@ -1,20 +1,14 @@
 # frozen_string_literal: true
 
 RSpec.describe LabelDb do
-  before :each do
-    # Save these, since they're not specific to this app.
-    @xdg_config_dirs = ENV['XDG_CONFIG_DIRS']
-    @xdg_config_home = ENV['XDG_CONFIG_HOME']
-    @sys_db_path = File.join(__dir__, '../lib/config_files/labeldb.yml')
-    @sys_db = File.read(@sys_db_path)
-    @user_db_path = File.join(__dir__, '../lib/config_files/labeldb_usr.yml')
-    @user_db = File.read(@user_db_path)
-  end
+  let!(:save_xdg_dirs) { ENV['XDG_CONFIG_DIRS'] }
+  let!(:save_xdg_home) { ENV['XDG_CONFIG_HOME'] }
+  let(:sys_db) { File.read(File.join(__dir__, '../lib/config_files/labeldb.yml')) }
 
-  after :each do
+  after do
     # Restore
-    ENV['XDG_CONFIG_DIRS'] = @xdg_config_dirs
-    ENV['XDG_CONFIG_HOME'] = @xdg_config_home
+    ENV['XDG_CONFIG_DIRS'] = save_xdg_dirs
+    ENV['XDG_CONFIG_HOME'] = save_xdg_home
     # Remove anything set in examples
     ENV['LABRAT_SYS_CONFIG'] = nil
     ENV['LABRAT_CONFIG'] = nil
@@ -22,7 +16,7 @@ RSpec.describe LabelDb do
   end
 
   it 'can read the system label db' do
-    setup_test_file('/etc/xdg/labrat/labeldb.yml', @sys_db)
+    setup_test_file('/etc/xdg/labrat/labeldb.yml', sys_db)
     LabelDb.read(dir_prefix: SANDBOX_DIR)
     expect(LabelDb[:avery5160].class).to eq(Hash)
     expect(LabelDb[:avery5160][:page_width]).to eq('8.5in')
@@ -51,7 +45,7 @@ RSpec.describe LabelDb do
         page-width: 65mm
         page-height: 24mm
     YAML
-    setup_test_file('/etc/xdg/labrat/labeldb.yml', @sys_db)
+    setup_test_file('/etc/xdg/labrat/labeldb.yml', sys_db)
     setup_test_file("/home/#{ENV['USER']}/.config/labrat/labeldb.yml", usrdb_yml)
     LabelDb.read(dir_prefix: SANDBOX_DIR)
     expect(LabelDb[:avery5160].class).to eq(Hash)
@@ -78,7 +72,7 @@ RSpec.describe LabelDb do
         page-width: 65mm
         page-height: 24mm
     YAML
-    setup_test_file('/etc/xdg/labrat/labeldb.yml', @sys_db)
+    setup_test_file('/etc/xdg/labrat/labeldb.yml', sys_db)
     setup_test_file("/home/#{ENV['USER']}/.config/labrat/labeldb.yml", usrdb_yml)
     args = ['--rows=5', '--label=avery5160', '--page-width=60mm']
     prior = LabelDb.read(dir_prefix: SANDBOX_DIR)
