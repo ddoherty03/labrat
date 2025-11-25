@@ -1,10 +1,20 @@
+GIT
+  remote: https://github.com/ddoherty03/rubocop-ddoherty.git
+  revision: 6b28e9614f18f94b684179c488acca8ac6cabdc6
+  branch: master
+  specs:
+    rubocop-ddoherty (0.1.2)
+      rubocop-performance (~> 1.0)
+      rubocop-rake (>= 0.7)
+      rubocop-rspec (~> 3.0)
+      rubocop-shopify (~> 2.0)
+
 PATH
   remote: .
   specs:
     labrat (1.2.3)
       activesupport
       fat_config (>= 0.4.2)
-      fat_core
       matrix
       prawn (~> 2.0)
 
@@ -57,16 +67,16 @@ GEM
       pp (>= 0.6.0)
       rdoc (>= 4.0.0)
       reline (>= 0.4.2)
-    json (2.10.2)
-    language_server-protocol (3.17.0.4)
+    json (2.16.0)
+    language_server-protocol (3.17.0.5)
     lint_roller (1.1.0)
     logger (1.6.6)
     matrix (0.4.2)
     method_source (1.1.0)
     minitest (5.25.5)
     ostruct (0.6.1)
-    parallel (1.26.3)
-    parser (3.3.7.1)
+    parallel (1.27.0)
+    parser (3.3.10.0)
       ast (~> 2.4.1)
       racc
     pdf-core (0.10.0)
@@ -77,6 +87,7 @@ GEM
       pdf-core (~> 0.10.0)
       ttfunk (~> 1.8)
     prettyprint (0.2.0)
+    prism (1.6.0)
     pry (0.15.2)
       coderay (~> 1.1)
       method_source (~> 1.0)
@@ -88,7 +99,7 @@ GEM
     rake (13.2.1)
     rdoc (6.12.0)
       psych (>= 4.0.0)
-    regexp_parser (2.10.0)
+    regexp_parser (2.11.3)
     reline (0.6.0)
       io-console (~> 0.5)
     rspec (3.13.0)
@@ -104,7 +115,7 @@ GEM
       diff-lcs (>= 1.2.0, < 2.0)
       rspec-support (~> 3.13.0)
     rspec-support (3.13.2)
-    rubocop (1.74.0)
+    rubocop (1.81.7)
       json (~> 2.3)
       language_server-protocol (~> 3.17.0.2)
       lint_roller (~> 1.1.0)
@@ -112,19 +123,23 @@ GEM
       parser (>= 3.3.0.2)
       rainbow (>= 2.2.2, < 4.0)
       regexp_parser (>= 2.9.3, < 3.0)
-      rubocop-ast (>= 1.38.0, < 2.0)
+      rubocop-ast (>= 1.47.1, < 2.0)
       ruby-progressbar (~> 1.7)
       unicode-display_width (>= 2.4.0, < 4.0)
-    rubocop-ast (1.40.0)
-      parser (>= 3.3.1.0)
+    rubocop-ast (1.48.0)
+      parser (>= 3.3.7.2)
+      prism (~> 1.4)
     rubocop-performance (1.24.0)
       lint_roller (~> 1.1)
       rubocop (>= 1.72.1, < 2.0)
       rubocop-ast (>= 1.38.0, < 2.0)
-    rubocop-rspec (3.5.0)
+    rubocop-rake (0.7.1)
+      lint_roller (~> 1.1)
+      rubocop (>= 1.72.1)
+    rubocop-rspec (3.7.0)
       lint_roller (~> 1.1)
       rubocop (~> 1.72, >= 1.72.1)
-    rubocop-shopify (2.16.0)
+    rubocop-shopify (2.18.0)
       rubocop (~> 1.62)
     ruby-progressbar (1.13.0)
     securerandom (0.4.1)
@@ -141,9 +156,9 @@ GEM
       bigdecimal (~> 3.1)
     tzinfo (2.0.6)
       concurrent-ruby (~> 1.0)
-    unicode-display_width (3.1.4)
-      unicode-emoji (~> 4.0, >= 4.0.4)
-    unicode-emoji (4.0.4)
+    unicode-display_width (3.2.0)
+      unicode-emoji (~> 4.1)
+    unicode-emoji (4.1.0)
     uri (1.0.3)
 
 PLATFORMS
@@ -156,9 +171,7 @@ DEPENDENCIES
   rake
   rspec
   rubocop
-  rubocop-performance
-  rubocop-rspec
-  rubocop-shopify
+  rubocop-ddoherty!
   simplecov
 
 BUNDLED WITH

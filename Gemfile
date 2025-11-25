@@ -10,9 +10,7 @@ group :development do
   gem 'pry'
   gem 'rake'
   gem 'rspec'
-  gem 'rubocop'
-  gem 'rubocop-performance'
-  gem 'rubocop-rspec'
-  gem 'rubocop-shopify'
+  gem 'rubocop', require: false
+  gem 'rubocop-ddoherty', git: 'https://github.com/ddoherty03/rubocop-ddoherty.git', branch: 'master', require: false
   gem 'simplecov'
 end
