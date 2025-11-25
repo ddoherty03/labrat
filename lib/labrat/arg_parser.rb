@@ -278,11 +278,14 @@ module Labrat
           max_width = lab_names.max_by(&:length).length
           ngrps = (78 / (max_width + 1)).floor
 
-          lab_names.sort_by { |nm|
+          # Sort the labels first by manufacturer name, then by number but in
+          # numeric rather than lexical order.
+          lab_names.sort_by! do |nm|
             nm =~ /\A([a-zA-Z]+)([0-9]+)?/
-            [$1, $2.to_i || 0]
-          }
-            .groups_of(ngrps).each do |_n, grp|
+            [$1, $2.to_i]
+          end
+
+          lab_names.each_slice(ngrps).each do |grp|
             fmt = "%-#{max_width + 1}s"
             grp = grp.map { |nm| sprintf(fmt, nm) }
             warn "  #{grp.join(' ')}"

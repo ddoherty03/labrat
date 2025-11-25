@@ -160,7 +160,7 @@ module Labrat
       dir_prefix ||= ''
       configs = []
       env_config = ENV["#{app_name.upcase}_SYS_CONFIG"]
-      if env_config && File.readable?((config = File.join(dir_prefix, File.expand_path(env_config))))
+      if env_config && File.readable?(config = File.join(dir_prefix, File.expand_path(env_config)))
         configs = [config]
       elsif File.readable?(config = File.join(dir_prefix, "/etc/#{app_name}"))
         configs = [config]
@@ -191,7 +191,7 @@ module Labrat
       dir_prefix ||= ''
       config_fname = nil
       env_config = ENV["#{app_name.upcase}_CONFIG"]
-      if env_config && File.readable?((config = File.join(dir_prefix, File.expand_path(env_config))))
+      if env_config && File.readable?(config = File.join(dir_prefix, File.expand_path(env_config)))
         config_fname = config
       elsif Dir.exist?(config_dir = File.join(dir_prefix, File.expand_path("~/.#{app_name}")))
         base_candidates = ["config.yml", "config.yaml", "config"]
