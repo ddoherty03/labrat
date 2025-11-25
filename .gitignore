@@ -19,3 +19,5 @@ labrat.pdf
 /README.pyg
 /README.tex
 /label.tex
+*.aux
+/texlabels/auto/
