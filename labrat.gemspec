@@ -44,7 +44,6 @@ Gem::Specification.new do |spec|
   spec.post_install_message = 'To install config and label database files, run labrat-install.'
   spec.add_dependency "activesupport"
   spec.add_dependency "fat_config", '>=0.4.2'
-  spec.add_dependency "fat_core"
   spec.add_dependency "matrix"
   spec.add_dependency "prawn", "~> 2.0"
 end
