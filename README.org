@@ -15,8 +15,8 @@ renders nicely on Github.
 
 [[https://github.com/ddoherty03/labrat/actions/workflows/main.yml/badge.svg]]
 
-* Table of Contents                                                   :toc_4:
-- [[#labrat][Labrat]]
+* Table of Contents                                                   :toc_5:
+- [[#usage][Usage]]
   - [[#motivation][Motivation]]
   - [[#a-tip-on-buying-file-folder-labels][A Tip on Buying File Folder Labels]]
   - [[#installation][Installation]]
@@ -58,9 +58,9 @@ renders nicely on Github.
 - [[#development][Development]]
 - [[#contributing][Contributing]]
 
-* Labrat
-A linux command-line program for quickly printing labels.  Labrat uses the
-wonderful [[https://github.com/prawnpdf/prawn][Prawn gem]] to generate PDF files with label formatting in mind. With
+* Usage
+=labrat= is a linux command-line program for quickly printing labels.  It uses
+the [[https://github.com/prawnpdf/prawn][Prawn gem]] to generate PDF files with label formatting in mind. With
 =labrat= properly configured, printing a label is as simple as:
 
 #+begin_example
@@ -84,10 +84,11 @@ Windows or to a Mac to run Dymo's proprietary GUI.  The Dymo GUI is
 particularly irksome because it takes a long time to start up and demands that
 you register every time you open it.
 
-I wanted a way to print a file label from the command line, or even better,
-from within my editor, Emacs.  After giving up looking for such a thing
-without success, I decided to write my own.  Hence labrat.  With it---after
-due configuration---printing a file folder label is as simple as:
+That's too much ceremony for generating simple labels.  I wanted a way to
+print a file label from the command line, or even better, from within my
+editor, Emacs.  After giving up looking for such a thing without success, I
+decided to write my own.  Hence labrat.  With it---after due
+configuration---printing a file folder label is as simple as:
 
 #+begin_src sh
   $ labrat 'First Line of Label ~~ And the Second Line'
@@ -125,7 +126,7 @@ thermal-printed store receipts.
 
 After looking for alternative printers, I found the solution, not in a new
 printer technology, but in a new label technology.  DuraReady makes labels
-that can be printed on a thermal printer like the Dymo LaserWriter, but print
+that can be printed on a thermal printer like the Dymo LabelWriter, but print
 on a "Gloss white polypropylene BOPP plastic."  I'm not sure what that is, but
 the labels come out with nice black lettering on a white background, and they
 don't fade.  Check it out here: [[https://www.duraready.com/file-folder-labels/1034d-9/16-x-3-7/16-white-bopp-plastic-label/][DuraReady]].
@@ -219,12 +220,12 @@ label setup options described in the [[* Label Setup Options][next]] section.
 *** Orientation
 - ~-L~, ~--[no-]landscape~ :: Orient the label grid and the printing direction
   of the text of the label in landscape (default false), i.e., with the label
-  grid rotated 90 degrees clockwise so that the first label is printed down
-  the page starting at the upper right element of the grid.  This setting does
-  not affect what is left, right, top, or bottom for purposes of specifying
-  the page dimensions, but does affect what is considered "horizontal rows"
-  and "vertical columns": those are counted in the rotated direction of
-  printing.
+  grid rotated 90 degrees counter-clockwise so that the first label is printed
+  down the page starting at the upper right element of the grid.  This setting
+  does not affect what is left, right, top, or bottom for purposes of
+  specifying the page dimensions, but does affect what is considered
+  "horizontal rows" and "vertical columns": those are counted in the rotated
+  direction of printing.
 - ~-P~, ~--[no-]portrait~ :: This is simply a convenience switch meaning
   ~--no-landscape~ and is the default.
 
