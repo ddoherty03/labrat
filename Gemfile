@@ -7,6 +7,7 @@ gemspec
 
 group :development do
   gem 'debug', '>= 1.0.0'
+  gem 'gem_docs'
   gem 'pry'
   gem 'rake'
   gem 'rspec'

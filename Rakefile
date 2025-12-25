@@ -7,6 +7,9 @@ RSpec::Core::RakeTask.new(:spec)
 
 require "rubocop/rake_task"
 
+require 'gem_docs'
+GemDocs.install
+
 ########################################################################
 # Rubocop tasks
 ########################################################################
