@@ -42,6 +42,8 @@ Gem::Specification.new do |spec|
   spec.executables   = spec.files.grep(%r{\Abin/labrat}) { |f| File.basename(f) }
   spec.require_paths = ["lib"]
   spec.post_install_message = 'To install config and label database files, run labrat-install.'
+  spec.rdoc_options += ['-D', '--ri', '--exclude', '^lib/lisp.*']
+
   spec.add_dependency "activesupport"
   spec.add_dependency "fat_config", '>=0.4.2'
   spec.add_dependency "matrix"
