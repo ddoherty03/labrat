@@ -254,7 +254,10 @@ RSpec.describe ArgParser do
       expect(ops.msg).to be_nil
       expect(ops.out_file).to eq(File.expand_path('file with some spaces.pdf'))
 
-      expect { ap.parse(['--out-file', '/labrat/outfile.pdf']) }.to raise_error(/cannot write to/)
+      # Cannot create an output directory
+      expect { ap.parse(['--out-file', '/labrat/outfile.pdf']) }.to raise_error(/cannot create/)
+      # Cannot write to a file in an existing output directory
+      expect { ap.parse(['--out-file', '/etc/outfile.pdf']) }.to raise_error(/cannot write to/)
     end
 
     it 'can set an optional print command' do

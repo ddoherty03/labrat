@@ -117,13 +117,8 @@ module Labrat
     end
 
     def self.default_out_file
-      begin
-        dir = ENV['XDG_DATA_HOME'] || "~/.local/share/labrat"
-        dir = File.expand_path(dir)
-        FileUtils.mkdir_p(dir)
-      rescue => ex
-        raise Labrat::OptionsError, "cannot create directory '#{dir}'"
-      end
+      dir = ENV['XDG_DATA_HOME'] || "~/.local/share/labrat"
+      dir = File.expand_path(dir)
       stamp = Time.now.strftime("%Y-%m-%dT%H:%M:%S.%3N")
       File.join(dir, stamp + '.pdf')
     end

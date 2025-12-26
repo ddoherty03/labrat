@@ -507,10 +507,18 @@ module Labrat
         options.out_file = file
         warn "  ::out-file <- '#{file}'::" if options.verbose
         dir = File.dirname(file)
-        unless File.writable?(dir)
-          raise Labrat::OptionError, "cannot write to '#{file}'"
+        begin
+          FileUtils.mkdir_p(dir) unless Dir.exist?(dir)
+          unless File.writable?(dir)
+            raise Labrat::OptionError, "cannot write to '#{file}'"
+          end
+        rescue => ex
+          if ex.to_s.include?('mkdir')
+            raise Labrat::OptionError, "cannot create output directory '#{dir}'"
+          else
+            raise ex
+          end
         end
-
         file
       end
     end
