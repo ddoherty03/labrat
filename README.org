@@ -416,11 +416,20 @@ the copies printed sequentially on the page.
 
 *** Input and output files
 **** Output file
-By default, =labrat= generates all the labels into a single PDF file called
-'labrat.pdf' in the current directory.  You can specify a different output
-file with the ~--out-file~ option.
+By default, =labrat= generates all the labels into a PDF file located in the
+directory $XDG_DATA_HOME/labrat, which is =~/.local/share/labrat~= by default.
+The file's base name is time-stamped based on the time of the run. So, the
+file name might look like =~/.local/share/labrat/2025-12-26T04:23:32.324.pdf=.
+~Labrat~ will never delete these files, so you might want to perform cleanup
+on this directory if disk space is precious.
+
+You can specify a different output file with the ~--out-file~ option.
 
 - ~-o~, ~--out-file=FILENAME~ :: Put generated label in the given file
+
+Unless the =FILENAME= includes a directory, the file will be placed in the
+current directory.  If you specify a directory that you do not have write
+permission on, =labrat= will raise an error and exit.
 
 **** Command-line arguments
 By default, =labrat= gets the text of the label from the non-option arguments
