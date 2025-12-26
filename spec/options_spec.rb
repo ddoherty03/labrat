@@ -1,6 +1,10 @@
 # frozen_string_literal: true
 
 RSpec.describe Options do
+  before do
+    ENV['XDG_DATA_HOME'] = nil
+  end
+
   describe 'Initialization without hash' do
     let(:ops) { Options.new }
 
@@ -36,7 +40,7 @@ RSpec.describe Options do
       expect(ops.label_sep).to eq('@@')
       expect(ops.copies).to eq(1)
       expect(ops.printer).to eq(ENV['PRINTER'] || 'dymo')
-      expect(ops.out_file).to match(/#{File.expand_path("~/.local/share/labrat")}\/\d\d\d\d/)
+      expect(ops.out_file).to match(%r{#{File.expand_path('~/.local/share/labrat')}/\d\d\d\d})
       expect(ops.print_command.class).to eq(String)
       expect(ops.view_command.class).to eq(String)
       expect(ops.view).to be false
@@ -149,12 +153,7 @@ RSpec.describe Options do
 
     context 'when no --out-file and XDG_DATA_HOME is not set' do
       before do
-        @old_env = ENV['XDG_DATA_HOME']
         ENV['XDG_DATA_HOME'] = nil
-      end
-
-      after do
-        ENV['XDG_DATA_HOME'] = @old_env
       end
 
       it 'defaults to saving output files in ~/.local/share/labrat' do
@@ -168,12 +167,7 @@ RSpec.describe Options do
 
     context 'when no --out-file and XDG_DATA_HOME is set' do
       before do
-        @old_env = ENV['XDG_DATA_HOME']
         ENV['XDG_DATA_HOME'] = "~/.cache/labrat"
-      end
-
-      after do
-        ENV['XDG_DATA_HOME'] = @old_env
       end
 
       it 'defaults to saving output files in directory in $XDG_DATA_HOME' do
