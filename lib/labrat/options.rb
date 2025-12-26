@@ -81,7 +81,7 @@ module Labrat
       self.copies = init[:copies] || 1
       # Output attributes
       self.printer = init[:printer] || ENV['LABRAT_PRINTER'] || ENV['PRINTER'] || 'dymo'
-      self.out_file = init[:out_file] || 'labrat.pdf'
+      self.out_file = init[:out_file] || self.class.default_out_file
       self.print_command = init[:print_command] || 'lpr -P %p %o'
       self.view_command = init[:view_command] || 'qpdfview --unique --instance labrat %o'
       self.view = init.fetch(:view, false)
@@ -116,6 +116,18 @@ module Labrat
       Labrat::ArgParser.new.parse(args, prior: file_options, verbose: verbose)
     end
 
+    def self.default_out_file
+      begin
+        dir = ENV['XDG_DATA_HOME'] || "~/.local/share/labrat"
+        dir = File.expand_path(dir)
+        FileUtils.mkdir_p(dir)
+      rescue => ex
+        raise Labrat::OptionsError, "cannot create directory '#{dir}'"
+      end
+      stamp = Time.now.strftime("%Y-%m-%dT%H:%M:%S.%3N")
+      File.join(dir, stamp + '.pdf')
+    end
+
     # Return any string in msg, e.g., the usage help or error.
     def to_s
       msg
@@ -124,6 +136,9 @@ module Labrat
     # Allow hash-like assignment to attributes.  This allows an Options object
     # to be used, for example, in the OptionParser#parse :into parameter.
     def []=(att, val)
+      if att == :out_file
+        val = File.expand_path(val)
+      end
       att = att.to_s.tr('-', '_')
       send(:"#{att}=", val)
     end

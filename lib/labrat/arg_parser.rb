@@ -491,20 +491,27 @@ module Labrat
       end
     end
 
-    # For batch printing of labels, the user might want to just feed a file of
-    # labels to be printed.  This option allows a file name to be give.
+    # The user may want labels generated in an file other than the default,
+    # time-stamped file name in $XDG_DATA_HOME.  This option allows a file
+    # name to be give.
     def out_file_option
       parser.on(
         "-oFILENAME",
         "--out-file=FILENAME",
         "Put generated label in the given file",
       ) do |file|
-        file = file.strip
+        file = File.expand_path(file.strip)
         unless /\.pdf\z/i.match?(file)
           file = "#{file}.pdf"
         end
         options.out_file = file
         warn "  ::out-file <- '#{file}'::" if options.verbose
+        dir = File.dirname(file)
+        unless File.writable?(dir)
+          raise Labrat::OptionError, "cannot write to '#{file}'"
+        end
+
+        file
       end
     end
 

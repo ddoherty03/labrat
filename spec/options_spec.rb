@@ -36,7 +36,7 @@ RSpec.describe Options do
       expect(ops.label_sep).to eq('@@')
       expect(ops.copies).to eq(1)
       expect(ops.printer).to eq(ENV['PRINTER'] || 'dymo')
-      expect(ops.out_file).to eq('labrat.pdf')
+      expect(ops.out_file).to match(/#{File.expand_path("~/.local/share/labrat")}\/\d\d\d\d/)
       expect(ops.print_command.class).to eq(String)
       expect(ops.view_command.class).to eq(String)
       expect(ops.view).to be false
@@ -141,6 +141,64 @@ RSpec.describe Options do
     it 'returns its message with a #to_s' do
       ops.msg = 'Willy Wonka sells Chonka'
       expect(ops.to_s).to eq('Willy Wonka sells Chonka')
+    end
+  end
+
+  describe 'location of out_file' do
+    let(:ops) { Options.new }
+
+    context 'when no --out-file and XDG_DATA_HOME is not set' do
+      before do
+        @old_env = ENV['XDG_DATA_HOME']
+        ENV['XDG_DATA_HOME'] = nil
+      end
+
+      after do
+        ENV['XDG_DATA_HOME'] = @old_env
+      end
+
+      it 'defaults to saving output files in ~/.local/share/labrat' do
+        file = ops.out_file
+        out_dir = File.dirname(file)
+        out_base = File.basename(file)
+        expect(out_dir).to eq(File.expand_path("~/.local/share/labrat"))
+        expect(out_base).to match(/\A\d\d\d\d-\d\d-\d\dT\d\d:\d\d/)
+      end
+    end
+
+    context 'when no --out-file and XDG_DATA_HOME is set' do
+      before do
+        @old_env = ENV['XDG_DATA_HOME']
+        ENV['XDG_DATA_HOME'] = "~/.cache/labrat"
+      end
+
+      after do
+        ENV['XDG_DATA_HOME'] = @old_env
+      end
+
+      it 'defaults to saving output files in directory in $XDG_DATA_HOME' do
+        file = ops.out_file
+        out_dir = File.dirname(file)
+        out_base = File.basename(file)
+        expect(out_dir).to eq(File.expand_path("~/.cache/labrat"))
+        expect(out_base).to match(/\A\d\d\d\d-\d\d-\d\dT\d\d:\d\d/)
+      end
+    end
+
+    context 'when --out-file is set' do
+      let!(:ops) { Options.new }
+
+      before do
+        ops[:out_file] = '~/junk/labrat.pdf'
+      end
+
+      it 'sets out file to option setting' do
+        file = ops.out_file
+        out_dir = File.dirname(file)
+        out_base = File.basename(file)
+        expect(out_dir).to eq(File.expand_path("~/junk"))
+        expect(out_base).to match(/labrat/)
+      end
     end
   end
 end

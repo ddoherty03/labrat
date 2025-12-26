@@ -240,19 +240,21 @@ RSpec.describe ArgParser do
     it 'can set an optional output PDF file' do
       ops = ap.parse(['-ojunk'])
       expect(ops.msg).to be_nil
-      expect(ops.out_file).to eq('junk.pdf')
+      expect(ops.out_file).to eq(File.expand_path('junk.pdf'))
 
       ops = ap.parse(['--out-file=junk'])
       expect(ops.msg).to be_nil
-      expect(ops.out_file).to eq('junk.pdf')
+      expect(ops.out_file).to eq(File.expand_path('junk.pdf'))
 
       ops = ap.parse(['--out-file=junk.PDF'])
       expect(ops.msg).to be_nil
-      expect(ops.out_file).to eq('junk.PDF')
+      expect(ops.out_file).to eq(File.expand_path('junk.PDF'))
 
       ops = ap.parse(['--out-file', '  file with some spaces  	'])
       expect(ops.msg).to be_nil
-      expect(ops.out_file).to eq('file with some spaces.pdf')
+      expect(ops.out_file).to eq(File.expand_path('file with some spaces.pdf'))
+
+      expect { ap.parse(['--out-file', '/labrat/outfile.pdf']) }.to raise_error(/cannot write to/)
     end
 
     it 'can set an optional print command' do
