@@ -83,3 +83,10 @@ lsp_dest_path = File.join(usr_dest_dir, 'labrat.el')
 warn "Installing Emacs lisp library '#{lsp_dest_path}'."
 icmd = "install -m 0664 '#{lsp_src_path}' '#{lsp_dest_path}'"
 system(icmd)
+
+# Copy vim plugin
+vim_src_dir = File.expand_path(File.join(__dir__, '../lib/vim'))
+warn "Copying vim plugin to '#{usr_dest_dir}/vim'."
+Dir.chdir(vim_src_dir) do
+  FileUtils.cp_r(vim_src_dir, usr_dest_dir)
+end

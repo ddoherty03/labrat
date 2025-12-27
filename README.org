@@ -36,6 +36,11 @@ Buy your copy today while supplies last!
 - [[#introduction][Introduction]]
 - [[#usage][Usage]]
   - [[#motivation][Motivation]]
+    - [[#quick-start][Quick Start]]
+    - [[#editor-integration][Editor Integration]]
+      - [[#emacs][Emacs]]
+      - [[#vim][Vim]]
+      - [[#installing-the-libraries][Installing the Libraries]]
   - [[#a-tip-on-buying-file-folder-labels][A Tip on Buying File Folder Labels]]
   - [[#installation][Installation]]
   - [[#setting-options][Setting options]]
@@ -102,6 +107,7 @@ Windows or to a Mac to run Dymo's proprietary GUI.  The Dymo GUI is
 particularly irksome because it takes a long time to start up and demands that
 you register every time you open it.
 
+*** Quick Start
 That's too much ceremony for generating simple labels.  I wanted a way to
 print a file label from the command line, or even better, from within my
 editor, Emacs.  After giving up looking for such a thing without success, I
@@ -112,8 +118,6 @@ configuration---printing a file folder label is as simple as:
   $ labrat 'First Line of Label ~~ And the Second Line'
   #+end_src
 
-  #+RESULTS:
-
 Or, you can preview the label in your previewer of choice (mine is qpdfview)
 by adding the -V flag:
 
@@ -121,8 +125,8 @@ by adding the -V flag:
   $ labrat -V 'First Line of Label ~~ And the Second Line'
   #+end_src
 
-  #+RESULTS:
-
+*** Editor Integration
+**** Emacs
 Even better, I have included with =labrat= an elisp file (=labrat.el=) that
 will invoke =labrat= to form a label with the text of the paragraph at or
 before point.  So within Emacs, you can bind keys to the commands,
@@ -131,10 +135,34 @@ paragraph as your default label.  Thus, in Emacs, I have ~C-z C-l C-l~ bound
 to =labrat-print= and ~C-z C-l C-v~ to =labrat-view=, and I can type a label
 in any buffer and get it generated with very little ceremony.
 
+**** Vim
 There is also a vim plugin that you can copy to you =~.vim/plugins/labrat.vim=
 directory to invoke ~labrat~ from within ~vim~.  Suggested keybindings are
-included for copying to =~/.vim/after/plugins/labrat.vim= that bind
+included for copying to =~/.vim/after/plugin/labrat.vim= that bind
 =<leader>lp= and =<leader>lv= to invoke ~labrat~ in normal and visual modes.
+
+**** Installing the Libraries
+After running ~labrat-install~ both the emacs and vim libraries will be copied
+to =~/.config/labrat=. It's up to you to copy them from there to you Emacs
+load-path or vim ~plugin~ and ~after/plugin~ directories respectively.
+
+Or, you can just add symlinks to the distributed files, so you get updates
+whenever you update ~labrat~:
+
+#+begin_src sh
+  $ cd ~/.emacs.d/lisp  # Assuming this is on your load-path
+  $ ln -s ~/.config/labrat/labrat.el labrat.el
+#+end_src
+
+Then, `require 'labrat'` in you Emacs init file.
+
+#+begin_src sh
+  $ cd ~/.vim/plugin
+  $ ln -s ~/.config/labrat/vim/plugin/labrat.vim labrat.vim
+
+  $ cd ~/.vim/after/plugin
+  $ ln -s ~/.config/labrat/vim/after/plugin/labrat.vim labrat.vim
+#+end_src
 
 ** A Tip on Buying File Folder Labels
 As mentioned, one of my main motivations for writing =labrat= was the need to
