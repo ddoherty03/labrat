@@ -14,9 +14,9 @@ require 'pp'
 #
 # * Introduction
 # This gem provides a command-line application, ~labrat~, for the easy printing
-# of labels after suitable configuration.  It also provides an Emacs library for
-# easily invoking ~labrat~ from within Emacs to make a label from the paragraph
-# at point.
+# of labels after suitable configuration.  It also provides Emacs and ~vim~
+# libraries for easily invoking ~labrat~ from within the editor to make a label
+# from the paragraph at point.
 #
 # It can handle everything from label printers such as the Dymo LabelWriter
 # geared toward single label printing to full-size printers for printing a
