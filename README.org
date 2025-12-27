@@ -12,9 +12,9 @@
 
 * Introduction
 This gem provides a command-line application, ~labrat~, for the easy printing
-of labels after suitable configuration.  It also provides an Emacs library for
-easily invoking ~labrat~ from within Emacs to make a label from the paragraph
-at point.
+of labels after suitable configuration.  It also provides Emacs and ~vim~
+libraries for easily invoking ~labrat~ from within the editor to make a label
+from the paragraph at point.
 
 It can handle everything from label printers such as the Dymo LabelWriter
 geared toward single label printing to full-size printers for printing a
@@ -130,6 +130,11 @@ before point.  So within Emacs, you can bind keys to the commands,
 paragraph as your default label.  Thus, in Emacs, I have ~C-z C-l C-l~ bound
 to =labrat-print= and ~C-z C-l C-v~ to =labrat-view=, and I can type a label
 in any buffer and get it generated with very little ceremony.
+
+There is also a vim plugin that you can copy to you =~.vim/plugins/labrat.vim=
+directory to invoke ~labrat~ from within ~vim~.  Suggested keybindings are
+included for copying to =~/.vim/after/plugins/labrat.vim= that bind
+=<leader>lp= and =<leader>lv= to invoke ~labrat~ in normal and visual modes.
 
 ** A Tip on Buying File Folder Labels
 As mentioned, one of my main motivations for writing =labrat= was the need to
