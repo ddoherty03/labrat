@@ -9,7 +9,6 @@ require 'prawn/measurement_extensions'
 require 'optparse'
 require 'yaml'
 require 'pp'
-require 'debug'
 
 # Gem Overview (extracted from README.org by gem_docs)
 #
