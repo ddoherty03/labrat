@@ -1,47 +1,47 @@
-- [Introduction](#org56fb828)
-- [Usage](#org974093b)
-  - [Motivation](#orgd8b82a3)
-  - [Quick Start](#orgfd1ca0b)
-  - [Editor Integration](#orgc67a2fd)
-    - [Emacs](#org2d923c0)
-    - [Vim](#org58ddd36)
-    - [Installing the Libraries](#org19960cd)
-  - [A Tip on Buying File Folder Labels](#orgf7d8f9d)
-  - [Installation](#orgfff2f5d)
-  - [Setting options](#orgb21e4d6)
-  - [Dimensions and other values in options](#org6b63666)
-  - [Page Setup Options](#org383399f)
-    - [Orientation](#org2f32488)
-    - [Page Dimensions](#org7f80091)
-    - [Page Grid](#org7756925)
-  - [Label Setup Options](#orga23cfc9)
-    - [Padding](#org6e340b5)
-    - [Alignment](#org44fbd0b)
-    - [Fonts and styling](#org91b1428)
-    - [Position Adjustment](#org6ecc377)
-  - [Job Processing Options](#orgb130f7b)
-    - [Starting label](#org8e17103)
-    - [New line marker](#orgdae0b4d)
-    - [Label separator](#orgd282e3f)
-    - [Number of copies](#org3616573)
-    - [Input and output files](#orgc219619)
-    - [Printing or viewing](#org18b6d40)
-    - [Printing and viewing shell commands](#org0a3ddbe)
-    - [Aids to testing label layouts](#org72cfe80)
-  - [The Label Database and the label option](#org5a0f691)
-    - [Listing labels](#org8cf306f)
-    - [System label database](#org8f4e843)
-    - [Trying out a label definition](#orgca1435c)
-    - [Nesting label definitions](#org5d2c388)
-    - [Label database entries as configuration sets](#org4eaa1a5)
-    - [A Caution about option order](#org65dfc16)
-- [Development](#org7a15b9d)
-- [Contributing](#org92ab19d)
+- [Introduction](#orgc81a53e)
+- [Motivation](#org33f3607)
+- [Quick Start](#org95f6e5f)
+- [Installation](#org400d5bd)
+- [Editor Integration](#org5bbd0fe)
+  - [Emacs](#org4c76c08)
+  - [Vim](#org5f6cf03)
+  - [Installing the Libraries](#org509ab48)
+- [A Tip on Buying File Folder Labels](#orgd0e562b)
+- [Usage](#orga8cac2c)
+  - [Setting options](#org96d4f01)
+  - [Dimensions and other values in options](#orgc37a47c)
+  - [Page Setup Options](#orgbc30780)
+    - [Orientation](#orgdf081ce)
+    - [Page Dimensions](#org05e1557)
+    - [Page Grid](#org4a7e5f3)
+  - [Label Setup Options](#org1f5ee0e)
+    - [Padding](#org231ffe1)
+    - [Alignment](#org0010334)
+    - [Fonts and styling](#orgf9697b9)
+    - [Position Adjustment](#org30f6a42)
+  - [Job Processing Options](#org47db8f0)
+    - [Starting label](#org53e295e)
+    - [New line marker](#orgc2e67f7)
+    - [Label separator](#org25d3fa7)
+    - [Number of copies](#orgeac6a2c)
+    - [Input and output files](#org20e7efe)
+    - [Printing or viewing](#org0be4d3e)
+    - [Printing and viewing shell commands](#orgd13d251)
+    - [Aids to testing label layouts](#org64127ec)
+  - [The Label Database and the label option](#org32dd507)
+    - [Listing labels](#orgb630f76)
+    - [System label database](#orgdfee168)
+    - [Trying out a label definition](#org9afbed8)
+    - [Nesting label definitions](#orge88e427)
+    - [Label database entries as configuration sets](#org2b864e1)
+    - [A Caution about option order](#org79b4bed)
+- [Development](#org9807206)
+- [Contributing](#org8a8eb4a)
 
 [![CI](https://github.com/ddoherty03/labrat/actions/workflows/main.yml/badge.svg?branch=master)](https://github.com/ddoherty03/labrat/actions/workflows/main.yml)
 
 
-<a id="org56fb828"></a>
+<a id="orgc81a53e"></a>
 
 # Introduction
 
@@ -56,33 +56,16 @@ Easy-to-print labels can make the process of creating file folders trivial, but 
 Buy your copy today while supplies last!
 
 
-<a id="org974093b"></a>
+<a id="org33f3607"></a>
 
-# Usage
-
-`labrat` is a linux command-line program for quickly printing labels. It uses the [Prawn gem](https://github.com/prawnpdf/prawn) to generate PDF files with label formatting in mind. With `labrat` properly configured, printing a label is as simple as:
-
-```
-$ labrat 'Income Taxes 2021 ~~ Example Maker, Inc.'
-```
-
-And you will get a two-line file-folder label printed that looks like this:
-
-![img](./img/sample.png)
-
-Note that an outline was added to make the size of the label apparent and is not actually printed with the label by default.
-
-
-<a id="orgd8b82a3"></a>
-
-## Motivation
+# Motivation
 
 I need to print labels. And in my case, mostly I need file folder labels. I typically want to print to a Dymo LabelWriter, of which I own several variants. The problem is that I work almost entirely in Linux, but the simple task of printing a file folder label has required opening a GUI application, such as the very fine [glabels](https://help.gnome.org/users/glabels/stable/), or worse, switching to a machine running Windows or to a Mac to run Dymo's proprietary GUI. The Dymo GUI is particularly irksome because it takes a long time to start up and demands that you register every time you open it.
 
 
-<a id="orgfd1ca0b"></a>
+<a id="org95f6e5f"></a>
 
-## Quick Start
+# Quick Start
 
 That's too much ceremony for generating simple labels. I wanted a way to print a file label from the command line, or even better, from within my editor, Emacs. After giving up looking for such a thing without success, I decided to write my own. Hence labrat. With it&#x2014;after due configuration&#x2014;printing a file folder label is as simple as:
 
@@ -97,28 +80,51 @@ $ labrat -V 'First Line of Label ~~ And the Second Line'
 ```
 
 
-<a id="orgc67a2fd"></a>
+<a id="org400d5bd"></a>
 
-## Editor Integration
+# Installation
+
+Since `labrat` is distributed as a Ruby gem, you have to have a ruby installation. Look [here](https://www.ruby-lang.org/en/documentation/installation/) for ruby installation instructions. You can then install `labrat` with:
+
+```sh
+$ gem install labrat
+```
+
+After installation, you should install the user and system (if you have sudo privileges) configuration files with:
+
+```sh
+$ labrat-install
+```
+
+This will, assuming you have sudo privileges, install an annotated system-wide config file in `/etc/xdg/labrat/config.yml` and a system-wide label database in `/etc/xdg/labrat/labeldb.yml`.
+
+It will also install an annotated sample user config file in `~/.config/labrat/labrat.yml` and a sample user-level label database in `~/.config/labrat/labeldb.yml`.
+
+If you invoke `labrat-install` multiple times, it will refuse to overwrite any existing config or database files that you may have already installed. If you want to re-install them you have to remove the existing files or move them out of the way.
 
 
-<a id="org2d923c0"></a>
+<a id="org5bbd0fe"></a>
 
-### Emacs
-
-Even better, I have included with `labrat` an elisp file (`labrat.el`) that will invoke `labrat` to form a label with the text of the paragraph at or before point. So within Emacs, you can bind keys to the commands, `labrat-print` and `labrat-view` to print or view the current or prior paragraph as your default label. Thus, in Emacs, I have `C-z C-l C-l` bound to `labrat-print` and `C-z C-l C-v` to `labrat-view`, and I can type a label in any buffer and get it generated with very little ceremony.
+# Editor Integration
 
 
-<a id="org58ddd36"></a>
+<a id="org4c76c08"></a>
 
-### Vim
+## Emacs
+
+Included with `labrat` is an elisp file (`labrat.el`) that will invoke `labrat` to form a label with the text of the paragraph at or before point. So within Emacs, you can bind keys to the commands, `labrat-print` and `labrat-view` to print or view the current or prior paragraph as your default label. Thus, in Emacs, I have `C-z C-l C-l` bound to `labrat-print` and `C-z C-l C-v` to `labrat-view`, and I can type a label in any buffer and get it generated with very little ceremony.
+
+
+<a id="org5f6cf03"></a>
+
+## Vim
 
 There is also a vim plugin that you can copy to you `~.vim/plugins/labrat.vim` directory to invoke `labrat` from within `vim`. Suggested keybindings are included for copying to `~/.vim/after/plugin/labrat.vim` that bind `<leader>lp` and `<leader>lv` to invoke `labrat` in normal and visual modes.
 
 
-<a id="org19960cd"></a>
+<a id="org509ab48"></a>
 
-### Installing the Libraries
+## Installing the Libraries
 
 After running `labrat-install` both the emacs and vim libraries will be copied to `~/.config/labrat`. It's up to you to copy them from there to you Emacs load-path or vim `plugin` and `after/plugin` directories respectively.
 
@@ -144,9 +150,9 @@ $ ln -s ~/.config/labrat/vim/after/plugin/labrat.vim labrat.vim
 ```
 
 
-<a id="orgf7d8f9d"></a>
+<a id="orgd0e562b"></a>
 
-## A Tip on Buying File Folder Labels
+# A Tip on Buying File Folder Labels
 
 As mentioned, one of my main motivations for writing `labrat` was the need to easily create file-folder labels. I got into creating files after reading *Getting Things Done* by David Allen. One of his recommendations for keeping organized is having a filing system so that documents can be easily archived and retrieved.
 
@@ -157,32 +163,24 @@ After looking for alternative printers, I found the solution, not in a new print
 Thermal labels may be fine for ephemeral applications like name tags or shipping labels, but are terrible for long-term applications like file folders, marking cables, marking electrical breakers, or any other number of applications where long-term readability is essential.
 
 
-<a id="orgfff2f5d"></a>
+<a id="orga8cac2c"></a>
 
-## Installation
+# Usage
 
-Since `labrat` is distributed as a Ruby gem, you have to have a ruby installation. Look [here](https://www.ruby-lang.org/en/documentation/installation/) for ruby installation instructions. You can then install `labrat` with:
+`labrat` is a linux command-line program for quickly printing labels. It uses the [Prawn gem](https://github.com/prawnpdf/prawn) to generate PDF files with label formatting in mind. With `labrat` properly configured, printing a label is as simple as:
 
-```sh
-$ gem install labrat
+```
+$ labrat 'Income Taxes 2021 ~~ Example Maker, Inc.'
 ```
 
-After installation, you should install the user and system (if you have sudo privileges) configuration files with:
+And you will get a two-line file-folder label printed that looks like this:
 
-```sh
-$ labrat-install
-```
+![img](./img/sample.png)
 
-This will, assuming you have sudo privileges, install an annotated system-wide config file in `/etc/xdg/labrat/config.yml` and a system-wide label database in `/etc/xdg/labrat/labeldb.yml`.
-
-It will also install an annotated sample user config file in `~/.config/labrat/labrat.yml` and a sample user-level label database in `~/.config/labrat/labeldb.yml`.
-
-For the benefit of Emacs users, it also installs the `labrat.el` elisp library in `~/.config/labrat` as well. You may want to add this directory to your `load-path` or copy, move, or link it to a directory already in your `load-path`.
-
-If you invoke `labrat-install` multiple times, it will refuse to overwrite any existing config or database files that you may have already installed. If you want to re-install them you have to remove the existing files or move them out of the way.
+Note that an outline was added to make the size of the label apparent and is not actually printed with the label by default.
 
 
-<a id="orgb21e4d6"></a>
+<a id="org96d4f01"></a>
 
 ## Setting options
 
@@ -195,7 +193,7 @@ Labrat reads options from the following locations, with the locations listed fro
 3.  Finally, it reads options from the command-line, where, of course, the leading hyphens are mandatory.
 
 
-<a id="org6b63666"></a>
+<a id="orgc37a47c"></a>
 
 ## Dimensions and other values in options
 
@@ -212,14 +210,14 @@ Many of the options deal with specifying some sort of distance. Those are design
 Most other options are strings, which need to be quoted on the command-line if they contain any spaces or other characters special to your shell. In the configuration files, string values need not be quoted.
 
 
-<a id="org383399f"></a>
+<a id="orgbc30780"></a>
 
 ## Page Setup Options
 
-`Labrat` can handle multi-label pages such as Avery-style label sheets. These options deal with the page-level dimensions of the, potentially, multi-label page. By contrast, the dimensions of individual labels are dealt with by the label setup options described in the [next](#orga23cfc9) section.
+`Labrat` can handle multi-label pages such as Avery-style label sheets. These options deal with the page-level dimensions of the, potentially, multi-label page. By contrast, the dimensions of individual labels are dealt with by the label setup options described in the [next](#org1f5ee0e) section.
 
 
-<a id="org2f32488"></a>
+<a id="orgdf081ce"></a>
 
 ### Orientation
 
@@ -227,7 +225,7 @@ Most other options are strings, which need to be quoted on the command-line if t
 -   **`-P`, `--[no-]portrait`:** This is simply a convenience switch meaning `--no-landscape` and is the default.
 
 
-<a id="org7f80091"></a>
+<a id="org05e1557"></a>
 
 ### Page Dimensions
 
@@ -246,7 +244,7 @@ With that in mind, specifying the page dimensions is just a matter of getting ou
 -   **`--page-margin=DIM`:** Distance from all sides of page (in portrait) to the print area; short for `--top-page-margin`, `--bottom-page-margin`, `--left-page-margin` and `--right-page-margin`
 
 
-<a id="org7756925"></a>
+<a id="org4a7e5f3"></a>
 
 ### Page Grid
 
@@ -258,7 +256,7 @@ By default, `labrat` considers a page of labels to contain only one row and one 
 -   **`--column-gap=DIM`:** The distance between columns of labels on a page
 
 
-<a id="orga23cfc9"></a>
+<a id="org1f5ee0e"></a>
 
 ## Label Setup Options
 
@@ -272,7 +270,7 @@ These options determine the layout of individual labels within the page grid rat
 The remaining space on the page is divided into a grid of identically-sized labels, which determines the size of each label.
 
 
-<a id="org6e340b5"></a>
+<a id="org231ffe1"></a>
 
 ### Padding
 
@@ -287,7 +285,7 @@ Within each label, the following options allow you to set the margins on each si
 -   **`--pad=DIM`:** Short for `--top-pad=DIM`, `--bottom-pad=DIM`, `--left-pad=DIM` and `--right-pad=DIM`
 
 
-<a id="org44fbd0b"></a>
+<a id="org0010334"></a>
 
 ### Alignment
 
@@ -297,7 +295,7 @@ By default the label text is centered horizontally and vertically within the lab
 -   **`--v-align=[top|center|bottom]`:** Vertical alignment of text within the label (default center)
 
 
-<a id="org91b1428"></a>
+<a id="orgf9697b9"></a>
 
 ### Fonts and styling
 
@@ -308,7 +306,7 @@ By default the label text is centered horizontally and vertically within the lab
 -   **`--font-style=[normal|bold|italic|bold-italic]`:** Style of font to use for text (default normal)
 
 
-<a id="org6ecc377"></a>
+<a id="org30f6a42"></a>
 
 ### Position Adjustment
 
@@ -318,14 +316,14 @@ Despite our best efforts, the vagaries of printer hardware, print drivers, and c
 -   **`-y, --delta-y=DIM`:** Up-down adjustment (positive moves up, negative down) of label text within the label print area.
 
 
-<a id="orgb130f7b"></a>
+<a id="org47db8f0"></a>
 
 ## Job Processing Options
 
 The following options control the processing of labels by `labrat`.
 
 
-<a id="org8e17103"></a>
+<a id="org53e295e"></a>
 
 ### Starting label
 
@@ -336,7 +334,7 @@ When printing onto a multi-label page, some of the labels may have already been 
 This only affects the placement of the first label on the first page. Any later pages always start on the first label position.
 
 
-<a id="orgdae0b4d"></a>
+<a id="orgc2e67f7"></a>
 
 ### New line marker
 
@@ -345,7 +343,7 @@ You can embed a special text-sequence in the label text to indicate where a line
 -   **`-n`, `--nlsep=SEPARATOR`:** Specify text to be translated into a line-break (default ' `∼∼` ')
 
 
-<a id="orgd282e3f"></a>
+<a id="org25d3fa7"></a>
 
 ### Label separator
 
@@ -354,7 +352,7 @@ The only way to print more than one label from the command-line is to indicate w
 -   **`--label-sep=SEPARATOR`:** Specify text that indicates the start of a new label (default '@@')
 
 
-<a id="org3616573"></a>
+<a id="orgeac6a2c"></a>
 
 ### Number of copies
 
@@ -363,7 +361,7 @@ This option causes `labrat` to generate multiple copies of each label with all t
 -   **`-c NUM`, `--copies=NUM`:** Number of copies of each label to generate.
 
 
-<a id="orgc219619"></a>
+<a id="org20e7efe"></a>
 
 ### Input and output files
 
@@ -431,10 +429,10 @@ This option causes `labrat` to generate multiple copies of each label with all t
 
 5.  Template exception
 
-    Notwithstanding all of the above, if the `-T` (`--template`) option is given (see below at [2.10.8](#org72cfe80)), all label texts from the command-line, an `in-file`, or standard input are ignored and a template is generated.
+    Notwithstanding all of the above, if the `-T` (`--template`) option is given (see below at [7.5.8](#org64127ec)), all label texts from the command-line, an `in-file`, or standard input are ignored and a template is generated.
 
 
-<a id="org18b6d40"></a>
+<a id="org0be4d3e"></a>
 
 ### Printing or viewing
 
@@ -443,7 +441,7 @@ By default, `labrat` prints the generated output file to the printer named with 
 -   **`-V`, `--[no-]view`:** View rather than print
 
 
-<a id="org0a3ddbe"></a>
+<a id="orgd13d251"></a>
 
 ### Printing and viewing shell commands
 
@@ -469,7 +467,7 @@ to launch the previewer when the `--view` or `-V` options are given. It also '%o
 -   **`-:`, `--view-command=VIEWCMD`:** Command to use for viewing with %o for label file name (the \`:\` is meant to remind you of a pair of eyes looking at the purdy label)
 
 
-<a id="org72cfe80"></a>
+<a id="org64127ec"></a>
 
 ### Aids to testing label layouts
 
@@ -494,14 +492,14 @@ to launch the previewer when the `--view` or `-V` options are given. It also '%o
     -   **`-v`, `--[no-]verbose`:** Run verbosely, that is, print out lots of information about what `labrat` is doing as it processes the job.
 
 
-<a id="org5a0f691"></a>
+<a id="org32dd507"></a>
 
 ## The Label Database and the label option
 
 One of the nice things about `labrat` is that it comes with a database of pre-defined label configurations for many standard labels, especially Avery labels since they were good enough to publish PDF templates for all their products at <https://www.avery.com/templates>.
 
 
-<a id="org8cf306f"></a>
+<a id="orgb630f76"></a>
 
 ### Listing labels
 
@@ -514,7 +512,7 @@ $ labrat --list-labels
 Any users who create useful label definitions can propose them for inclusion with `labrat's` distributed label database by filing a pull request at this git repository.
 
 
-<a id="org8f4e843"></a>
+<a id="orgdfee168"></a>
 
 ### System label database
 
@@ -538,7 +536,7 @@ avery8987:
 Note that it restricts itself to page-level settings. It would be inappropriate to, for example, include something like `font-style` in a system-wide label definition, though such things can be useful in a user's private label configuration.
 
 
-<a id="orgca1435c"></a>
+<a id="org9afbed8"></a>
 
 ### Trying out a label definition
 
@@ -555,7 +553,7 @@ $ labrat -V -c30 --label=avery8987 'Four score and seven years ago ~~ Our father
 ```
 
 
-<a id="org5d2c388"></a>
+<a id="orge88e427"></a>
 
 ### Nesting label definitions
 
@@ -569,7 +567,7 @@ avery8986:
 In other words, it defines the `avery8986` label with a nested `--label` option that simply incorporates the `avery8987` entry settings.
 
 
-<a id="org4eaa1a5"></a>
+<a id="org2b864e1"></a>
 
 ### Label database entries as configuration sets
 
@@ -615,7 +613,7 @@ $ labrat -V -c14 --label=badge 'Daniel E. Doherty ~~ (Amateur Programmer)'
 ```
 
 
-<a id="org65dfc16"></a>
+<a id="org79b4bed"></a>
 
 ### A Caution about option order
 
@@ -634,7 +632,7 @@ $ labrat --label=ff --font-style=italic 'Four score and seven years ago ~~ Our f
 ```
 
 
-<a id="org7a15b9d"></a>
+<a id="org9807206"></a>
 
 # Development
 
@@ -643,7 +641,7 @@ After checking out the repo, run \`bin/setup\` to install dependencies. Then, ru
 To install this gem onto your local machine, run \`bundle exec rake install\`.
 
 
-<a id="org92ab19d"></a>
+<a id="org8a8eb4a"></a>
 
 # Contributing
 
