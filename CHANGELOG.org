@@ -1,5 +1,35 @@
 
-* [1.3.0] - [2025-12-26 Fri]
+* Version 1.4.0 [2025-12-28 Sun]
+- Added a ~vim~ plugin to allow printing or viewing labels from within a vim
+  buffer as was possible in Emacs with ~labrat.el~.
 
-* [0.1.0] - [2021-07-28 Wed]
+* Version 1.3.0 [2025-12-26 Fri]
+- By default, labrat no longer puts the output file in labrat.pdf; instead,
+  all labels go to =~/.local/share/labrat= and uses the run time for a
+  time-stamp file name.
+- Output file can still be overridden with the ~-o~ or ~--out-file~ option
+
+* Version 1.2.3 [2025-03-20 Thu]
+- No user-visible changes
+
+* Version 1.2.2 [2024-11-29 Fri]
+- Used ~fat_config~ gem to read config files
+
+* Version 1.2.1 [2024-09-20 Fri]
+- Fixed ~labrat.el~ view command
+
+* Version 1.2.0 [2023-01-19 Thu]
+- Changed =nlsep= to '~~'
+- Changed =label-sep= to '@@'
+- Minor bug fixes
+
+* Version 1.1.0 [2023-01-06 Fri]
+- Changed =nl-sep= to '-->'
+- Changed =label-sep= to '==>'
+- Added label name to template output
+
+* Version 0.1.14 [2022-02-03 Thu]
+- Nothing important
+
+* Version 0.1.13 [2021-11-04 Thu]
 - Initial release
