@@ -224,8 +224,8 @@ It will also install an annotated sample user config file in
 
 For the benefit of Emacs users, it also installs the =labrat.el= elisp library
 in =~/.config/labrat= as well.  You may want to add this directory to your
-~load-path~ or copy, move, or link it to a directory already in your
-~load-path~.
+=load-path= or copy, move, or link it to a directory already in your
+=load-path=.
 
 If you invoke =labrat-install= multiple times, it will refuse to overwrite any
 existing config or database files that you may have already installed.  If you
@@ -273,7 +273,7 @@ they contain any spaces or other characters special to your shell.  In the
 configuration files, string values need not be quoted.
 
 ** Page Setup Options
-Labrat can handle multi-label pages such as Avery-style label sheets.  These
+~Labrat~ can handle multi-label pages such as Avery-style label sheets.  These
 options deal with the page-level dimensions of the, potentially, multi-label
 page.  By contrast, the dimensions of individual labels are dealt with by the
 label setup options described in the [[* Label Setup Options][next]] section.
