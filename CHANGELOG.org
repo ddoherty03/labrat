@@ -19,7 +19,7 @@
 - Fixed ~labrat.el~ view command
 
 * Version 1.2.0 [2023-01-19 Thu]
-- Changed =nlsep= to '~~'
+- Changed =nl-sep= to '~~'
 - Changed =label-sep= to '@@'
 - Minor bug fixes
 

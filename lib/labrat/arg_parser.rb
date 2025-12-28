@@ -48,7 +48,7 @@ module Labrat
       parser.separator ""
       parser.separator "Print or view (with -V) a label with the given <label-text>."
       parser.separator "All non-option arguments are used for the label text with a special"
-      parser.separator "marker ('~~' by default, see --nlsep) indicating a line-break."
+      parser.separator "marker ('~~' by default, see --nl-sep) indicating a line-break."
       parser.separator ""
       parser.separator "Below, NUM indicates an integer, DIM, indicates a linear dimension,"
       parser.separator "valid DIM units are: pt, mm, cm, dm, m, in, ft, yd."

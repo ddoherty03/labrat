@@ -421,12 +421,12 @@ line-break should occur.  By default it is the sequence =∼∼=.  This means th
 even consecutive occurrences.  There is no way to escape this in the text, so
 if you want labels that use =∼∼= as part of the text, you are going to have
 difficulty printing.  But you can change the marker to something else with
-~--nlsep~.  This is especially helpful when you are using the command-line to
+~--nl-sep~.  This is especially helpful when you are using the command-line to
 supply the label text since specifying line-breaks on a shell command can be
 difficult.  However note that this substitution takes place even when reading
 label texts from a file or standard input.
 
-- ~-n~, ~--nlsep=SEPARATOR~ :: Specify text to be translated into a line-break
+- ~-n~, ~--nl-sep=SEPARATOR~ :: Specify text to be translated into a line-break
   (default ' =∼∼= ')
 
 *** Label separator
@@ -513,7 +513,7 @@ you can use the ~--in-file~ option to specify that label texts are to be read
 from the given file instead.
 
 Each paragraph in the file constitutes a separate label.  Line breaks within
-the paragraphs are respected, though the ~--nlsep~ marker is still replaced
+the paragraphs are respected, though the ~--nl-sep~ marker is still replaced
 with additional line breaks.  Any line starting with a ~#~ character is
 considered a comment and is not included in the text of any label.
 
