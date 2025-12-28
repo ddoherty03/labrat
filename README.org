@@ -34,15 +34,15 @@ Buy your copy today while supplies last!
 
 * Table of Contents                                          :toc_5:noexport:
 - [[#introduction][Introduction]]
+- [[#motivation][Motivation]]
+- [[#quick-start][Quick Start]]
+- [[#installation][Installation]]
+- [[#editor-integration][Editor Integration]]
+  - [[#emacs][Emacs]]
+  - [[#vim][Vim]]
+  - [[#installing-the-libraries][Installing the Libraries]]
+- [[#a-tip-on-buying-file-folder-labels][A Tip on Buying File Folder Labels]]
 - [[#usage][Usage]]
-  - [[#motivation][Motivation]]
-  - [[#quick-start][Quick Start]]
-  - [[#editor-integration][Editor Integration]]
-    - [[#emacs][Emacs]]
-    - [[#vim][Vim]]
-    - [[#installing-the-libraries][Installing the Libraries]]
-  - [[#a-tip-on-buying-file-folder-labels][A Tip on Buying File Folder Labels]]
-  - [[#installation][Installation]]
   - [[#setting-options][Setting options]]
   - [[#dimensions-and-other-values-in-options][Dimensions and other values in options]]
   - [[#page-setup-options][Page Setup Options]]
@@ -81,23 +81,7 @@ Buy your copy today while supplies last!
 - [[#development][Development]]
 - [[#contributing][Contributing]]
 
-* Usage
-=labrat= is a linux command-line program for quickly printing labels.  It uses
-the [[https://github.com/prawnpdf/prawn][Prawn gem]] to generate PDF files with label formatting in mind. With
-=labrat= properly configured, printing a label is as simple as:
-
-#+begin_example
-$ labrat 'Income Taxes 2021 ~~ Example Maker, Inc.'
-#+end_example
-
-And you will get a two-line file-folder label printed that looks like this:
-
-[[./img/sample.png]]
-
-Note that an outline was added to make the size of the label apparent and is
-not actually printed with the label by default.
-
-** Motivation
+* Motivation
 I need to print labels. And in my case, mostly I need file folder labels.  I
 typically want to print to a Dymo LabelWriter, of which I own several
 variants.  The problem is that I work almost entirely in Linux, but the simple
@@ -107,7 +91,7 @@ Windows or to a Mac to run Dymo's proprietary GUI.  The Dymo GUI is
 particularly irksome because it takes a long time to start up and demands that
 you register every time you open it.
 
-** Quick Start
+* Quick Start
 That's too much ceremony for generating simple labels.  I wanted a way to
 print a file label from the command line, or even better, from within my
 editor, Emacs.  After giving up looking for such a thing without success, I
@@ -125,75 +109,7 @@ by adding the -V flag:
   $ labrat -V 'First Line of Label ~~ And the Second Line'
   #+end_src
 
-** Editor Integration
-*** Emacs
-Even better, I have included with =labrat= an elisp file (=labrat.el=) that
-will invoke =labrat= to form a label with the text of the paragraph at or
-before point.  So within Emacs, you can bind keys to the commands,
-=labrat-print= and =labrat-view= to print or view the current or prior
-paragraph as your default label.  Thus, in Emacs, I have ~C-z C-l C-l~ bound
-to =labrat-print= and ~C-z C-l C-v~ to =labrat-view=, and I can type a label
-in any buffer and get it generated with very little ceremony.
-
-*** Vim
-There is also a vim plugin that you can copy to you =~.vim/plugins/labrat.vim=
-directory to invoke ~labrat~ from within ~vim~.  Suggested keybindings are
-included for copying to =~/.vim/after/plugin/labrat.vim= that bind
-=<leader>lp= and =<leader>lv= to invoke ~labrat~ in normal and visual modes.
-
-*** Installing the Libraries
-After running ~labrat-install~ both the emacs and vim libraries will be copied
-to =~/.config/labrat=. It's up to you to copy them from there to you Emacs
-load-path or vim ~plugin~ and ~after/plugin~ directories respectively.
-
-Or, you can just add symlinks to the distributed files, so you get updates
-whenever you update ~labrat~:
-
-For emacs:
-#+begin_src sh
-  $ cd ~/.emacs.d/lisp  # Assuming this is on your load-path
-  $ ln -s ~/.config/labrat/labrat.el labrat.el
-#+end_src
-
-Then, `require 'labrat'` in you Emacs init file.
-
-And for vim:
-#+begin_src sh
-  $ cd ~/.vim/plugin
-  $ ln -s ~/.config/labrat/vim/plugin/labrat.vim labrat.vim
-
-  $ cd ~/.vim/after/plugin
-  $ ln -s ~/.config/labrat/vim/after/plugin/labrat.vim labrat.vim
-#+end_src
-
-** A Tip on Buying File Folder Labels
-As mentioned, one of my main motivations for writing =labrat= was the need to
-easily create file-folder labels.  I got into creating files after reading
-/Getting Things Done/ by David Allen.  One of his recommendations for keeping
-organized is having a filing system so that documents can be easily archived
-and retrieved.
-
-I have long used Dymo's 30327 label, which is just the right size for file
-folders.  But after several years of use, I started to notice something
-alarming: I could no longer read the text of the labels, they had nearly faded
-into oblivion.  The problem is that the labels use a thermal printing
-technology that is affected by light and time, and over a period of years,
-they get lighter and lighter.  You may have seen the same thing on old
-thermal-printed store receipts.
-
-After looking for alternative printers, I found the solution, not in a new
-printer technology, but in a new label technology.  DuraReady makes labels
-that can be printed on a thermal printer like the Dymo LabelWriter, but print
-on a "Gloss white polypropylene BOPP plastic."  I'm not sure what that is, but
-the labels come out with nice black lettering on a white background, and they
-don't fade.  Check it out here: [[https://www.duraready.com/file-folder-labels/1034d-9/16-x-3-7/16-white-bopp-plastic-label/][DuraReady]].
-
-Thermal labels may be fine for ephemeral applications like name tags or
-shipping labels, but are terrible for long-term applications like file
-folders, marking cables, marking electrical breakers, or any other number of
-applications where long-term readability is essential.
-
-** Installation
+* Installation
 Since =labrat= is distributed as a Ruby gem, you have to have a ruby
 installation.  Look [[https://www.ruby-lang.org/en/documentation/installation/][here]] for ruby installation instructions.  You can then
 install =labrat= with:
@@ -222,15 +138,94 @@ It will also install an annotated sample user config file in
 =~/.config/labrat/labrat.yml= and a sample user-level label database in
 =~/.config/labrat/labeldb.yml=.
 
-For the benefit of Emacs users, it also installs the =labrat.el= elisp library
-in =~/.config/labrat= as well.  You may want to add this directory to your
-=load-path= or copy, move, or link it to a directory already in your
-=load-path=.
-
 If you invoke =labrat-install= multiple times, it will refuse to overwrite any
 existing config or database files that you may have already installed.  If you
 want to re-install them you have to remove the existing files or move them out
 of the way.
+
+* Editor Integration
+** Emacs
+Included with =labrat= is an elisp file (=labrat.el=) that will invoke
+=labrat= to form a label with the text of the paragraph at or before point.
+So within Emacs, you can bind keys to the commands, =labrat-print= and
+=labrat-view= to print or view the current or prior paragraph as your default
+label.  Thus, in Emacs, I have ~C-z C-l C-l~ bound to =labrat-print= and ~C-z
+C-l C-v~ to =labrat-view=, and I can type a label in any buffer and get it
+generated with very little ceremony.
+
+** Vim
+There is also a vim plugin that you can copy to you =~.vim/plugins/labrat.vim=
+directory to invoke ~labrat~ from within ~vim~.  Suggested keybindings are
+included for copying to =~/.vim/after/plugin/labrat.vim= that bind
+=<leader>lp= and =<leader>lv= to invoke ~labrat~ in normal and visual modes.
+
+** Installing the Libraries
+After running ~labrat-install~ both the emacs and vim libraries will be copied
+to =~/.config/labrat=. It's up to you to copy them from there to you Emacs
+load-path or vim ~plugin~ and ~after/plugin~ directories respectively.
+
+Or, you can just add symlinks to the distributed files, so you get updates
+whenever you update ~labrat~:
+
+For emacs:
+#+begin_src sh
+  $ cd ~/.emacs.d/lisp  # Assuming this is on your load-path
+  $ ln -s ~/.config/labrat/labrat.el labrat.el
+#+end_src
+
+Then, `require 'labrat'` in you Emacs init file.
+
+And for vim:
+#+begin_src sh
+  $ cd ~/.vim/plugin
+  $ ln -s ~/.config/labrat/vim/plugin/labrat.vim labrat.vim
+
+  $ cd ~/.vim/after/plugin
+  $ ln -s ~/.config/labrat/vim/after/plugin/labrat.vim labrat.vim
+#+end_src
+
+* A Tip on Buying File Folder Labels
+As mentioned, one of my main motivations for writing =labrat= was the need to
+easily create file-folder labels.  I got into creating files after reading
+/Getting Things Done/ by David Allen.  One of his recommendations for keeping
+organized is having a filing system so that documents can be easily archived
+and retrieved.
+
+I have long used Dymo's 30327 label, which is just the right size for file
+folders.  But after several years of use, I started to notice something
+alarming: I could no longer read the text of the labels, they had nearly faded
+into oblivion.  The problem is that the labels use a thermal printing
+technology that is affected by light and time, and over a period of years,
+they get lighter and lighter.  You may have seen the same thing on old
+thermal-printed store receipts.
+
+After looking for alternative printers, I found the solution, not in a new
+printer technology, but in a new label technology.  DuraReady makes labels
+that can be printed on a thermal printer like the Dymo LabelWriter, but print
+on a "Gloss white polypropylene BOPP plastic."  I'm not sure what that is, but
+the labels come out with nice black lettering on a white background, and they
+don't fade.  Check it out here: [[https://www.duraready.com/file-folder-labels/1034d-9/16-x-3-7/16-white-bopp-plastic-label/][DuraReady]].
+
+Thermal labels may be fine for ephemeral applications like name tags or
+shipping labels, but are terrible for long-term applications like file
+folders, marking cables, marking electrical breakers, or any other number of
+applications where long-term readability is essential.
+
+* Usage
+=labrat= is a linux command-line program for quickly printing labels.  It uses
+the [[https://github.com/prawnpdf/prawn][Prawn gem]] to generate PDF files with label formatting in mind. With
+=labrat= properly configured, printing a label is as simple as:
+
+#+begin_example
+$ labrat 'Income Taxes 2021 ~~ Example Maker, Inc.'
+#+end_example
+
+And you will get a two-line file-folder label printed that looks like this:
+
+[[./img/sample.png]]
+
+Note that an outline was added to make the size of the label apparent and is
+not actually printed with the label by default.
 
 ** Setting options
 You can control how =labrat= composes a label completely from the
