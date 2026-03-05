@@ -46,5 +46,6 @@ Gem::Specification.new do |spec|
 
   spec.add_dependency "activesupport"
   spec.add_dependency "fat_config", '>=0.4.2'
-  spec.add_dependency "prawn", "~> 2.0"
+  spec.add_dependency "matrix"
+  spec.add_dependency "prawn", "<=2.5"
 end
