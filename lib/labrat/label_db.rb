@@ -4,20 +4,20 @@ module Labrat
   module LabelDb
     class << self
       # Module-level variable to hold the merged database.
-      attr_accessor :db
+      attr_accessor :db, :reader
     end
 
     # Read in the Labrat database of label settings, merging system and user
     # databases.
     def self.read(dir_prefix: '')
-      reader = FatConfig::Reader.new('labrat', root_prefix: dir_prefix)
+      self.reader = FatConfig::Reader.new('labrat', root_prefix: dir_prefix)
       self.db = reader.read('labeldb')
     end
 
     # Return a hash of config settings for the label named by labname.
     def self.[](labname)
       read unless db
-      db[labname.to_sym] || {}
+      db[labname.to_sym] || db[labname.downcase.to_sym] || {}
     end
 
     # Set a runtime configuration for a single labelname.
@@ -37,13 +37,11 @@ module Labrat
     end
 
     def self.system_db_paths(dir_prefix = '')
-      paths = Config.config_paths('labrat', base: 'labeldb', dir_prefix: dir_prefix)
-      paths[:system]
+      reader.config_paths[:system]
     end
 
     def self.user_db_paths(dir_prefix = '')
-      paths = Config.config_paths('labrat', base: 'labeldb', dir_prefix: dir_prefix)
-      paths[:user]
+      reader.config_paths[:user]
     end
   end
 end
