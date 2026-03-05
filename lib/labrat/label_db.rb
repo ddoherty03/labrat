@@ -11,7 +11,7 @@ module Labrat
     # databases.
     def self.read(dir_prefix: '')
       self.reader = FatConfig::Reader.new('labrat', root_prefix: dir_prefix)
-      self.db = reader.read('labeldb')
+      self.db = reader.read('labeldb').transform_keys(&:downcase)
     end
 
     # Return a hash of config settings for the label named by labname.
@@ -23,7 +23,7 @@ module Labrat
     # Set a runtime configuration for a single labelname.
     def self.[]=(labname, config = {})
       read unless db
-      db[labname.to_sym] = config
+      db[labname.to_sym.downcase] = config
     end
 
     # Return an Array of label names.
