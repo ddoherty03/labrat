@@ -38,6 +38,9 @@ labrat configuration at ~/.config/labrat/config.yml."
   :type 'string
   :group 'labrat)
 
+(defconst labrat-buffer-name "*labrat*"
+  "Name of the labrat process output buffer.")
+
 (defun labrat/pars-in-region ()
   "Return a string of paragraphs in region, separated by `labrat-label-sep'.
 
@@ -82,6 +85,57 @@ that start with '#' are removed, and the remaining lines
 returned"
   (s-join "\n" (--remove (string-match "^#" it) (s-split "\n" str))))
 
+(defun labrat/run (&rest args)
+  "Run labrat with ARGS, always reusing and displaying `*labrat*'.
+
+Stdout and stderr are both written to the `*labrat*' buffer.
+Return the labrat exit status."
+  (let* ((buf (get-buffer-create labrat-buffer-name))
+         (stderr-file (make-temp-file "labrat-stderr-"))
+         (status nil))
+    (unwind-protect
+        (progn
+          (with-current-buffer buf
+            (let ((inhibit-read-only t)
+                  (ts (format-time-string "%Y-%m-%d %H:%M:%S")))
+              (goto-char (point-max))
+              (unless (bolp)
+                (insert "\n"))
+              (insert (format "\n===== %s =====\n" ts))
+              (insert (format "$ %s %s\n\n"
+                              labrat-executable
+                              (mapconcat #'identity args " ")))))
+          (setq status
+                (apply #'call-process
+                       labrat-executable
+                       nil
+                       (list buf stderr-file)
+                       nil
+                       args))
+          (with-current-buffer buf
+            (let ((inhibit-read-only t))
+              (when (file-exists-p stderr-file)
+                (let ((stderr-text
+                       (with-temp-buffer
+                         (insert-file-contents stderr-file)
+                         (buffer-string))))
+                  (unless (string-empty-p stderr-text)
+                    (goto-char (point-max))
+                    (unless (bolp)
+                      (insert "\n"))
+                    (insert "===== stderr =====\n")
+                    (insert stderr-text)
+                    (unless (bolp)
+                      (insert "\n")))))
+              (goto-char (point-max))
+              (insert (format "\n[labrat exited with status %s]\n" status))))
+          (unless (equal status 0)
+            (display-buffer buf)
+            (message "labrat failed with status %s; see %s" status labrat-buffer-name))
+          status)
+      (when (file-exists-p stderr-file)
+        (delete-file stderr-file)))))
+
 (defun labrat-view ()
   "View the paragraph at or before point as a label with labrat.
 
@@ -90,19 +144,17 @@ paragraph at or before point inserted in the <label> position,
 but with each new-line replaced with the value of the variable
 labrat-nl-sep, '~~' by default."
   (interactive)
-  (call-process labrat-executable nil (get-buffer-create "*labrat*") nil
-                "-V" "-o ~/labrat.pdf" (labrat/pars-in-region)))
+  (labrat/run "-V" (labrat/pars-in-region)))
 
 (defun labrat-print ()
   "Print the paragraph at or before point as a label with labrat.
 
-This invokes the \"labrat -P <label>\" command with the paragraph
+This invokes the \"labrat <label>\" command with the paragraph
 at or before point inserted in the <label> position, but with
 each new-line replaced with the value of the variable
 labrat-nl-sep, '~~' by default."
   (interactive)
-  (call-process labrat-executable nil (buffer-name (get-buffer-create "*labrat*")) nil
-                "-o ~/labrat.pdf" (labrat/pars-in-region)))
+  (labrat/run (labrat/pars-in-region)))
 
 (provide 'labrat)
 ;;; labrat.el ends here
