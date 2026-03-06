@@ -119,6 +119,7 @@ module Labrat
           end
         end
       end
+      puts ops.out_file
       self
     end
 
