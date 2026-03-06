@@ -1,4 +1,11 @@
 
+* Version 1.6.0 [2026-03-06 Fri]
+- Improved labrat.el to ensure that the *labrat* buffer gets created and logs
+  the command used along with a timestamp and any errors.
+- Echo the output file name after creation.
+- Add the process number to file name to prevent name collisions.
+- Fix use of XDG_DATA_HOME environment variable.
+
 * Version 1.4.1 [2025-12-28 Sun]
 - Added a ~vim~ plugin to allow printing or viewing labels from within a vim
   buffer as was possible in Emacs with ~labrat.el~.
