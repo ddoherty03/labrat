@@ -1,3 +1,5 @@
+;; -*- lexical-binding: t; -*-
+
 ;;;; labrat -- Print labels using labrat from within a buffer.
 
 ;;; Commentary:
