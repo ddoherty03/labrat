@@ -43,6 +43,7 @@ RSpec.describe Options do
       expect(ops.out_file).to match(%r{#{File.expand_path('~/.local/share/labrat')}/\d\d\d\d})
       expect(ops.print_command.class).to eq(String)
       expect(ops.view_command.class).to eq(String)
+      expect(ops.print_options).to be_empty
       expect(ops.view).to be false
       expect(ops.template).to be false
       expect(ops.verbose).to be false
@@ -167,7 +168,7 @@ RSpec.describe Options do
 
     context 'when no --out-file and XDG_DATA_HOME is set' do
       before do
-        ENV['XDG_DATA_HOME'] = "~/.cache/labrat"
+        ENV['XDG_DATA_HOME'] = "~/.cache"
       end
 
       it 'defaults to saving output files in directory in $XDG_DATA_HOME' do

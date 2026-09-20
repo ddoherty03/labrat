@@ -40,6 +40,7 @@ module Labrat
                   :out_file,
                   :print_command,
                   :view_command,
+                  :print_options,
                   :view,
                   :template,
                   :verbose,
@@ -82,8 +83,9 @@ module Labrat
       # Output attributes
       self.printer = init[:printer] || ENV['LABRAT_PRINTER'] || ENV['PRINTER'] || 'dymo'
       self.out_file = init[:out_file] || self.class.default_out_file
-      self.print_command = init[:print_command] || 'lpr -P %p %o'
+      self.print_command = init[:print_command] || 'lpr -P %p %O %o'
       self.view_command = init[:view_command] || 'qpdfview --unique --instance labrat %o'
+      self.print_options = init[:print_options] || []
       self.view = init.fetch(:view, false)
       self.template = init.fetch(:landscape, false)
       self.grid = init.fetch(:gid, false)
@@ -200,6 +202,7 @@ module Labrat
         out_file: out_file,
         print_command: print_command,
         view_command: view_command,
+        print_options: print_options,
         view: view,
         template: template,
         verbose: verbose,

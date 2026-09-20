@@ -55,6 +55,9 @@ module Labrat
           delta-y: 1cm
           nl-sep: '%%'
           printer: seiko3
+          print-options:
+            - InputSlot=Right
+            - Resolution=150
         YAML
         setup_test_file('/etc/xdg/labrat/config.yml', config_yml)
         reader = FatConfig::Reader.new('labrat', xdg: true, root_prefix: SANDBOX_DIR)
@@ -66,6 +69,7 @@ module Labrat
         expect(op.delta_y).to be_within(EPS).of(1 * CM)
         expect(op.nl_sep).to eq('%%')
         expect(op.printer).to eq('seiko3')
+        expect(op.print_options).to eq(['InputSlot=Right', 'Resolution=150'])
       end
 
       it 'reads an XDG_CONFIG_DIRS xdg system directory config file' do

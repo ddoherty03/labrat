@@ -124,11 +124,16 @@ module Labrat
     end
 
     def print
-      cmd = ops.print_command.gsub('%p', ops.printer).gsub('%o', ops.out_file)
-      if ops.verbose
-        warn "Printing with:"
-        warn "  #{cmd} &"
+      print_options =
+        Shellwords.join(ops.print_options.flat_map { |option| ['-o', option] })
+      cmd = ops.print_command.gsub(/%[pOo]/) do |placeholder|
+        case placeholder
+        when '%p' then Shellwords.escape(ops.printer)
+        when '%o' then Shellwords.escape(ops.out_file)
+        when '%O' then print_options
+        end
       end
+      warn "Printing with:\n  #{cmd} &" if ops.verbose
       system("#{cmd} &")
     end
 

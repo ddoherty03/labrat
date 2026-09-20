@@ -1,4 +1,7 @@
 
+* Version 1.7.0 [2026-09-20 Sun]
+- Added a new --print-option config to pass printer config options to the print-command.
+
 * Version 1.6.0 [2026-03-06 Fri]
 - Improved labrat.el to ensure that the *labrat* buffer gets created and logs
   the command used along with a timestamp and any errors.

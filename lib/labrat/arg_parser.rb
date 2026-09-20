@@ -528,7 +528,7 @@ module Labrat
       parser.on(
         "-%PRINTCMD",
         "--print-command=PRINTCMD",
-        "Command to use for printing with %p for printer name; %o for label file name",
+        "Command to use for printing with %p for printer name; %o for label file name; %O print options",
       ) do |cmd|
         options.print_command = cmd.strip
         warn "  ::print-command <- '#{cmd}'::" if options.verbose
@@ -541,6 +541,15 @@ module Labrat
       ) do |cmd|
         options.view_command = cmd.strip
         warn "  ::view-command <- '#{cmd}'::" if options.verbose
+      end
+      # NB: Get possible options from `lpoptions -l -p <printername>`
+      parser.on(
+        "-O OPTIONTEXT",
+        "--print-option=OPTIONTEXT",
+        "Options to add to print-command a la `lpoptions -l -p <printername>`",
+      ) do |txt|
+        options.print_options << txt
+        warn "  ::print-option <- '#{txt}'::" if options.verbose
       end
     end
 

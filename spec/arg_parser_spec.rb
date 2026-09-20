@@ -42,6 +42,7 @@ RSpec.describe ArgParser do
       expect(op.out_file.class).to eq(String)
       expect(op.print_command.class).to eq(String)
       expect(op.view_command.class).to eq(String)
+      expect(op.print_options).to eq([])
       expect(op.view).to be(false)
       expect(op.template).to be(false)
       expect(op.verbose).to be(false)
@@ -119,6 +120,7 @@ RSpec.describe ArgParser do
       expect(help).to include('--out-file')
       expect(help).to include('--print-command')
       expect(help).to include('--view-command')
+      expect(help).to include('--print-option')
       expect(help).to include('--[no-]template')
       expect(help).to include('--[no-]view')
       expect(help).to include('--[no-]verbose')
@@ -132,10 +134,17 @@ RSpec.describe ArgParser do
       bad_option = '--lsflkwroi'
       expect { ap.parse([bad_option]) }.to raise_exception(OptionError)
       expect { ap.parse([bad_option]) }.to raise_exception(/#{bad_option}/)
+      # Should be --print-option, singular
+      bad_option = '--print-options'
+      expect { ap.parse([bad_option]) }.to raise_exception(OptionError)
+      expect { ap.parse([bad_option]) }.to raise_exception(/#{bad_option}/)
     end
 
     it 'raises an error on missing option arg' do
       option = '--delta-x'
+      expect { ap.parse([option]) }.to raise_exception(OptionError)
+      expect { ap.parse([option]) }.to raise_exception(/missing argument: #{option}/)
+      option = '--print-option'
       expect { ap.parse([option]) }.to raise_exception(OptionError)
       expect { ap.parse([option]) }.to raise_exception(/missing argument: #{option}/)
     end
@@ -278,6 +287,23 @@ RSpec.describe ArgParser do
       ops = ap.parse(["--view-command=snapview %o"])
       expect(ops.msg).to be_nil
       expect(ops.view_command).to eq('snapview %o')
+    end
+
+    it 'can set print options' do
+      ops = ap.parse(["--print-option=InputSlot=Right"])
+      expect(ops.msg).to be_nil
+      expect(ops.print_options).to eq(['InputSlot=Right'])
+    end
+
+    it 'can set multiple print options' do
+      ops = ap.parse([
+        '-O',
+        'InputSlot=Right',
+        '-O',
+        'Resolution=150',
+        '--print-option=ColorModel=Gray',
+      ])
+      expect(ops.print_options).to eq(['InputSlot=Right', 'Resolution=150', 'ColorModel=Gray'])
     end
 
     it 'can ask to view rather than print' do

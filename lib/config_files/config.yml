@@ -116,8 +116,11 @@
 # and allows a unique instance to be dedicated to labrat with the --unique and
 # --instance flags.
 #
-# print-command: lpr -P %p %o
+# print-command: lpr -P %p %O %o
 # view-command: qpdfview --unique --instance labrat %o
+# print-option:
+#   - InputSlot=Right
+#   - Resolution=150
 
 # The following correspond to the -V, -T, and -v flags respectively.
 #

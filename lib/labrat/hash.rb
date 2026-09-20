@@ -7,12 +7,17 @@ class Hash
     options = []
     each_pair do |k, v|
       key = k.to_s.tr('_', '-')
-      options <<
-        if [TrueClass, FalseClass].include?(v.class)
-          v ? "--#{key}" : "--no-#{key}"
-        else
-          "--#{key}=#{v}"
-        end
+      key = 'print-option' if key == 'print-options'
+      if v.is_a?(Array)
+        v.each { |value| options << "--#{key}=#{value}" }
+      else
+        options <<
+          if [TrueClass, FalseClass].include?(v.class)
+            v ? "--#{key}" : "--no-#{key}"
+          else
+            "--#{key}=#{v}"
+          end
+      end
     end
     options
   end

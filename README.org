@@ -67,6 +67,7 @@ Buy your copy today while supplies last!
       - [[#template-exception][Template exception]]
     - [[#printing-or-viewing][Printing or viewing]]
     - [[#printing-and-viewing-shell-commands][Printing and viewing shell commands]]
+    - [[#print-options][Print Options]]
     - [[#aids-to-testing-label-layouts][Aids to testing label layouts]]
       - [[#page-grid-1][Page Grid]]
       - [[#page-template][Page Template]]
@@ -543,34 +544,85 @@ command from ~--view-command~ to view the generated PDF file instead.
 *** Printing and viewing shell commands
 By default, =labrat= uses the shell command:
 #+begin_example
-lpr -P %p %o
+  lpr -P %p %O %o
 #+end_example
-to print, and substitutes '%p' with the printer name and '%o' with the output
-file name.  But you can specify a different print command with the
-~--print-command~ option.  The printer name used in the substitution is by
-default taken from the environment variable =LABRAT_PRINTER= if it is defined,
-or from the environment variable =PRINTER= if it is defined and
-=LABRAT_PRINTER= is not defined.  If neither is defined, it defaults to the
-name 'dymo'.  But you can set the printer name with the ~--printer~ option in
-any event.
+to print, and substitutes '%p' with the printer name, %O with the print
+options, and '%o' with the output file name.  But you can specify a different
+print command with the ~--print-command~ option.  The printer name used in the
+substitution is by default taken from the environment variable
+=LABRAT_PRINTER= if it is defined, or from the environment variable =PRINTER=
+if it is defined and =LABRAT_PRINTER= is not defined.  If neither is defined,
+it defaults to the name 'dymo'.  But you can set the printer name with the
+~--printer~ option in any event.
 
 - ~-p~, ~--printer=NAME~ :: Name of the label printer to print on
 - ~-%~, ~--print-command=PRINTCMD~ :: Command to use for printing with %p for
-  printer name; %o for label file name (the `%` is meant to remind you of a
-  piece of a paper beingg fed between two rollers)
+  printer name; %O for the print options; and %o for label file name (the `%`
+  is meant to remind you of a piece of a paper beingg fed between two rollers)
 
 Likewise, =labrat= uses the shell command
 #+begin_example
   qpdfview --unique --instance labrat %o'
 #+end_example
 to launch the previewer when the ~--view~ or ~-V~ options are given.  It also
-'%o' with the output file name, but does not recognize '%p' as special.  It is
-very likely that you will want to configure this with the ~--view-command~
-option to your liking.
+substitutes '%o' with the output file name, but does not recognize '%p' as
+special.  It is very likely that you will want to configure this with the
+~--view-command~ option to your liking.
 
 - ~-:~, ~--view-command=VIEWCMD~ :: Command to use for viewing with %o for
   label file name (the `:` is meant to remind you of a pair of eyes looking at
   the purdy label)
+
+*** Print Options
+=labrat= allows you to set printer /options/ with the ~--print-option~ (or
+=-O=) command-line option.  These options are substituted for the =%O=
+placeholder in the =print-command= as described above.  Since the default
+print-command invokes =lpr=, this is primarily targeted at options for the
+=lpr= command.  You can see what options are available with
+#+begin_example
+ lpoptions -p <PRINTER_NAME> -l
+#+end_example
+
+For example, my local label printer is a dymo LabelWriter 400 Turbo and is
+named =dymo= on my system.  Here are the results on my system:
+
+#+begin_src sh :eval yes :results output raw :wrap example
+ lpoptions -p dymo -l
+#+end_src
+
+#+RESULTS:
+#+begin_example
+PageSize/Media Size: *w81h252 w101h252 w54h144 w162h225 w162h288 w162h540 w162h504 w41h248 w41h144 w153h198
+Resolution/Resolution: 136dpi 203dpi *300dpi
+InputSlot/Media Source: *Roll Roll2
+cupsDarkness/Darkness: Light Medium *Normal Dark
+#+end_example
+
+You can specify as many print options as needed and they will each be passed
+as "-o <OPTIONTEXT>" to the =print-command= in lieu of the =%O= placeholder.
+So, I could use
+
+#+begin_src sh
+  labrat --print-option=InputSlot=Roll2 -O Resolution=136dpi Roll2 LowRes Sample Label
+#+end_src
+
+These options are ignored in the view-command.
+
+Also, like all options, these can be set in the =labeldb.yml= file to define a
+virtual label by using the YAML array form:
+
+#+begin_example
+fflr:
+  label: duraready1034D
+  font-style: bold
+  font-size: 12pt
+  delta-x: -3mm
+  delta-y: 0.5mm
+  print-options:
+    - InputSlot=Roll2
+    - Resolution=136dpi
+#+end_example
+
 
 *** Aids to testing label layouts
 
