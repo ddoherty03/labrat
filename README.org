@@ -598,6 +598,12 @@ InputSlot/Media Source: *Roll Roll2
 cupsDarkness/Darkness: Light Medium *Normal Dark
 #+end_example
 
+NOTE: the output from lpoptions shows options as
+<OptionName>/<HumanDescription>, so you should only use the part /before/ the
+~/~.  Thus, the option names for my printer are =PageSize=, =Resolution=,
+=InputSlot=, and =cupsDarkness=.  Each of those is followed by their possible
+values with the current default value marked with an ~*~ asterisk.
+
 You can specify as many print options as needed and they will each be passed
 as "-o <OPTIONTEXT>" to the =print-command= in lieu of the =%O= placeholder.
 So, I could use
@@ -623,6 +629,9 @@ fflr:
     - Resolution=136dpi
 #+end_example
 
+NOTE: the command line option is singular, =--print-option= but =labrat=
+allows the use of singular or plural in the =labeldb.yml= file as shown in the
+above example.
 
 *** Aids to testing label layouts
 
