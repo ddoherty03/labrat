@@ -9,6 +9,7 @@ Gem::Specification.new do |spec|
   spec.email         = ["ded-labrat@ddoherty.net"]
 
   spec.summary       = "Command-line and Emacs label print software."
+  spec.license       = "MIT"
   spec.description = <<~DESC
 
     Labrat is a linux command-line program for quickly printing labels.  Labrat uses
