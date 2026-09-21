@@ -28,7 +28,7 @@ Gem::Specification.new do |spec|
   DESC
 
   spec.homepage = "http://github.com/ddoherty03/labrat"
-  spec.required_ruby_version = Gem::Requirement.new(">= 2.4.0")
+  spec.required_ruby_version = Gem::Requirement.new(">= 3.2")
 
   spec.metadata["homepage_uri"] = spec.homepage
   spec.metadata["source_code_uri"] = "http://github.com/ddoherty03/labrat"
