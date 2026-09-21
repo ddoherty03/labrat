@@ -46,6 +46,7 @@ Gem::Specification.new do |spec|
   spec.rdoc_options += ['-D', '--ri', '--exclude', '^lib/lisp.*', '--exclude', '^lib/vim.*']
 
   spec.add_dependency "activesupport"
+  spec.add_dependency "bigdecimal", "~> 3.1"
   spec.add_dependency "fat_config", '>=0.4.2'
   spec.add_dependency "matrix"
   spec.add_dependency "prawn", "<=2.5"

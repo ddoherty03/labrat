@@ -1,5 +1,9 @@
 # frozen_string_literal: true
 
+# Active Support otherwise activates the newest BigDecimal before Prawn can
+# enforce ttfunk's more restrictive dependency.
+gem 'bigdecimal', '~> 3.1'
+
 require 'active_support'
 require 'active_support/core_ext'
 require 'fat_core/enumerable'
