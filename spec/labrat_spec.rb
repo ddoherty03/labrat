@@ -17,14 +17,20 @@ RSpec.describe Labrat do
     end
 
     it 'can read label texts from standard input' do
-      $stdin = File.open(lab_fname)
-      # Using nil as a file name parameter to read_label_texts causes labels
-      # to be read from standard input.
-      lab_txts = Labrat.read_label_texts(nil, '~~')
-      expect(lab_txts.size).to eq(3)
-      expect(lab_txts[0]).to match(/\AFour score/)
-      expect(lab_txts[1]).to match(/this continent, a\z/)
-      expect(lab_txts[2]).to match(/~~the proposition/)
+      original_stdin = $stdin
+      File.open(lab_fname) do |file|
+        $stdin = file
+
+        # Using nil as a file name parameter to read_label_texts causes labels
+        # to be read from standard input.
+        lab_txts = Labrat.read_label_texts(nil, '~~')
+        expect(lab_txts.size).to eq(3)
+        expect(lab_txts[0]).to match(/\AFour score/)
+        expect(lab_txts[1]).to match(/this continent, a\z/)
+        expect(lab_txts[2]).to match(/~~the proposition/)
+      ensure
+        $stdin = original_stdin
+      end
     end
   end
 end

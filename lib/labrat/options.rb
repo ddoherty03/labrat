@@ -123,7 +123,7 @@ module Labrat
       dir = File.expand_path(File.join(base, "labrat"))
       FileUtils.mkdir_p(dir)
       stamp = Time.now.strftime("%Y-%m-%dT%H:%M:%S.%3N")
-      File.join(dir, "#{stamp}-#{$$}.pdf")
+      File.join(dir, "#{stamp}-#{$PID}.pdf")
     end
 
     # Return any string in msg, e.g., the usage help or error.
