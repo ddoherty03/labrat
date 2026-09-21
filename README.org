@@ -141,8 +141,8 @@ It will also install an annotated sample user config file in
 
 If you invoke =labrat-install= multiple times, it will refuse to overwrite any
 existing config or database files that you may have already installed.  If you
-want to re-install them you have to remove the existing files or move them out
-of the way.
+want to re-install them you first have to remove the existing files or move
+them out of the way.
 
 * Editor Integration
 ** Emacs
@@ -155,7 +155,7 @@ C-l C-v~ to =labrat-view=, and I can type a label in any buffer and get it
 generated with very little ceremony.
 
 ** Vim
-There is also a vim plugin that you can copy to you =~.vim/plugins/labrat.vim=
+There is also a vim plugin that you can copy to you =~/.vim/plugins/labrat.vim=
 directory to invoke ~labrat~ from within ~vim~.  Suggested keybindings are
 included for copying to =~/.vim/after/plugin/labrat.vim= that bind
 =<leader>lp= and =<leader>lv= to invoke ~labrat~ in normal and visual modes.
@@ -583,7 +583,7 @@ print-command invokes =lpr=, this is primarily targeted at options for the
  lpoptions -p <PRINTER_NAME> -l
 #+end_example
 
-For example, my local label printer is a dymo LabelWriter 400 Turbo and is
+For example, my local label printer is a Dymo LabelWriter 400 Turbo and is
 named =dymo= on my system.  Here are the results on my system:
 
 #+begin_src sh :eval yes :results output raw :wrap example
@@ -592,10 +592,12 @@ named =dymo= on my system.  Here are the results on my system:
 
 #+RESULTS:
 #+begin_example
-PageSize/Media Size: *w81h252 w101h252 w54h144 w162h225 w162h288 w162h540 w162h504 w41h248 w41h144 w153h198
-Resolution/Resolution: 136dpi 203dpi *300dpi
-InputSlot/Media Source: *Roll Roll2
-cupsDarkness/Darkness: Light Medium *Normal Dark
+PageSize/Media Size: w154h64 w72h154 w72h72 w162h90 w54h144 w118h252 w167h188 w79h252 w167h252 w167h288 w154h198 w82h248 w154h64.1 w79h252.1 w102h252 w154h286 w154h198.1 w54h424 w131h221 *w57h248 w54h144.1 w72h72.1 w72h72.2 w162h90.1 30334_2-1_4_in_x_1-1_4_in w73h86 w72h154.1 w118h252.1 w54h203 w54h180 w36h136 w72h108 w65h90 w167h288.1 w168h252 w144h169 w71h144 w144h252 w80h144 w162h504 30383_PC_Postage_3-Part w167h540 30384_PC_Postage_2-Part w167h756 30387_PC_Postage_EPS w167h188.1 w176h292 w167h288.2 w112h126 w79h252.2 w102h252.1 w154h286.1 w154h286.2 w154h198.2 w63h419 w139h221 w36h144 w108h539 w167h539 w154h7680 w154h792 Custom.WIDTHxHEIGHT
+Resolution/Output Resolution: *300dpi
+DymoHalftoning/Halftoning: Default *ErrorDiffusion NLL
+DymoPrintDensity/Print Density: Light Medium *Normal Dark
+DymoPrintQuality/Print Quality: *Text Graphics
+InputSlot/Media Source: *Auto Left Right
 #+end_example
 
 NOTE: the output from lpoptions shows options as
