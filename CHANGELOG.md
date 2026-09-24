@@ -1,24 +1,24 @@
-- [Version 1.7.0 <span class="timestamp-wrapper"><span class="timestamp">[2026-09-20 Sun]</span></span>](#org6f0ed48)
-- [Version 1.6.0 <span class="timestamp-wrapper"><span class="timestamp">[2026-03-06 Fri]</span></span>](#orga90e5bb)
-- [Version 1.4.1 <span class="timestamp-wrapper"><span class="timestamp">[2025-12-28 Sun]</span></span>](#org7c8e446)
-- [Version 1.3.0 <span class="timestamp-wrapper"><span class="timestamp">[2025-12-26 Fri]</span></span>](#orga376b97)
-- [Version 1.2.3 <span class="timestamp-wrapper"><span class="timestamp">[2025-03-20 Thu]</span></span>](#org2e73608)
-- [Version 1.2.2 <span class="timestamp-wrapper"><span class="timestamp">[2024-11-29 Fri]</span></span>](#org1c5c6f7)
-- [Version 1.2.1 <span class="timestamp-wrapper"><span class="timestamp">[2024-09-20 Fri]</span></span>](#org45d96d4)
-- [Version 1.2.0 <span class="timestamp-wrapper"><span class="timestamp">[2023-01-19 Thu]</span></span>](#org0e5726b)
-- [Version 1.1.0 <span class="timestamp-wrapper"><span class="timestamp">[2023-01-06 Fri]</span></span>](#org055ad15)
-- [Version 0.1.14 <span class="timestamp-wrapper"><span class="timestamp">[2022-02-03 Thu]</span></span>](#orgb3e1e30)
-- [Version 0.1.13 <span class="timestamp-wrapper"><span class="timestamp">[2021-11-04 Thu]</span></span>](#org5a4e73b)
+- [Version 1.7.0 <span class="timestamp-wrapper"><span class="timestamp">[2026-09-20 Sun]</span></span>](#org88a6da3)
+- [Version 1.6.0 <span class="timestamp-wrapper"><span class="timestamp">[2026-03-06 Fri]</span></span>](#org03c0e34)
+- [Version 1.4.1 <span class="timestamp-wrapper"><span class="timestamp">[2025-12-28 Sun]</span></span>](#org72acd0b)
+- [Version 1.3.0 <span class="timestamp-wrapper"><span class="timestamp">[2025-12-26 Fri]</span></span>](#orgbd22d5f)
+- [Version 1.2.3 <span class="timestamp-wrapper"><span class="timestamp">[2025-03-20 Thu]</span></span>](#org3038de9)
+- [Version 1.2.2 <span class="timestamp-wrapper"><span class="timestamp">[2024-11-29 Fri]</span></span>](#org2cb2b79)
+- [Version 1.2.1 <span class="timestamp-wrapper"><span class="timestamp">[2024-09-20 Fri]</span></span>](#orgdf2d64b)
+- [Version 1.2.0 <span class="timestamp-wrapper"><span class="timestamp">[2023-01-19 Thu]</span></span>](#orgaa2d7a4)
+- [Version 1.1.0 <span class="timestamp-wrapper"><span class="timestamp">[2023-01-06 Fri]</span></span>](#org58ea9ac)
+- [Version 0.1.14 <span class="timestamp-wrapper"><span class="timestamp">[2022-02-03 Thu]</span></span>](#org8f68c13)
+- [Version 0.1.13 <span class="timestamp-wrapper"><span class="timestamp">[2021-11-04 Thu]</span></span>](#org37dff59)
 
 
-<a id="org6f0ed48"></a>
+<a id="org88a6da3"></a>
 
 # Version 1.7.0 <span class="timestamp-wrapper"><span class="timestamp">[2026-09-20 Sun]</span></span>
 
 -   Added a new &ndash;print-option config to pass printer config options to the print-command.
 
 
-<a id="orga90e5bb"></a>
+<a id="org03c0e34"></a>
 
 # Version 1.6.0 <span class="timestamp-wrapper"><span class="timestamp">[2026-03-06 Fri]</span></span>
 
@@ -28,14 +28,14 @@
 -   Fix use of XDG\_DATA\_HOME environment variable.
 
 
-<a id="org7c8e446"></a>
+<a id="org72acd0b"></a>
 
 # Version 1.4.1 <span class="timestamp-wrapper"><span class="timestamp">[2025-12-28 Sun]</span></span>
 
 -   Added a `vim` plugin to allow printing or viewing labels from within a vim buffer as was possible in Emacs with `labrat.el`.
 
 
-<a id="orga376b97"></a>
+<a id="orgbd22d5f"></a>
 
 # Version 1.3.0 <span class="timestamp-wrapper"><span class="timestamp">[2025-12-26 Fri]</span></span>
 
@@ -43,28 +43,28 @@
 -   Output file can still be overridden with the `-o` or `--out-file` option
 
 
-<a id="org2e73608"></a>
+<a id="org3038de9"></a>
 
 # Version 1.2.3 <span class="timestamp-wrapper"><span class="timestamp">[2025-03-20 Thu]</span></span>
 
 -   No user-visible changes
 
 
-<a id="org1c5c6f7"></a>
+<a id="org2cb2b79"></a>
 
 # Version 1.2.2 <span class="timestamp-wrapper"><span class="timestamp">[2024-11-29 Fri]</span></span>
 
 -   Used `fat_config` gem to read config files
 
 
-<a id="org45d96d4"></a>
+<a id="orgdf2d64b"></a>
 
 # Version 1.2.1 <span class="timestamp-wrapper"><span class="timestamp">[2024-09-20 Fri]</span></span>
 
 -   Fixed `labrat.el` view command
 
 
-<a id="org0e5726b"></a>
+<a id="orgaa2d7a4"></a>
 
 # Version 1.2.0 <span class="timestamp-wrapper"><span class="timestamp">[2023-01-19 Thu]</span></span>
 
@@ -73,7 +73,7 @@
 -   Minor bug fixes
 
 
-<a id="org055ad15"></a>
+<a id="org58ea9ac"></a>
 
 # Version 1.1.0 <span class="timestamp-wrapper"><span class="timestamp">[2023-01-06 Fri]</span></span>
 
@@ -82,14 +82,14 @@
 -   Added label name to template output
 
 
-<a id="orgb3e1e30"></a>
+<a id="org8f68c13"></a>
 
 # Version 0.1.14 <span class="timestamp-wrapper"><span class="timestamp">[2022-02-03 Thu]</span></span>
 
 -   Nothing important
 
 
-<a id="org5a4e73b"></a>
+<a id="org37dff59"></a>
 
 # Version 0.1.13 <span class="timestamp-wrapper"><span class="timestamp">[2021-11-04 Thu]</span></span>
 
