@@ -238,7 +238,7 @@ of the option as a key in a YAML configuration format.
 
 Labrat reads options from the following locations, with the locations listed
 from lowest to highest priority.  In other words, options set in the
-first-listed location can be overriden by settings in later-listed locations.
+first-listed location can be overridden by settings in later-listed locations.
 
 1. From =/etc/xdg/labrat/config.yml=.  This is a YAML formatted file in which
    the long form of the option, without the leading '--', is used as a key
@@ -247,6 +247,16 @@ first-listed location can be overriden by settings in later-listed locations.
    the long form of option names.
 3. Finally, it reads options from the command-line, where, of course, the
    leading hyphens are mandatory.
+
+Label definitions are read separately from the label databases in
+=/etc/xdg/labrat/labeldb.yml= and =~/.config/labrat/labeldb.yml=. The
+user-level database overrides matching definitions from the system
+database.
+
+When a label option is processed (say in =config.yml= or on the command-line
+with the =--label= option), its definition is inserted at that point in the
+option sequence, so later options override settings supplied by the label
+definition.
 
 ** Dimensions and other values in options
 Many of the options deal with specifying some sort of distance.  Those are
