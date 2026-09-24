@@ -454,12 +454,13 @@ module Labrat
     end
 
     # On a command-line, specifying where a new label should be started.  This
-    # allows the user to use some distinctive marker ('][' by default) to
+    # allows the user to use some distinctive marker ('@@' by default) to
     # designate where a new label shoul be started.
     def label_sep_option
       parser.on(
+        "-qSEP",
         "--label-sep=SEPARATOR",
-        "Specify text that indicates the start of a new label (default '==>')",
+        "Specify text that indicates the start of a new label (default '@@')",
       ) do |ls|
         options.label
         warn "  ::label-sep <- '#{ls}'::" if options.verbose
